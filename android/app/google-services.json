@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "458253485832",
+    "firebase_url": "https://setlist-e921f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "setlist-e921f",
+    "storage_bucket": "setlist-e921f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458253485832:android:9df44f344a2c379dd40ebd",
+        "android_client_info": {
+          "package_name": "com.example.setlist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLd2rxUaTxIzwOaYCnmEX6QAHJrxdm-B0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

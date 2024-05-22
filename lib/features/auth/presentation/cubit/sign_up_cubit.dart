@@ -10,13 +10,22 @@ class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit({required this.usecase}) : super(const SignUpState());
 
   void onEmailChanged(String val) {
-    // TODO: check email validity
-    emit(state.copyWith(email: val));
+    emit(
+      state.copyWith(
+        email: val,
+        emailStatus: FieldStatus.valid,
+      ),
+    );
   }
 
   void onPasswordChanged(String val) {
     // TODO: check password validity
-    emit(state.copyWith(password: val));
+    emit(
+      state.copyWith(
+        password: val,
+        passwordStatus: FieldStatus.valid,
+      ),
+    );
   }
 
   Future<void> signUp() async {
