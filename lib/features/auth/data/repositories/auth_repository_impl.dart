@@ -15,20 +15,26 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<AuthUser> login({required String email, required String password}) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<AuthUser> login({required String email, required String password}) async {
+    final authUserModel = await authRemoteDataSource.login(
+      email: email,
+      password: password,
+    );
+
+    return authUserModel;
   }
 
   @override
   Future<void> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+    return authRemoteDataSource.logout();
   }
 
   @override
   Future<AuthUser> signup({required String email, required String password}) async {
-    final authUserModel = await authRemoteDataSource.signUp(email: email, password: password);
+    final authUserModel = await authRemoteDataSource.signUp(
+      email: email,
+      password: password,
+    );
 
     return authUserModel;
   }

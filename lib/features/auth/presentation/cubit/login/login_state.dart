@@ -1,22 +1,7 @@
-part of 'sign_up_cubit.dart';
+part of 'login_cubit.dart';
 
-enum SignUpStatus {
-  initial,
-  loading,
-  error,
-  valid,
-  invalid,
-  success,
-}
-
-enum FieldStatus {
-  initilal,
-  valid,
-  invalid,
-}
-
-class SignUpState extends Equatable {
-  final SignUpStatus status;
+class LoginState extends Equatable {
+  final FormStatus status;
   final String email;
   final FieldStatus emailStatus;
   final String password;
@@ -24,22 +9,22 @@ class SignUpState extends Equatable {
 
   bool get formValid => emailStatus == FieldStatus.valid && passwordStatus == FieldStatus.valid;
 
-  const SignUpState({
-    this.status = SignUpStatus.initial,
+  const LoginState({
+    this.status = FormStatus.initial,
     this.email = '',
     this.emailStatus = FieldStatus.initilal,
     this.password = '',
     this.passwordStatus = FieldStatus.initilal,
   });
 
-  SignUpState copyWith({
-    SignUpStatus? status,
+  LoginState copyWith({
+    FormStatus? status,
     String? email,
     FieldStatus? emailStatus,
     String? password,
     FieldStatus? passwordStatus,
   }) {
-    return SignUpState(
+    return LoginState(
       status: status ?? this.status,
       email: email ?? this.email,
       emailStatus: emailStatus ?? this.emailStatus,

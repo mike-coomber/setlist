@@ -1,56 +1,59 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:setlist/features/auth/domain/usecases/signup_usecase.dart';
-import 'package:setlist/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
+import 'package:setlist/features/auth/domain/usecases/login_usecase.dart';
+import 'package:setlist/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:setlist/router/router.gr.dart';
 
 import '../../domain/repositories/auth_repository.dart';
 import '../cubit/form_status.dart';
 
 @RoutePage()
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignUpCubit(
-        usecase: SignupUsecase(
+      create: (context) => LoginCubit(
+        usecase: LoginUsecase(
           authRepository: context.read<AuthRepository>(),
         ),
       ),
-      child: const SignUpView(),
+      child: const LoginView(),
     );
   }
 }
 
-class SignUpView extends StatefulWidget {
-  const SignUpView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
-  SignUpCubit get _cubit => context.read<SignUpCubit>();
+class _LoginViewState extends State<LoginView> {
+  LoginCubit get _cubit => context.read<LoginCubit>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: const Text('Login'),
       ),
-      body: BlocConsumer<SignUpCubit, SignUpState>(
+      body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.status == FormStatus.error) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Signup failed')),
+              const SnackBar(content: Text('Login failed')),
             );
           }
           if (state.status == FormStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Signup success')),
+              const SnackBar(content: Text('Login success')),
             );
+            context.router.removeLast();
+            context.router.push(HomeRoute());
           }
         },
         builder: (context, state) {
@@ -69,8 +72,12 @@ class _SignUpViewState extends State<SignUpView> {
                   autocorrect: false,
                 ),
                 FilledButton(
-                  onPressed: _cubit.signUp,
+                  onPressed: () => context.router.push(const SignUpRoute()),
                   child: const Text('Sign up'),
+                ),
+                FilledButton(
+                  onPressed: _cubit.login,
+                  child: const Text('Login'),
                 ),
                 if (state.status == FormStatus.loading) const CircularProgressIndicator()
               ],

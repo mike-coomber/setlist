@@ -13,4 +13,6 @@ class AuthUser {
     this.name,
     this.profilePictureUrl,
   });
+
+  static const AuthUser empty = AuthUser(id: '', email: '');
 }

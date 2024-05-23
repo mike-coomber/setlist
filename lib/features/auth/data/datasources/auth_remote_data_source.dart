@@ -6,6 +6,10 @@ abstract class AuthRemoteDataSource {
   Stream<AuthUserModel?> get user;
 
   Future<AuthUserModel> signUp({required String email, required String password});
+
+  Future<AuthUserModel> login({required String email, required String password});
+
+  Future<void> logout();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -43,6 +47,30 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       return AuthUserModel.fromFirebaseAuthUser(credential.user!);
     } catch (error) {
       throw Exception('Sign up failed: $error');
+    }
+  }
+
+  @override
+  Future<AuthUserModel> login({required String email, required String password}) async {
+    try {
+      UserCredential credential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+
+      if (credential.user == null) {
+        throw Exception('User does not exist');
+      }
+
+      return AuthUserModel.fromFirebaseAuthUser(credential.user!);
+    } catch (error) {
+      throw Exception('Login failed: $error');
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      return _firebaseAuth.signOut();
+    } catch (error) {
+      throw Exception('Logout failed $error');
     }
   }
 }
