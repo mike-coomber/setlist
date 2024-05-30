@@ -10,7 +10,10 @@ import '../../../domain/usecases/current_user_usecase.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit({required this.currentUserUsecase, required this.logoutUsecase}) : super(AuthInitial()) {
+  AuthCubit({
+    required this.currentUserUsecase,
+    required this.logoutUsecase,
+  }) : super(AuthInitial()) {
     subscription = currentUserUsecase.call().listen((currentUser) {
       _currentUser = currentUser;
       if (currentUser == null) {

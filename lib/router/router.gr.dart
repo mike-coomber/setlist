@@ -9,13 +9,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:setlist/features/auth/presentation/pages/home_page.dart' as _i1;
 import 'package:setlist/features/auth/presentation/pages/logged_out_page.dart'
     as _i2;
 import 'package:setlist/features/auth/presentation/pages/login_page.dart'
     as _i3;
 import 'package:setlist/features/auth/presentation/pages/sign_up_page.dart'
     as _i4;
+import 'package:setlist/features/dashboard/presentation/pages/home_page.dart'
+    as _i1;
 
 abstract class $AppRouter extends _i5.RootStackRouter {
   $AppRouter({super.navigatorKey});

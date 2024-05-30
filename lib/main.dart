@@ -31,16 +31,18 @@ void main() {
         authRemoteDataSource: authRemoteDataSource,
       );
 
+      final user = await authRepository.user.first;
+
       return App(
         authRepository: authRepository,
-        authUser: await authRepository.user.first,
+        authUser: user,
       );
     },
   );
 }
 
 class App extends StatelessWidget {
-  App({
+  const App({
     super.key,
     required this.authRepository,
     this.authUser,
@@ -68,17 +70,14 @@ class App extends StatelessWidget {
         },
         child: Builder(builder: (context) {
           final appRouter = AppRouter(authCubit: context.read<AuthCubit>());
-          final stream = context.read<AuthCubit>().stream;
-          stream.listen((_) {
-            print('changed');
-          });
+
           return MaterialApp.router(
-            title: 'Clean Architecture',
+            title: 'setlist',
             theme: ThemeData.light(useMaterial3: true),
             routerConfig: appRouter.config(
               navigatorObservers: () => [DebugObserver()],
               reevaluateListenable: ReevaluateListenable.stream(
-                stream,
+                context.read<AuthCubit>().stream,
               ),
             ),
           );
