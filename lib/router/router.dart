@@ -14,6 +14,7 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: HomeRoute.page,
+          path: '/',
           guards: [
             AuthGuard(authCubit: authCubit),
           ],
