@@ -53,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
               const SnackBar(content: Text('Login success')),
             );
             context.router.removeLast();
-            context.router.push(HomeRoute());
+            context.router.push(const HomeRoute());
           }
         },
         builder: (context, state) {

@@ -12,7 +12,7 @@ class AuthGuard extends AutoRouteGuard {
     if (authCubit.authenticated) {
       resolver.next(true);
     } else {
-      router.push(LoginRoute());
+      router.push(const LoginRoute());
     }
   }
 }
