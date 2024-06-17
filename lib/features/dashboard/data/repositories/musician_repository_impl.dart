@@ -3,7 +3,7 @@ import 'package:setlist/features/dashboard/domain/repositories/musician_reposito
 
 class MusicianRepositoryImpl extends MusicianRepository {
   @override
-  Future<Musician> createMusician(String name) {
+  Future<Musician> createMusician({required String name, required String id}) {
     // TODO: implement createMusician
     throw UnimplementedError();
   }

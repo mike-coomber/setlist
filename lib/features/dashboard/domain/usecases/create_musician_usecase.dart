@@ -6,11 +6,7 @@ class CreateMusicianUsecase {
 
   CreateMusicianUsecase({required this.musicianRepository});
 
-  Future<Musician> call({required String name}) {
-    try {
-      return musicianRepository.createMusician(name);
-    } catch (e) {
-      throw Error();
-    }
+  Future<Musician> call({required String name, required String id}) {
+    return musicianRepository.createMusician(name: name, id: id);
   }
 }

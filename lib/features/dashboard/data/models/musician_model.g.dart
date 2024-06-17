@@ -11,7 +11,7 @@ MusicianModel _$MusicianModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       memberships: (json['memberships'] as List<dynamic>)
-          .map((e) => MembershipModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => e as String)
           .toList(),
     );
 

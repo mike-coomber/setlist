@@ -8,10 +8,6 @@ class GetMusicianUsecase {
   GetMusicianUsecase({required this.musicianRepository});
 
   Future<Musician> call({required String userId}) {
-    try {
-      return musicianRepository.getMusician(userId);
-    } catch (e) {
-      throw Error();
-    }
+    return musicianRepository.getMusician(userId);
   }
 }

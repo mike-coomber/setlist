@@ -1,4 +1,3 @@
-import 'package:setlist/features/dashboard/data/models/membership_model.dart';
 import 'package:setlist/features/dashboard/domain/entities/musician.dart';
 
 import 'package:json_annotation/json_annotation.dart';
@@ -17,7 +16,7 @@ class MusicianModel implements Musician {
   final String id;
 
   @override
-  final List<MembershipModel> memberships;
+  final List<String> memberships;
 
   @override
   final String name;

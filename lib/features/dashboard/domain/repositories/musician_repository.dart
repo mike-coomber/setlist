@@ -3,5 +3,5 @@ import '../entities/musician.dart';
 abstract class MusicianRepository {
   Future<Musician> getMusician(String musicianId);
 
-  Future<Musician> createMusician(String name);
+  Future<Musician> createMusician({required String name, required String id});
 }
