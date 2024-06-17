@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:setlist/features/auth/domain/usecases/login_usecase.dart';
 import 'package:setlist/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:setlist/injection_container.dart';
 import 'package:setlist/router/router.gr.dart';
 
-import '../../domain/repositories/auth_repository.dart';
 import '../cubit/form_status.dart';
 
 @RoutePage()
@@ -14,12 +13,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginCubit(
-        usecase: LoginUsecase(
-          authRepository: context.read<AuthRepository>(),
-        ),
-      ),
+    return BlocProvider<LoginCubit>(
+      create: (context) => serviceLocator<LoginCubit>(),
       child: const LoginView(),
     );
   }
