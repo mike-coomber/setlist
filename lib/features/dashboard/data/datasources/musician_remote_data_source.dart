@@ -1,6 +1,6 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:setlist/core/errors.dart';
-import 'package:setlist/core/utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:setlist/core/db_consts.dart';
+import 'package:setlist/core/firebase_utils.dart';
 import 'package:setlist/features/dashboard/domain/entities/musician.dart';
 
 import '../models/musician_model.dart';
@@ -13,31 +13,25 @@ abstract class MusicianRemoteDataSource {
 
 class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
   MusicianRemoteDataSourceImpl({
-    FirebaseDatabase? firebaseDatabase,
-  }) : _database = firebaseDatabase ?? FirebaseDatabase.instance;
+    FirebaseFirestore? firebaseDatabase,
+  }) : _db = firebaseDatabase ?? FirebaseFirestore.instance;
 
-  final FirebaseDatabase _database;
+  final FirebaseFirestore _db;
 
   @override
   Future<Musician> createMusician({required String name, required String id}) async {
-    final ref = _database.ref("musicians/$id");
-    await firebaseSet(ref, {'name': name, 'memberships': [], 'id': id});
-    return Musician(id: id, name: name, memberships: []);
+    final newMusician = MusicianModel(id: id, name: name, memberships: []);
+    final docRef = _db.collection(musicianPath).doc(id);
+
+    await firebaseSet(docRef, newMusician.toJson());
+
+    return newMusician;
   }
 
   @override
   Future<Musician> getMusician({required String id}) async {
-    final ref = _database.ref();
-    try {
-      final snapshot = await ref.child('musicians/$id').get();
+    final docRef = _db.collection(musicianPath).doc(id);
 
-      if (snapshot.exists) {
-        return MusicianModel.fromJson(snapshot.value as Map<String, dynamic>);
-      } else {
-        throw Error();
-      }
-    } catch (e) {
-      throw ServerError();
-    }
+    return MusicianModel.fromJson(await firebaseGet(docRef));
   }
 }
