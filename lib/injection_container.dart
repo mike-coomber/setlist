@@ -14,6 +14,7 @@ import 'package:setlist/features/dashboard/data/repositories/musician_repository
 import 'package:setlist/features/dashboard/domain/repositories/musician_repository.dart';
 import 'package:setlist/features/dashboard/domain/usecases/create_musician_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/get_musician_usecase.dart';
+import 'package:setlist/features/dashboard/presentation/cubit/create_musician/create_musician_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
 
 final serviceLocator = GetIt.instance;
@@ -42,6 +43,11 @@ void init() {
   serviceLocator.registerFactory(
     () => DashboardCubit(
       getMusicianUsecase: serviceLocator(),
+    ),
+  );
+
+  serviceLocator.registerFactory(
+    () => CreateMusicianCubit(
       createMusicianUsecase: serviceLocator(),
     ),
   );

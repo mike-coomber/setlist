@@ -21,10 +21,7 @@ class AppRouter extends $AppRouter {
           initial: true,
           keepHistory: false,
         ),
-        AutoRoute(
-          page: LoginRoute.page,
-          keepHistory: true,
-        ),
+        AutoRoute(page: LoginRoute.page),
         AutoRoute(page: LoggedOutRoute.page),
         AutoRoute(page: SignUpRoute.page),
       ];
