@@ -4,7 +4,7 @@ import 'package:setlist/features/dashboard/domain/entities/membership.dart';
 
 part 'membership_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class MembershipModel implements Membership {
   @override
   final String bandId;

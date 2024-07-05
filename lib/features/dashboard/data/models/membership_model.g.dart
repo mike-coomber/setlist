@@ -17,5 +17,5 @@ Map<String, dynamic> _$MembershipModelToJson(MembershipModel instance) =>
     <String, dynamic>{
       'bandId': instance.bandId,
       'musicianId': instance.musicianId,
-      'role': instance.role,
+      'role': instance.role.toJson(),
     };

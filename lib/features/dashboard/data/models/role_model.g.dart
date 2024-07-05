@@ -14,7 +14,7 @@ RoleModel _$RoleModelFromJson(Map<String, dynamic> json) => RoleModel(
 
 Map<String, dynamic> _$RoleModelToJson(RoleModel instance) => <String, dynamic>{
       'name': instance.name,
-      'permissions': instance.permissions,
+      'permissions': instance.permissions.toJson(),
     };
 
 PermissionsModel _$PermissionsModelFromJson(Map<String, dynamic> json) =>

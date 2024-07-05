@@ -11,13 +11,13 @@ Future<Map<String, dynamic>> firebaseGet(DocumentReference docRef) {
       throw DataNotFoundError();
     }
   }, onError: (e) {
-    throw ServerError();
+    throw ServerError(e.toString());
   });
 }
 
 Future<void> firebaseSet(DocumentReference docRef, Map<String, dynamic> data) {
   return docRef.set(data).onError((e, _) {
-    throw ServerError();
+    throw ServerError(e.toString());
   });
 }
 
@@ -29,13 +29,13 @@ Future<String> firebaseAdd(CollectionReference collectionRef, Map<String, dynami
       )
       .onError(
     (e, _) {
-      throw ServerError();
+      throw ServerError(e.toString());
     },
   );
 }
 
 Future<void> firebaseUpdate(DocumentReference docRef, Map<String, dynamic> data) {
   return docRef.update(data).onError((e, _) {
-    throw ServerError();
+    throw ServerError(e.toString());
   });
 }
