@@ -9,6 +9,8 @@ abstract class MusicianRemoteDataSource {
   Future<Musician> getMusician({required String id});
 
   Future<Musician> createMusician({required String name, required String id});
+
+  Future<void> addMembership({required musicianId, required membershipId});
 }
 
 class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
@@ -21,7 +23,7 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
   @override
   Future<Musician> createMusician({required String name, required String id}) async {
     final newMusician = MusicianModel(id: id, name: name, memberships: []);
-    final docRef = _db.collection(musicianPath).doc(id);
+    final docRef = _db.collection(kMusicianPath).doc(id);
 
     await firebaseSet(docRef, newMusician.toJson());
 
@@ -30,8 +32,20 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
 
   @override
   Future<Musician> getMusician({required String id}) async {
-    final docRef = _db.collection(musicianPath).doc(id);
+    final docRef = _db.collection(kMusicianPath).doc(id);
 
     return MusicianModel.fromJson(await firebaseGet(docRef));
+  }
+
+  @override
+  Future<void> addMembership({required musicianId, required membershipId}) async {
+    final docRef = _db.collection(kMusicianPath).doc(musicianId);
+
+    return firebaseUpdate(
+      docRef,
+      {
+        "memberships": FieldValue.arrayUnion([membershipId]),
+      },
+    );
   }
 }

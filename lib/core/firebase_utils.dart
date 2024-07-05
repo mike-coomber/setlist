@@ -20,3 +20,22 @@ Future<void> firebaseSet(DocumentReference docRef, Map<String, dynamic> data) {
     throw ServerError();
   });
 }
+
+Future<String> firebaseAdd(CollectionReference collectionRef, Map<String, dynamic> data) {
+  return collectionRef
+      .add(data)
+      .then(
+        (doc) => doc.id,
+      )
+      .onError(
+    (e, _) {
+      throw ServerError();
+    },
+  );
+}
+
+Future<void> firebaseUpdate(DocumentReference docRef, Map<String, dynamic> data) {
+  return docRef.update(data).onError((e, _) {
+    throw ServerError();
+  });
+}

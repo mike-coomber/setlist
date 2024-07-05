@@ -16,4 +16,9 @@ class MusicianRepositoryImpl extends MusicianRepository {
   Future<Musician> getMusician(String musicianId) {
     return remoteDataSource.getMusician(id: musicianId);
   }
+
+  @override
+  Future<void> addMembership({required String musicianId, required String membershipId}) {
+    return remoteDataSource.addMembership(musicianId: musicianId, membershipId: membershipId);
+  }
 }
