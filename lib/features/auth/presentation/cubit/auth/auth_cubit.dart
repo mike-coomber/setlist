@@ -33,9 +33,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   bool get authenticated => _currentUser != null;
 
-  void logout() {
+  Future<void> logout() async {
     try {
-      logoutUsecase.call();
+      await logoutUsecase.call();
       emit(LoggedOut());
     } catch (e) {
       print(e);

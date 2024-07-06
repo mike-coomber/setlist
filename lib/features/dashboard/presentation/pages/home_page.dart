@@ -16,29 +16,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('setlist'),
-        actions: [
-          BlocBuilder<AuthCubit, AuthState>(
-            builder: (context, state) {
-              return IconButton(
-                onPressed: () {
-                  context.read<AuthCubit>().logout();
-                  context.router.push(const LoginRoute());
-                },
-                icon: Icon(Icons.logout),
-              );
-            },
-          )
-        ],
-      ),
-      body: BlocProvider(
-        create: (context) => serviceLocator<DashboardCubit>()
-          ..getMusician(
-            context.read<AuthCubit>().user.id,
-          ),
-        child: BlocBuilder<DashboardCubit, DashboardState>(
+    return BlocProvider(
+      create: (context) => serviceLocator<DashboardCubit>()
+        ..getMusician(
+          context.read<AuthCubit>().user.id,
+        ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('setlist'),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await context.read<AuthCubit>().logout();
+                if (!context.mounted) return;
+                context.pushRoute(const LoginRoute());
+              },
+              icon: const Icon(Icons.logout),
+            )
+          ],
+        ),
+        body: BlocBuilder<DashboardCubit, DashboardState>(
           builder: (context, state) {
             switch (state) {
               case DashboardInitial():
