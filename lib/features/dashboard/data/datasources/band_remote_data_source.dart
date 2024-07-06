@@ -3,10 +3,11 @@ import 'package:setlist/core/db_consts.dart';
 import 'package:setlist/core/firebase_utils.dart';
 import 'package:setlist/features/dashboard/data/models/band_model.dart';
 import 'package:setlist/features/dashboard/domain/entities/band.dart';
-import 'package:setlist/features/dashboard/domain/entities/membership.dart';
 
 abstract class BandRemoteDataSource {
-  Future<List<Band>> getBands({required List<Membership> memberships});
+  Future<Band> getBand({required String bandId});
+
+  Future<List<Band>> getBands({required List<String> bandIds});
 
   Future<String> createBand({required String bandName});
 
@@ -22,7 +23,7 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
 
   @override
   Future<void> addMembership({required String bandId, required String membershipId}) {
-    final docRef = _db.collection(kMusicianPath).doc(bandId);
+    final docRef = _db.collection(kBandPath).doc(bandId);
 
     return firebaseUpdate(
       docRef,
@@ -36,16 +37,17 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
   Future<String> createBand({required String bandName}) {
     final collectionRef = _db.collection(kBandPath);
 
-    final newBand = BandModel(membershipIds: [], name: bandName);
+    final newBand = BandModel(memberships: [], name: bandName);
 
     return firebaseAdd(collectionRef, newBand.toJson());
   }
 
   @override
-  Future<List<Band>> getBands({required List<Membership> memberships}) async {
-    final bandIds = memberships.map((membership) => membership.bandId);
-
-    final collectionRef = _db.collection(kBandPath).where(FieldPath.documentId, whereIn: bandIds);
+  Future<List<Band>> getBands({required List<String> bandIds}) async {
+    final collectionRef = _db.collection(kBandPath).where(
+          FieldPath.documentId,
+          whereIn: bandIds,
+        );
 
     return (await collectionRef.get())
         .docs
@@ -53,5 +55,12 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
           (doc) => BandModel.fromJson(doc.data()),
         )
         .toList();
+  }
+
+  @override
+  Future<Band> getBand({required String bandId}) async {
+    final docRef = _db.collection(kBandPath).doc(bandId);
+
+    return BandModel.fromJson(await firebaseGet(docRef));
   }
 }
