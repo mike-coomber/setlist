@@ -1,5 +1,5 @@
 import 'package:setlist/features/dashboard/data/datasources/membership_remote_data_source.dart';
-import 'package:setlist/features/dashboard/data/models/role_model.dart';
+import 'package:setlist/features/dashboard/domain/entities/membership.dart';
 import 'package:setlist/features/dashboard/domain/entities/role.dart';
 import 'package:setlist/features/dashboard/domain/repositories/membership_repository.dart';
 
@@ -13,7 +13,12 @@ class MembershipRespositoryImpl extends MembershipRepository {
     return membershipRemoteDataSource.createMembership(
       musicianId: musicianId,
       bandId: bandId,
-      role: role as RoleModel,
+      role: role,
     );
+  }
+
+  @override
+  Future<List<Membership>> getMemberships({required String userId}) {
+    return membershipRemoteDataSource.getMemberships(userId: userId);
   }
 }

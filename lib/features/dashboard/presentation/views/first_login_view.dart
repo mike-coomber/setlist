@@ -24,7 +24,7 @@ class FirstLoginView extends StatelessWidget {
               }
               break;
             case CreateMusicianStateSuccessful():
-              context.read<DashboardCubit>().setMusician(state.createdMusician);
+              context.read<DashboardCubit>().init(state.createdMusician.id);
               break;
           }
         },

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/features/auth/presentation/cubit/auth/auth_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
+import 'package:setlist/features/dashboard/presentation/views/create_band_view.dart';
 import 'package:setlist/features/dashboard/presentation/views/error.dart';
 import 'package:setlist/features/dashboard/presentation/views/first_login_view.dart';
 import 'package:setlist/features/dashboard/presentation/views/loading_view.dart';
@@ -18,13 +19,31 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => serviceLocator<DashboardCubit>()
-        ..getMusician(
+        ..init(
           context.read<AuthCubit>().user.id,
         ),
       child: Scaffold(
         appBar: AppBar(
           title: Text('setlist'),
           actions: [
+            BlocBuilder<DashboardCubit, DashboardState>(
+              builder: (context, state) {
+                return IconButton(
+                  onPressed: () async {
+                    final result = await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CreateBandView();
+                      },
+                    );
+                    if (result == true && context.mounted) {
+                      context.read<DashboardCubit>().getBands();
+                    }
+                  },
+                  icon: const Icon(Icons.add),
+                );
+              },
+            ),
             IconButton(
               onPressed: () async {
                 await context.read<AuthCubit>().logout();

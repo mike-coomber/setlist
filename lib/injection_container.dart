@@ -9,11 +9,20 @@ import 'package:setlist/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:setlist/features/auth/presentation/cubit/auth/auth_cubit.dart';
 import 'package:setlist/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:setlist/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
+import 'package:setlist/features/dashboard/data/datasources/band_remote_data_source.dart';
+import 'package:setlist/features/dashboard/data/datasources/membership_remote_data_source.dart';
 import 'package:setlist/features/dashboard/data/datasources/musician_remote_data_source.dart';
+import 'package:setlist/features/dashboard/data/repositories/band_repository_impl.dart';
+import 'package:setlist/features/dashboard/data/repositories/membership_respository_impl.dart';
 import 'package:setlist/features/dashboard/data/repositories/musician_repository_impl.dart';
+import 'package:setlist/features/dashboard/domain/repositories/band_repository.dart';
+import 'package:setlist/features/dashboard/domain/repositories/membership_repository.dart';
 import 'package:setlist/features/dashboard/domain/repositories/musician_repository.dart';
+import 'package:setlist/features/dashboard/domain/usecases/create_band_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/create_musician_usecase.dart';
+import 'package:setlist/features/dashboard/domain/usecases/get_bands_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/get_musician_usecase.dart';
+import 'package:setlist/features/dashboard/presentation/cubit/create_band/create_band_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/create_musician/create_musician_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
 
@@ -27,28 +36,27 @@ void init() {
       logoutUsecase: serviceLocator(),
     ),
   );
-
   serviceLocator.registerFactory(
     () => SignUpCubit(
       usecase: serviceLocator(),
     ),
   );
-
   serviceLocator.registerFactory(
     () => LoginCubit(
       usecase: serviceLocator(),
     ),
   );
-
   serviceLocator.registerFactory(
-    () => DashboardCubit(
-      getMusicianUsecase: serviceLocator(),
-    ),
+    () => DashboardCubit(getMusicianUsecase: serviceLocator(), getBandsUsecase: serviceLocator()),
   );
-
   serviceLocator.registerFactory(
     () => CreateMusicianCubit(
       createMusicianUsecase: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => CreateBandCubit(
+      createBandUsecase: serviceLocator(),
     ),
   );
 
@@ -83,6 +91,19 @@ void init() {
       musicianRepository: serviceLocator(),
     ),
   );
+  serviceLocator.registerLazySingleton(
+    () => CreateBandUsecase(
+      bandRepository: serviceLocator(),
+      membershipRepository: serviceLocator(),
+      musicianRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton(
+    () => GetBandsUsecase(
+      bandRepository: serviceLocator(),
+      membershipRepository: serviceLocator(),
+    ),
+  );
 
   // Repositories
   serviceLocator.registerLazySingleton<AuthRepository>(
@@ -90,11 +111,18 @@ void init() {
       authRemoteDataSource: serviceLocator(),
     ),
   );
-
   serviceLocator.registerLazySingleton<MusicianRepository>(
     () => MusicianRepositoryImpl(
       remoteDataSource: serviceLocator(),
     ),
+  );
+  serviceLocator.registerLazySingleton<MembershipRepository>(
+    () => MembershipRespositoryImpl(
+      membershipRemoteDataSource: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton<BandRepository>(
+    () => BandRepositoryImpl(remoteDataSource: serviceLocator()),
   );
 
   // Data sources
@@ -103,5 +131,11 @@ void init() {
   );
   serviceLocator.registerLazySingleton<MusicianRemoteDataSource>(
     () => MusicianRemoteDataSourceImpl(),
+  );
+  serviceLocator.registerLazySingleton<BandRemoteDataSource>(
+    () => BandRemoteDataSourceImpl(),
+  );
+  serviceLocator.registerLazySingleton<MembershipRemoteDataSource>(
+    () => MembershipRemoteDataSourceImpl(),
   );
 }

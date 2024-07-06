@@ -3,11 +3,18 @@ import 'package:setlist/core/db_consts.dart';
 import 'package:setlist/core/firebase_utils.dart';
 import 'package:setlist/features/dashboard/data/models/membership_model.dart';
 import 'package:setlist/features/dashboard/data/models/role_model.dart';
+import 'package:setlist/features/dashboard/domain/entities/membership.dart';
 
 import '../../domain/entities/role.dart';
 
 abstract class MembershipRemoteDataSource {
-  Future<String> createMembership({required String musicianId, required String bandId, required Role role});
+  Future<String> createMembership({
+    required String musicianId,
+    required String bandId,
+    required Role role,
+  });
+
+  Future<List<Membership>> getMemberships({required String userId});
 }
 
 class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
@@ -28,5 +35,22 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
     );
 
     return firebaseAdd(collectionRef, newMembership.toJson());
+  }
+
+  @override
+  Future<List<Membership>> getMemberships({required String userId}) async {
+    final collectionRef = _db.collection(kMembershipPath).where(
+          'musicianId',
+          isEqualTo: userId,
+        );
+
+    return (await collectionRef.get())
+        .docs
+        .map(
+          (doc) => MembershipModel.fromJson(
+            doc.data(),
+          ),
+        )
+        .toList();
   }
 }

@@ -15,11 +15,25 @@ final class DashboardError extends DashboardState {}
 
 final class DashboardLoggedIn extends DashboardState {
   final Musician currentMusician;
+  final List<Band> bands;
 
-  const DashboardLoggedIn({required this.currentMusician});
+  const DashboardLoggedIn({
+    required this.currentMusician,
+    required this.bands,
+  });
+
+  DashboardLoggedIn copyWith({
+    Musician? currentMusician,
+    List<Band>? bands,
+  }) {
+    return DashboardLoggedIn(
+      currentMusician: currentMusician ?? this.currentMusician,
+      bands: bands ?? this.bands,
+    );
+  }
 
   @override
-  List<Object> get props => [currentMusician];
+  List<Object> get props => [currentMusician, bands];
 }
 
 final class DashboardFirstLogin extends DashboardState {}
