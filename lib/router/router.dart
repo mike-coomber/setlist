@@ -13,10 +13,17 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: HomeRoute.page,
+          page: DashboardRoute.page,
           path: '/',
           guards: [
             AuthGuard(authCubit: authCubit),
+          ],
+          children: [
+            AutoRoute(
+              page: HomeRoute.page,
+              initial: true,
+            ),
+            AutoRoute(page: CreateBandRoute.page)
           ],
           initial: true,
           keepHistory: false,

@@ -11,4 +11,9 @@ class MembershipRespositoryImpl extends MembershipRepository {
   Future<List<Membership>> getMemberships({required String userId}) {
     return membershipRemoteDataSource.getMemberships(userId: userId);
   }
+
+  @override
+  Stream<List<Membership>> membershipUpdateNotifier({required String userId}) {
+    return membershipRemoteDataSource.membershipUpdateNotifier(userId: userId);
+  }
 }

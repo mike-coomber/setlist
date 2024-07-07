@@ -15,6 +15,8 @@ abstract class MembershipRemoteDataSource {
   });
 
   Future<List<Membership>> getMemberships({required String userId});
+
+  Stream<List<Membership>> membershipUpdateNotifier({required String userId});
 }
 
 class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
@@ -52,5 +54,21 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
           ),
         )
         .toList();
+  }
+
+  @override
+  Stream<List<Membership>> membershipUpdateNotifier({required String userId}) {
+    final collectionRef = _db.collection(kMembershipPath).where(
+          'musicianId',
+          isEqualTo: userId,
+        );
+
+    return collectionRef.snapshots().map(
+          (snapshot) => snapshot.docs
+              .map(
+                (doc) => MembershipModel.fromJson(doc.data()),
+              )
+              .toList(),
+        );
   }
 }

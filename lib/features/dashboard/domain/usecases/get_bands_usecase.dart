@@ -1,3 +1,4 @@
+import 'package:setlist/features/dashboard/domain/entities/membership.dart';
 import 'package:setlist/features/dashboard/domain/repositories/band_repository.dart';
 import 'package:setlist/features/dashboard/domain/repositories/membership_repository.dart';
 
@@ -12,12 +13,10 @@ class GetBandsUsecase {
     required this.membershipRepository,
   });
 
-  Future<List<Band>> call({required String userId}) async {
-    final memerships = await membershipRepository.getMemberships(userId: userId);
+  Future<List<Band>> call({required List<Membership> memberships}) async {
+    if (memberships.isEmpty) return [];
 
-    if (memerships.isEmpty) return [];
-
-    final bandIds = memerships.map((membership) => membership.bandId).toList();
+    final bandIds = memberships.map((membership) => membership.bandId).toList();
 
     return bandRepository.getBands(bandIds: bandIds);
   }

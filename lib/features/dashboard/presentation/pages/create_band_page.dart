@@ -6,8 +6,9 @@ import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/create_band/create_band_cubit.dart';
 import 'package:setlist/injection_container.dart';
 
-class CreateBandView extends StatelessWidget {
-  const CreateBandView({super.key});
+@RoutePage()
+class CreateBandPage extends StatelessWidget {
+  const CreateBandPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,9 @@ class CreateBandView extends StatelessWidget {
         },
         child: BlocBuilder<CreateBandCubit, CreateBandState>(
           builder: (context, state) {
-            return Dialog(
-              child: Padding(
+            return Scaffold(
+              appBar: AppBar(title: Text('Create new band')),
+              body: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

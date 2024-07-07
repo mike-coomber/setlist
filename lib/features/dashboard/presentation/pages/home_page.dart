@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/features/auth/presentation/cubit/auth/auth_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
-import 'package:setlist/features/dashboard/presentation/views/create_band_view.dart';
 import 'package:setlist/features/dashboard/presentation/views/error.dart';
 import 'package:setlist/features/dashboard/presentation/views/first_login_view.dart';
 import 'package:setlist/features/dashboard/presentation/views/loading_view.dart';
@@ -29,16 +28,8 @@ class HomePage extends StatelessWidget {
             BlocBuilder<DashboardCubit, DashboardState>(
               builder: (context, state) {
                 return IconButton(
-                  onPressed: () async {
-                    final result = await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const CreateBandView();
-                      },
-                    );
-                    if (result == true && context.mounted) {
-                      context.read<DashboardCubit>().getBands();
-                    }
+                  onPressed: () {
+                    context.pushRoute(const CreateBandRoute());
                   },
                   icon: const Icon(Icons.add),
                 );

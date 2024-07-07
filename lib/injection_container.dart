@@ -22,6 +22,7 @@ import 'package:setlist/features/dashboard/domain/usecases/create_band_usecase.d
 import 'package:setlist/features/dashboard/domain/usecases/create_musician_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/get_bands_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/get_musician_usecase.dart';
+import 'package:setlist/features/dashboard/domain/usecases/membership_notifier_usecase.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/create_band/create_band_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/create_musician/create_musician_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
@@ -47,7 +48,11 @@ void init() {
     ),
   );
   serviceLocator.registerFactory(
-    () => DashboardCubit(getMusicianUsecase: serviceLocator(), getBandsUsecase: serviceLocator()),
+    () => DashboardCubit(
+      getMusicianUsecase: serviceLocator(),
+      getBandsUsecase: serviceLocator(),
+      membershipNotifierUsecase: serviceLocator(),
+    ),
   );
   serviceLocator.registerFactory(
     () => CreateMusicianCubit(
@@ -101,6 +106,11 @@ void init() {
   serviceLocator.registerLazySingleton(
     () => GetBandsUsecase(
       bandRepository: serviceLocator(),
+      membershipRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton(
+    () => MembershipNotifierUsecase(
       membershipRepository: serviceLocator(),
     ),
   );
