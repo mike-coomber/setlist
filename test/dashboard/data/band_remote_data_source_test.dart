@@ -24,14 +24,6 @@ main() {
     expect(bandId.isNotEmpty, true);
   });
 
-  test('Should correctly add a membership to a given band', () async {
-    await dataSourceImpl.addMembership(bandId: bandId, membershipId: membershipId);
-
-    final band = await dataSourceImpl.getBand(bandId: bandId);
-
-    expect(band.memberships.contains(membershipId), true);
-  });
-
   test('Should correctly fetch a list of bands with matching ids', () async {
     final bands = await dataSourceImpl.getBands(bandIds: [bandId]);
 

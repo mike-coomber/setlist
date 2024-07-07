@@ -20,13 +20,6 @@ void main() {
     expect(musician.id, musicianId);
   });
 
-  test('Should add a new membership id to a given musician id', () async {
-    await dataSourceImpl.addMembership(musicianId: musicianId, membershipId: membershipId);
-
-    final musician = await dataSourceImpl.getMusician(id: musicianId);
-    expect(musician.memberships.contains(membershipId), true);
-  });
-
   test('Should throw a DataNotFound error if no musician exists', () async {
     expect(
       () async => await dataSourceImpl.getMusician(id: 'musician_doesnt_exist'),

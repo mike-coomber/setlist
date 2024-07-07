@@ -16,7 +16,7 @@ class CreateBandCubit extends Cubit<CreateBandState> {
         ));
 
   onNameChanged(String name) {
-    emit((state as CreateBandState).copyWith(name: name));
+    emit(state.copyWith(name: name));
   }
 
   Future<void> createBand({required String userId}) async {

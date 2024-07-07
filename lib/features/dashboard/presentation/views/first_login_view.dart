@@ -35,7 +35,7 @@ class FirstLoginView extends StatelessWidget {
                 return Center(
                   child: Column(
                     children: [
-                      Text('First login'),
+                      const Text('First login'),
                       TextField(
                         onSubmitted: (_) => context.read<CreateMusicianCubit>().createMusician(
                               context.read<AuthCubit>().user.id,

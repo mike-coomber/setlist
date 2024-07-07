@@ -8,11 +8,6 @@ class BandRepositoryImpl extends BandRepository {
   BandRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<void> addMembership({required String bandId, required String membershipId}) {
-    return remoteDataSource.addMembership(bandId: bandId, membershipId: membershipId);
-  }
-
-  @override
   Future<String> createBand({required String bandName}) {
     return remoteDataSource.createBand(bandName: bandName);
   }

@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
         ),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('setlist'),
+          title: const Text('setlist'),
           actions: [
             BlocBuilder<DashboardCubit, DashboardState>(
               builder: (context, state) {
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                     final result = await showDialog(
                       context: context,
                       builder: (context) {
-                        return CreateBandView();
+                        return const CreateBandView();
                       },
                     );
                     if (result == true && context.mounted) {

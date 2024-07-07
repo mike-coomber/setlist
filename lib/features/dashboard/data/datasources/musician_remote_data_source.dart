@@ -9,8 +9,6 @@ abstract class MusicianRemoteDataSource {
   Future<Musician> getMusician({required String id});
 
   Future<Musician> createMusician({required String name, required String id});
-
-  Future<void> addMembership({required musicianId, required membershipId});
 }
 
 class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
@@ -35,17 +33,5 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
     final docRef = _db.collection(kMusicianPath).doc(id);
 
     return MusicianModel.fromJson(await firebaseGet(docRef));
-  }
-
-  @override
-  Future<void> addMembership({required musicianId, required membershipId}) async {
-    final docRef = _db.collection(kMusicianPath).doc(musicianId);
-
-    return firebaseUpdate(
-      docRef,
-      {
-        "memberships": FieldValue.arrayUnion([membershipId]),
-      },
-    );
   }
 }

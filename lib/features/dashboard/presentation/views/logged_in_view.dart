@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
 
@@ -28,7 +27,7 @@ class LoggedInView extends StatelessWidget {
                 ),
               )
             else
-              Text('No Results'),
+              const Text('No Results'),
           ],
         );
       },

@@ -10,8 +10,6 @@ abstract class BandRemoteDataSource {
   Future<List<Band>> getBands({required List<String> bandIds});
 
   Future<String> createBand({required String bandName});
-
-  Future<void> addMembership({required String bandId, required String membershipId});
 }
 
 class BandRemoteDataSourceImpl extends BandRemoteDataSource {
@@ -20,18 +18,6 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
   }) : _db = firebaseDatabase ?? FirebaseFirestore.instance;
 
   final FirebaseFirestore _db;
-
-  @override
-  Future<void> addMembership({required String bandId, required String membershipId}) {
-    final docRef = _db.collection(kBandPath).doc(bandId);
-
-    return firebaseUpdate(
-      docRef,
-      {
-        "memberships": FieldValue.arrayUnion([membershipId]),
-      },
-    );
-  }
 
   @override
   Future<String> createBand({required String bandName}) {

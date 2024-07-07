@@ -28,7 +28,7 @@ class CreateBandView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
-                      decoration: InputDecoration(hintText: 'Band name'),
+                      decoration: const InputDecoration(hintText: 'Band name'),
                       onChanged: context.read<CreateBandCubit>().onNameChanged,
                     ),
                     FilledButton(
@@ -36,9 +36,9 @@ class CreateBandView extends StatelessWidget {
                         final userId = context.read<AuthCubit>().user.id;
                         context.read<CreateBandCubit>().createBand(userId: userId);
                       },
-                      child: Text('Create band'),
+                      child: const Text('Create band'),
                     ),
-                    if (state.status == FormStatus.loading) LinearProgressIndicator(),
+                    if (state.status == FormStatus.loading) const LinearProgressIndicator(),
                   ],
                 ),
               ),
