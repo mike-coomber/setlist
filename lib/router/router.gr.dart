@@ -10,21 +10,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
 import 'package:flutter/material.dart' as _i10;
-import 'package:setlist/features/auth/presentation/pages/logged_out_page.dart'
-    as _i5;
-import 'package:setlist/features/auth/presentation/pages/login_page.dart'
-    as _i6;
-import 'package:setlist/features/auth/presentation/pages/sign_up_page.dart'
-    as _i7;
-import 'package:setlist/features/dashboard/domain/entities/band.dart' as _i9;
-import 'package:setlist/features/dashboard/presentation/pages/band_details_page.dart'
-    as _i1;
-import 'package:setlist/features/dashboard/presentation/pages/create_band_page.dart'
-    as _i2;
-import 'package:setlist/features/dashboard/presentation/pages/dashboard_page.dart'
-    as _i3;
-import 'package:setlist/features/dashboard/presentation/pages/home_page.dart'
-    as _i4;
+import 'package:setlist/features/auth/presentation/pages/logged_out_page.dart' as _i5;
+import 'package:setlist/features/auth/presentation/pages/login_page.dart' as _i6;
+import 'package:setlist/features/auth/presentation/pages/sign_up_page.dart' as _i7;
+import 'package:setlist/core/domain/entities/band.dart' as _i9;
+import 'package:setlist/features/band_details/presentation/pages/band_details_page.dart' as _i1;
+import 'package:setlist/features/create_band/presentation/pages/create_band_page.dart' as _i2;
+import 'package:setlist/features/dashboard/presentation/pages/dashboard_page.dart' as _i3;
+import 'package:setlist/features/dashboard/presentation/pages/home_page.dart' as _i4;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
   $AppRouter({super.navigatorKey});
@@ -98,8 +91,7 @@ class BandDetailsRoute extends _i8.PageRouteInfo<BandDetailsRouteArgs> {
 
   static const String name = 'BandDetailsRoute';
 
-  static const _i8.PageInfo<BandDetailsRouteArgs> page =
-      _i8.PageInfo<BandDetailsRouteArgs>(name);
+  static const _i8.PageInfo<BandDetailsRouteArgs> page = _i8.PageInfo<BandDetailsRouteArgs>(name);
 }
 
 class BandDetailsRouteArgs {

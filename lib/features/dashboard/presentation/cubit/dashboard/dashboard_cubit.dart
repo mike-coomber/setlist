@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:setlist/core/errors.dart';
-import 'package:setlist/features/dashboard/domain/entities/musician.dart';
-import 'package:setlist/features/dashboard/domain/usecases/get_bands_usecase.dart';
-import 'package:setlist/features/dashboard/domain/usecases/get_musician_usecase.dart';
-import 'package:setlist/features/dashboard/domain/usecases/membership_notifier_usecase.dart';
+import 'package:setlist/core/domain/entities/musician.dart';
+import 'package:setlist/features/dashboard/usecases/get_bands_usecase.dart';
+import 'package:setlist/features/dashboard/usecases/get_musician_usecase.dart';
+import 'package:setlist/features/dashboard/usecases/membership_notifier_usecase.dart';
 
-import '../../../domain/entities/band.dart';
+import '../../../../../core/domain/entities/band.dart';
 
 part 'dashboard_state.dart';
 

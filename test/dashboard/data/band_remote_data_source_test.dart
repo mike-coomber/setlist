@@ -1,6 +1,6 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:setlist/features/dashboard/data/datasources/band_remote_data_source.dart';
+import 'package:setlist/core/data/datasources/band_remote_data_source.dart';
 
 const bandName = 'band123';
 const membershipId = 'membership123';

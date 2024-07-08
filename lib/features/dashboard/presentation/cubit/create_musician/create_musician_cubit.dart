@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
-import 'package:setlist/features/dashboard/domain/entities/musician.dart';
-import 'package:setlist/features/dashboard/domain/usecases/create_musician_usecase.dart';
+import 'package:setlist/core/domain/entities/musician.dart';
+import 'package:setlist/features/dashboard/usecases/create_musician_usecase.dart';
 
 part 'create_musician_state.dart';
 

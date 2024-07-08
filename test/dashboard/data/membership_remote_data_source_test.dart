@@ -1,7 +1,7 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:setlist/features/dashboard/data/datasources/membership_remote_data_source.dart';
-import 'package:setlist/features/dashboard/domain/entities/role.dart';
+import 'package:setlist/core/data/datasources/membership_remote_data_source.dart';
+import 'package:setlist/core/domain/entities/role.dart';
 
 const musicianId = 'musician123';
 const bandId = 'band123';

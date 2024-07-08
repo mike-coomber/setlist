@@ -1,7 +1,7 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:setlist/core/errors.dart';
-import 'package:setlist/features/dashboard/data/datasources/musician_remote_data_source.dart';
+import 'package:setlist/core/data/datasources/musician_remote_data_source.dart';
 
 const musicianId = 'music123';
 const musicianName = 'mike';
