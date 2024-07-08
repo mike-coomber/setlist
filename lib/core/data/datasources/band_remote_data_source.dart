@@ -24,7 +24,6 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
     final docRef = _db.collection(kBandPath).doc();
 
     final newBand = BandModel(
-      memberships: [],
       name: bandName,
       id: docRef.id,
     );

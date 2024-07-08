@@ -9,14 +9,10 @@ class MusicianModel implements Musician {
   MusicianModel({
     required this.id,
     required this.name,
-    required this.memberships,
   });
 
   @override
   final String id;
-
-  @override
-  final List<String> memberships;
 
   @override
   final String name;

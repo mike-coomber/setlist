@@ -22,7 +22,7 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
 
   @override
   Future<Musician> createMusician({required String name, required String id}) async {
-    final newMusician = MusicianModel(id: id, name: name, memberships: []);
+    final newMusician = MusicianModel(id: id, name: name);
     final docRef = _db.collection(kMusicianPath).doc(id);
 
     await firebaseSet(docRef: docRef, data: newMusician.toJson());
