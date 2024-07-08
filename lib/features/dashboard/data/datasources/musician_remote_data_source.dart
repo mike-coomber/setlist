@@ -9,6 +9,8 @@ abstract class MusicianRemoteDataSource {
   Future<Musician> getMusician({required String id});
 
   Future<Musician> createMusician({required String name, required String id});
+
+  Future<List<Musician>> getMusicians({required List<String> musicianIds});
 }
 
 class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
@@ -23,7 +25,7 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
     final newMusician = MusicianModel(id: id, name: name, memberships: []);
     final docRef = _db.collection(kMusicianPath).doc(id);
 
-    await firebaseSet(docRef, newMusician.toJson());
+    await firebaseSet(docRef: docRef, data: newMusician.toJson());
 
     return newMusician;
   }
@@ -32,6 +34,19 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
   Future<Musician> getMusician({required String id}) async {
     final docRef = _db.collection(kMusicianPath).doc(id);
 
-    return MusicianModel.fromJson(await firebaseGet(docRef));
+    return firebaseGet(docRef: docRef, converter: MusicianModel.fromJson);
+  }
+
+  @override
+  Future<List<Musician>> getMusicians({required List<String> musicianIds}) {
+    final query = _db.collection(kMusicianPath).where(
+          FieldPath.documentId,
+          whereIn: musicianIds,
+        );
+
+    return firebaseGetMultipleFromQuery(
+      query: query,
+      converter: MusicianModel.fromJson,
+    );
   }
 }

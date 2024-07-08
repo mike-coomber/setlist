@@ -4,6 +4,7 @@ import 'package:setlist/features/dashboard/data/datasources/membership_remote_da
 import 'package:setlist/features/dashboard/domain/entities/role.dart';
 
 const musicianId = 'musician123';
+const bandId = 'band123';
 
 main() {
   late MembershipRemoteDataSourceImpl dataSourceImpl;
@@ -13,7 +14,7 @@ main() {
     dataSourceImpl = MembershipRemoteDataSourceImpl(firebaseDatabase: FakeFirebaseFirestore());
     membershipId = await dataSourceImpl.createMembership(
       musicianId: musicianId,
-      bandId: 'band123',
+      bandId: bandId,
       role: Role.founder(),
     );
   });
@@ -23,9 +24,16 @@ main() {
   });
 
   test('Should be able to fetch the created membership with the musician id', () async {
-    final memberships = await dataSourceImpl.getMemberships(userId: musicianId);
+    final memberships = await dataSourceImpl.getMembershipsFromUserId(userId: musicianId);
 
     expect(memberships.isNotEmpty, true);
     expect(memberships.first.musicianId, musicianId);
+  });
+
+  test('Should be able to fetch the created membership with the band id', () async {
+    final memberships = await dataSourceImpl.getMembershipsFromBandId(bandId: bandId);
+
+    expect(memberships.isNotEmpty, true);
+    expect(memberships.first.bandId, bandId);
   });
 }

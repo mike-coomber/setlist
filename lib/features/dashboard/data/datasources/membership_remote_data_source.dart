@@ -14,7 +14,9 @@ abstract class MembershipRemoteDataSource {
     required Role role,
   });
 
-  Future<List<Membership>> getMemberships({required String userId});
+  Future<List<Membership>> getMembershipsFromUserId({required String userId});
+
+  Future<List<Membership>> getMembershipsFromBandId({required String bandId});
 
   Stream<List<Membership>> membershipUpdateNotifier({required String userId});
 }
@@ -36,24 +38,33 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
       role: RoleModel.fromEntity(role),
     );
 
-    return firebaseAdd(collectionRef, newMembership.toJson());
+    return firebaseAdd(collectionRef: collectionRef, data: newMembership.toJson());
   }
 
   @override
-  Future<List<Membership>> getMemberships({required String userId}) async {
-    final collectionRef = _db.collection(kMembershipPath).where(
+  Future<List<Membership>> getMembershipsFromUserId({required String userId}) async {
+    final query = _db.collection(kMembershipPath).where(
           'musicianId',
           isEqualTo: userId,
         );
 
-    return (await collectionRef.get())
-        .docs
-        .map(
-          (doc) => MembershipModel.fromJson(
-            doc.data(),
-          ),
-        )
-        .toList();
+    return firebaseGetMultipleFromQuery(
+      query: query,
+      converter: MembershipModel.fromJson,
+    );
+  }
+
+  @override
+  Future<List<Membership>> getMembershipsFromBandId({required String bandId}) async {
+    final query = _db.collection(kMembershipPath).where(
+          'bandId',
+          isEqualTo: bandId,
+        );
+
+    return firebaseGetMultipleFromQuery(
+      query: query,
+      converter: MembershipModel.fromJson,
+    );
   }
 
   @override
@@ -64,11 +75,10 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
         );
 
     return collectionRef.snapshots().map(
-          (snapshot) => snapshot.docs
-              .map(
-                (doc) => MembershipModel.fromJson(doc.data()),
-              )
-              .toList(),
+          (snapshot) => parseDocs(
+            docs: snapshot.docs,
+            converter: MembershipModel.fromJson,
+          ),
         );
   }
 }

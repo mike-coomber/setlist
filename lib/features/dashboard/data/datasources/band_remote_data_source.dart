@@ -25,28 +25,26 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
 
     final newBand = BandModel(memberships: [], name: bandName);
 
-    return firebaseAdd(collectionRef, newBand.toJson());
+    return firebaseAdd(collectionRef: collectionRef, data: newBand.toJson());
   }
 
   @override
   Future<List<Band>> getBands({required List<String> bandIds}) async {
-    final collectionRef = _db.collection(kBandPath).where(
+    final query = _db.collection(kBandPath).where(
           FieldPath.documentId,
           whereIn: bandIds,
         );
 
-    return (await collectionRef.get())
-        .docs
-        .map(
-          (doc) => BandModel.fromJson(doc.data()),
-        )
-        .toList();
+    return firebaseGetMultipleFromQuery(
+      query: query,
+      converter: BandModel.fromJson,
+    );
   }
 
   @override
   Future<Band> getBand({required String bandId}) async {
     final docRef = _db.collection(kBandPath).doc(bandId);
 
-    return BandModel.fromJson(await firebaseGet(docRef));
+    return firebaseGet(docRef: docRef, converter: BandModel.fromJson);
   }
 }

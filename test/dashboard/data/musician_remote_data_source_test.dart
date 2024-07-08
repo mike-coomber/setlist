@@ -15,9 +15,14 @@ void main() {
     await dataSourceImpl.createMusician(name: musicianName, id: musicianId);
   });
 
-  test('Should create and fetch a new musician', () async {
+  test('Fetch the created musician', () async {
     final musician = await dataSourceImpl.getMusician(id: musicianId);
     expect(musician.id, musicianId);
+  });
+
+  test('Should return the musician with getMusicians', () async {
+    final musician = await dataSourceImpl.getMusicians(musicianIds: [musicianId]);
+    expect(musician.first.id, musicianId);
   });
 
   test('Should throw a DataNotFound error if no musician exists', () async {
