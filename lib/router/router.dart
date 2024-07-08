@@ -23,7 +23,8 @@ class AppRouter extends $AppRouter {
               page: HomeRoute.page,
               initial: true,
             ),
-            AutoRoute(page: CreateBandRoute.page)
+            AutoRoute(page: CreateBandRoute.page),
+            AutoRoute(page: BandDetailsRoute.page)
           ],
           initial: true,
           keepHistory: false,

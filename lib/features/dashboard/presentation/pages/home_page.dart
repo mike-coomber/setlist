@@ -6,7 +6,7 @@ import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboar
 import 'package:setlist/features/dashboard/presentation/views/error.dart';
 import 'package:setlist/features/dashboard/presentation/views/first_login_view.dart';
 import 'package:setlist/features/dashboard/presentation/views/loading_view.dart';
-import 'package:setlist/features/dashboard/presentation/views/logged_in_view.dart';
+import 'package:setlist/features/dashboard/presentation/views/band_list.dart';
 import 'package:setlist/injection_container.dart';
 import 'package:setlist/router/router.gr.dart';
 
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
               case DashboardError():
                 return const ErrorView();
               case DashboardLoggedIn():
-                return const LoggedInView();
+                return const BandListView();
               case DashboardFirstLogin():
                 return const FirstLoginView();
             }

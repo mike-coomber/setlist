@@ -9,7 +9,7 @@ abstract class BandRemoteDataSource {
 
   Future<List<Band>> getBands({required List<String> bandIds});
 
-  Future<String> createBand({required String bandName});
+  Future<Band> createBand({required String bandName});
 }
 
 class BandRemoteDataSourceImpl extends BandRemoteDataSource {
@@ -20,12 +20,18 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
   final FirebaseFirestore _db;
 
   @override
-  Future<String> createBand({required String bandName}) {
-    final collectionRef = _db.collection(kBandPath);
+  Future<Band> createBand({required String bandName}) async {
+    final docRef = _db.collection(kBandPath).doc();
 
-    final newBand = BandModel(memberships: [], name: bandName);
+    final newBand = BandModel(
+      memberships: [],
+      name: bandName,
+      id: docRef.id,
+    );
 
-    return firebaseAdd(collectionRef: collectionRef, data: newBand.toJson());
+    await firebaseSet(docRef: docRef, data: newBand.toJson());
+
+    return newBand;
   }
 
   @override

@@ -14,7 +14,7 @@ main() {
       firebaseDatabase: FakeFirebaseFirestore(),
     );
 
-    bandId = await dataSourceImpl.createBand(bandName: bandName);
+    bandId = (await dataSourceImpl.createBand(bandName: bandName)).id;
   });
 
   test('The created band should have the correct name and an ID', () async {

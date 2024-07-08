@@ -20,6 +20,7 @@ import 'package:setlist/features/dashboard/domain/repositories/membership_reposi
 import 'package:setlist/features/dashboard/domain/repositories/musician_repository.dart';
 import 'package:setlist/features/dashboard/domain/usecases/create_band_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/create_musician_usecase.dart';
+import 'package:setlist/features/dashboard/domain/usecases/get_band_members_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/get_bands_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/get_musician_usecase.dart';
 import 'package:setlist/features/dashboard/domain/usecases/membership_notifier_usecase.dart';
@@ -111,6 +112,12 @@ void init() {
   );
   serviceLocator.registerLazySingleton(
     () => MembershipNotifierUsecase(
+      membershipRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerLazySingleton(
+    () => GetBandMembersUsecase(
+      musicianRepository: serviceLocator(),
       membershipRepository: serviceLocator(),
     ),
   );

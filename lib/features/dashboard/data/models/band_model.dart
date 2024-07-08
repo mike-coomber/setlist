@@ -6,12 +6,19 @@ part 'band_model.g.dart';
 @JsonSerializable()
 class BandModel implements Band {
   @override
-  final List<String> memberships;
+  final String id;
 
   @override
   final String name;
 
-  BandModel({required this.memberships, required this.name});
+  @override
+  final List<String> memberships;
+
+  BandModel({
+    required this.id,
+    required this.name,
+    required this.memberships,
+  });
 
   factory BandModel.fromJson(Map<String, dynamic> json) => _$BandModelFromJson(json);
 
