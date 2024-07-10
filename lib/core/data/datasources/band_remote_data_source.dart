@@ -10,6 +10,8 @@ abstract class BandRemoteDataSource {
   Future<List<Band>> getBands({required List<String> bandIds});
 
   Future<Band> createBand({required String bandName});
+
+  Future<void> deleteBand({required String bandId});
 }
 
 class BandRemoteDataSourceImpl extends BandRemoteDataSource {
@@ -51,5 +53,12 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
     final docRef = _db.collection(kBandPath).doc(bandId);
 
     return firebaseGet(docRef: docRef, converter: BandModel.fromJson);
+  }
+
+  @override
+  Future<void> deleteBand({required String bandId}) {
+    final docRef = _db.collection(kBandPath).doc(bandId);
+
+    return firebaseDelete(docRef: docRef);
   }
 }

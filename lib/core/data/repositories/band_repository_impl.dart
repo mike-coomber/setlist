@@ -21,4 +21,9 @@ class BandRepositoryImpl extends BandRepository {
   Future<Band> getBand({required String bandId}) {
     return remoteDataSource.getBand(bandId: bandId);
   }
+
+  @override
+  Future<void> deleteBand({required String bandId}) {
+    return remoteDataSource.deleteBand(bandId: bandId);
+  }
 }

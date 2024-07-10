@@ -32,3 +32,7 @@ final class BandDetailsStateLoading extends BandDetailsState {
 final class BandDetailsStateError extends BandDetailsState {
   const BandDetailsStateError(super.band);
 }
+
+final class BandDetailsStateDeleted extends BandDetailsState {
+  const BandDetailsStateDeleted(super.band);
+}

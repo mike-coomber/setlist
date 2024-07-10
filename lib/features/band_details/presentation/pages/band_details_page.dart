@@ -16,33 +16,54 @@ class BandDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<BandDetailsCubit>(
-      create: (context) => BandDetailsCubit(
-        band: band,
-        getBandMembersUsecase: serviceLocator(),
-      )..init(),
-      child: Scaffold(
-        appBar: AppBar(title: Text(band.name)),
-        body: BlocBuilder<BandDetailsCubit, BandDetailsState>(
-          builder: (context, state) {
-            switch (state) {
-              case BandDetailsStateInitial():
-              case BandDetailsStateLoading():
-                return const LoadingView();
-              case BandDetailsStateError():
-                return const ErrorView();
-              case BandDetailsStateLoaded():
-                return ListView.builder(
-                  itemCount: state.members.length,
-                  itemBuilder: (context, index) {
-                    final member = state.members[index];
+      create: (context) => serviceLocator<BandDetailsCubit>(param1: band)..init(),
+      child: BlocListener<BandDetailsCubit, BandDetailsState>(
+        listener: (context, state) {
+          if (state is BandDetailsStateDeleted) {
+            context.maybePop(state.band.id);
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(band.name),
+            actions: [
+              BlocBuilder<BandDetailsCubit, BandDetailsState>(
+                builder: (context, state) {
+                  return IconButton(
+                    onPressed: () {
+                      context.read<BandDetailsCubit>().deleteBand();
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          body: BlocBuilder<BandDetailsCubit, BandDetailsState>(
+            builder: (context, state) {
+              switch (state) {
+                case BandDetailsStateInitial():
+                case BandDetailsStateLoading():
+                  return const LoadingView();
+                case BandDetailsStateError():
+                case BandDetailsStateDeleted():
+                  return const ErrorView();
+                case BandDetailsStateLoaded():
+                  return ListView.builder(
+                    itemCount: state.members.length,
+                    itemBuilder: (context, index) {
+                      final member = state.members[index];
 
-                    return Card(
-                      child: Text(member.name),
-                    );
-                  },
-                );
-            }
-          },
+                      return Card(
+                        child: Text(member.name),
+                      );
+                    },
+                  );
+              }
+            },
+          ),
         ),
       ),
     );

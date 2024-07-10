@@ -6,4 +6,6 @@ abstract class BandRepository {
   Future<List<Band>> getBands({required List<String> bandIds});
 
   Future<Band> createBand({required String bandName});
+
+  Future<void> deleteBand({required String bandId});
 }

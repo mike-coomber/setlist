@@ -23,8 +23,11 @@ class BandListView extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final band = state.bands[index];
                     return GestureDetector(
-                      onTap: () {
-                        context.pushRoute(BandDetailsRoute(band: band));
+                      onTap: () async {
+                        final bandId = await context.pushRoute(BandDetailsRoute(band: band));
+                        if (context.mounted && bandId != null && bandId is String) {
+                          context.read<DashboardCubit>().removeBand(bandId: bandId as String);
+                        }
                       },
                       child: Card(
                         child: Text(band.name),

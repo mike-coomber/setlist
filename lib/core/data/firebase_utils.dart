@@ -77,3 +77,11 @@ Future<void> firebaseUpdate({
     throw ServerError(e.toString());
   });
 }
+
+Future<void> firebaseDelete({
+  required DocumentReference docRef,
+}) async {
+  return docRef.delete().onError((e, _) {
+    throw ServerError(e.toString());
+  });
+}

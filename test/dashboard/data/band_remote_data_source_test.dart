@@ -1,6 +1,7 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:setlist/core/data/datasources/band_remote_data_source.dart';
+import 'package:setlist/core/errors.dart';
 
 const bandName = 'band123';
 const membershipId = 'membership123';
@@ -29,5 +30,16 @@ main() {
 
     expect(bands.length == 1, true);
     expect(bands.first.name == bandName, true);
+  });
+
+  test('Should correctly delete the band', () async {
+    await dataSourceImpl.deleteBand(bandId: bandId);
+
+    expect(
+      () async => await dataSourceImpl.getBand(bandId: bandId),
+      throwsA(
+        isA<DataNotFoundError>,
+      ),
+    );
   });
 }

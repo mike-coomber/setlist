@@ -42,4 +42,16 @@ class DashboardCubit extends Cubit<DashboardState> {
       emit(DashboardError());
     }
   }
+
+  Future<void> removeBand({required String bandId}) async {
+    if (state is DashboardLoggedIn) {
+      final castState = state as DashboardLoggedIn;
+      final filteredBands = castState.bands
+          .where(
+            (band) => band.id != bandId,
+          )
+          .toList();
+      emit(castState.copyWith(bands: filteredBands));
+    }
+  }
 }
