@@ -18,8 +18,10 @@ import 'package:setlist/core/data/repositories/musician_repository_impl.dart';
 import 'package:setlist/core/domain/repositories/band_repository.dart';
 import 'package:setlist/core/domain/repositories/membership_repository.dart';
 import 'package:setlist/core/domain/repositories/musician_repository.dart';
-import 'package:setlist/features/band_details/presentation/cubit/band_details_cubit.dart';
+import 'package:setlist/features/band_details/presentation/cubit/add_members/add_members_cubit.dart';
+import 'package:setlist/features/band_details/presentation/cubit/band_details/band_details_cubit.dart';
 import 'package:setlist/features/band_details/usecases/delete_band_usecase.dart';
+import 'package:setlist/features/band_details/usecases/search_musicians_usecase.dart';
 import 'package:setlist/features/create_band/usecases/create_band_usecase.dart';
 import 'package:setlist/features/dashboard/usecases/create_musician_usecase.dart';
 import 'package:setlist/features/band_details/usecases/get_band_members_usecase.dart';
@@ -67,6 +69,11 @@ void init() {
   serviceLocator.registerFactory(
     () => CreateBandCubit(
       createBandUsecase: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => AddMembersCubit(
+      searchMusiciansUsecase: serviceLocator(),
     ),
   );
   serviceLocator.registerFactoryParam(
@@ -135,6 +142,11 @@ void init() {
   serviceLocator.registerFactory(
     () => DeleteBandUsecase(
       bandRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => SearchMusiciansUsecase(
+      musicianRepository: serviceLocator(),
     ),
   );
 

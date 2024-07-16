@@ -24,9 +24,14 @@ class BandListView extends StatelessWidget {
                     final band = state.bands[index];
                     return GestureDetector(
                       onTap: () async {
-                        final bandId = await context.pushRoute(BandDetailsRoute(band: band));
+                        final bandId = await context.pushRoute(BandDetailsRoute(
+                          band: band,
+                          children: [
+                            BandDashboardRoute(band: band),
+                          ],
+                        ));
                         if (context.mounted && bandId != null && bandId is String) {
-                          context.read<DashboardCubit>().removeBand(bandId: bandId as String);
+                          context.read<DashboardCubit>().removeBand(bandId: bandId);
                         }
                       },
                       child: Card(

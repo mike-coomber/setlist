@@ -11,6 +11,8 @@ abstract class MusicianRemoteDataSource {
   Future<Musician> createMusician({required String name, required String id});
 
   Future<List<Musician>> getMusicians({required List<String> musicianIds});
+
+  Future<List<Musician>> searchMusicians({required String searchStr});
 }
 
 class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
@@ -42,6 +44,19 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
     final query = _db.collection(kMusicianPath).where(
           FieldPath.documentId,
           whereIn: musicianIds,
+        );
+
+    return firebaseGetMultipleFromQuery(
+      query: query,
+      converter: MusicianModel.fromJson,
+    );
+  }
+
+  @override
+  Future<List<Musician>> searchMusicians({required String searchStr}) {
+    final query = _db.collection(kMusicianPath).where(
+          'name',
+          isLessThanOrEqualTo: '$searchStr\uf8ff',
         );
 
     return firebaseGetMultipleFromQuery(

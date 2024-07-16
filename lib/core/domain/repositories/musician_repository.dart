@@ -6,4 +6,6 @@ abstract class MusicianRepository {
   Future<Musician> createMusician({required String name, required String id});
 
   Future<List<Musician>> getMusicians({required List<String> musicianIds});
+
+  Future<List<Musician>> searchMusicians({required String searchStr});
 }

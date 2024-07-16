@@ -33,4 +33,11 @@ void main() {
       ),
     );
   });
+
+  test('Should return the musician by searching', () async {
+    final results = await dataSourceImpl.searchMusicians(searchStr: musicianName.substring(0, 2));
+
+    expect(results.isNotEmpty, true);
+    expect(results.first.id, musicianId);
+  });
 }

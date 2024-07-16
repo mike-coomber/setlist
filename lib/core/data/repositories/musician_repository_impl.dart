@@ -21,4 +21,9 @@ class MusicianRepositoryImpl extends MusicianRepository {
   Future<List<Musician>> getMusicians({required List<String> musicianIds}) {
     return remoteDataSource.getMusicians(musicianIds: musicianIds);
   }
+
+  @override
+  Future<List<Musician>> searchMusicians({required String searchStr}) {
+    return remoteDataSource.searchMusicians(searchStr: searchStr);
+  }
 }
