@@ -14,8 +14,13 @@ Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   init();
+  final authCubit = serviceLocator<AuthCubit>();
+  final router = AppRouter(authCubit: authCubit);
 
-  runApp(const App());
+  runApp(App(
+    authCubit: authCubit,
+    router: router,
+  ));
 }
 
 void main() {
@@ -25,19 +30,22 @@ void main() {
 class App extends StatelessWidget {
   const App({
     super.key,
+    required this.authCubit,
+    required this.router,
   });
+
+  final AppRouter router;
+  final AuthCubit authCubit;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
-      create: (context) => serviceLocator<AuthCubit>(),
+      create: (context) => authCubit,
       child: Builder(builder: (context) {
-        final appRouter = AppRouter(authCubit: context.read<AuthCubit>());
-
         return MaterialApp.router(
           title: 'setlist',
           theme: ThemeData.light(useMaterial3: true),
-          routerConfig: appRouter.config(
+          routerConfig: router.config(
             navigatorObservers: () => [DebugObserver()],
             reevaluateListenable: ReevaluateListenable.stream(
               context.read<AuthCubit>().stream,

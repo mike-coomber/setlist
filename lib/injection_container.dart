@@ -72,8 +72,9 @@ void init() {
       createBandUsecase: serviceLocator(),
     ),
   );
-  serviceLocator.registerFactory(
-    () => AddMembersCubit(
+  serviceLocator.registerFactoryParam(
+    (List<String> currentMemberMusicianIds, _) => AddMembersCubit(
+      currentMemberMusicianIds: currentMemberMusicianIds,
       searchMusiciansUsecase: serviceLocator(),
       addMembersUsecase: serviceLocator(),
     ),

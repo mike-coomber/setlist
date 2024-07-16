@@ -6,7 +6,13 @@ class SearchMusiciansUsecase {
 
   SearchMusiciansUsecase({required this.musicianRepository});
 
-  Future<List<Musician>> call({required String searchStr}) {
-    return musicianRepository.searchMusicians(searchStr: searchStr);
+  Future<List<Musician>> call({
+    required String searchStr,
+    required List<String> currentMemberMusicianIds,
+  }) {
+    return musicianRepository.searchMusicians(
+      searchStr: searchStr,
+      currentMemberMusicianIds: currentMemberMusicianIds,
+    );
   }
 }

@@ -35,9 +35,34 @@ void main() {
   });
 
   test('Should return the musician by searching', () async {
-    final results = await dataSourceImpl.searchMusicians(searchStr: musicianName.substring(0, 2));
+    final results = await dataSourceImpl.searchMusicians(
+      searchStr: musicianName.substring(0, 2),
+      currentMemberMusicianIds: [],
+    );
 
     expect(results.isNotEmpty, true);
     expect(results.first.id, musicianId);
+  });
+
+  test('Should not return the musician by searching with the wrong name', () async {
+    final results = await dataSourceImpl.searchMusicians(
+      searchStr: 'xxx',
+      currentMemberMusicianIds: [],
+    );
+
+    expect(results.isEmpty, true);
+  });
+
+  test('Should return the musician by searching and exclude the given musician id', () async {
+    const secondMusicianID = "musician2";
+
+    await dataSourceImpl.createMusician(name: musicianName, id: secondMusicianID);
+
+    final results = await dataSourceImpl.searchMusicians(
+      searchStr: musicianName.substring(0, 2),
+      currentMemberMusicianIds: [secondMusicianID],
+    );
+
+    expect(results.length, 1);
   });
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/core/utils/deboucer.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/band_details/usecases/add_members_usecase.dart';
@@ -13,26 +14,29 @@ class AddMembersCubit extends Cubit<AddMembersState> {
   final SearchMusiciansUsecase searchMusiciansUsecase;
   final AddMembersUsecase addMembersUsecase;
 
+  final List<String> currentMemberMusicianIds;
+
   final _searchDebounce = Debouncer(milliseconds: 500);
 
   AddMembersCubit({
     required this.searchMusiciansUsecase,
     required this.addMembersUsecase,
+    required this.currentMemberMusicianIds,
   }) : super(
           const AddMembersState(
             searchTerm: '',
             searchResults: [],
             selectedMusicianIds: [],
-            status: FormStatus.initial,
+            searchStatus: FormStatus.initial,
           ),
         );
 
   void onSearchChanged(String value) {
     if (value.isEmpty) {
       _searchDebounce.cancel();
-      emit(state.copyWith(searchResults: [], status: FormStatus.initial));
+      emit(state.copyWith(searchResults: [], searchStatus: FormStatus.initial));
     } else {
-      emit(state.copyWith(searchTerm: value, status: FormStatus.loading));
+      emit(state.copyWith(searchTerm: value, searchStatus: FormStatus.loading));
 
       _searchDebounce.run(_searchUsers);
     }
@@ -40,11 +44,19 @@ class AddMembersCubit extends Cubit<AddMembersState> {
 
   void _searchUsers() async {
     try {
-      final searchResults = await searchMusiciansUsecase.call(searchStr: state.searchTerm);
+      final searchResults = await searchMusiciansUsecase.call(
+        searchStr: state.searchTerm,
+        currentMemberMusicianIds: currentMemberMusicianIds,
+      );
 
-      emit(state.copyWith(searchResults: searchResults, status: FormStatus.success));
+      emit(
+        state.copyWith(
+          searchResults: searchResults,
+          searchStatus: FormStatus.success,
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(status: FormStatus.error));
+      emit(state.copyWith(searchStatus: FormStatus.error));
     }
   }
 
@@ -58,6 +70,17 @@ class AddMembersCubit extends Cubit<AddMembersState> {
           selectedMusicianIds: [...state.selectedMusicianIds, musicianId],
         ),
       );
+    }
+  }
+
+  Future<void> addMembers({required String bandId}) async {
+    emit(state.copyWith(submitStatus: FormStatus.loading));
+    try {
+      await addMembersUsecase.call(musicianIds: state.selectedMusicianIds, bandId: bandId);
+
+      emit(state.copyWith(submitStatus: FormStatus.success));
+    } catch (e) {
+      emit(state.copyWith(submitStatus: FormStatus.error));
     }
   }
 }
