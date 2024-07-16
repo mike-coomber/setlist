@@ -9,7 +9,7 @@ class MembershipRespositoryImpl extends MembershipRepository {
 
   @override
   Future<List<Membership>> getMembershipsFromMusicianId({required String userId}) {
-    return membershipRemoteDataSource.getMembershipsFromMusicianId(userId: userId);
+    return membershipRemoteDataSource.getMembershipsFromMusicianId(musicianId: userId);
   }
 
   @override
@@ -30,5 +30,10 @@ class MembershipRespositoryImpl extends MembershipRepository {
   @override
   Future<void> createMemberships({required List<Membership> memberships}) {
     return membershipRemoteDataSource.createMemeberships(memberships: memberships);
+  }
+
+  @override
+  Future<void> deleteMembership({required String musicianId, required String bandId}) {
+    return membershipRemoteDataSource.deleteMembership(musicianId: musicianId, bandId: bandId);
   }
 }

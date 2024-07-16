@@ -10,4 +10,6 @@ abstract class MembershipRepository {
   Future<void> createMembership({required Membership membership});
 
   Stream<List<Membership>> membershipUpdateNotifier({required String userId});
+
+  Future<void> deleteMembership({required String musicianId, required String bandId});
 }

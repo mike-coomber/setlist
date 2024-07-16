@@ -20,8 +20,10 @@ class BandDashboardPage extends StatelessWidget {
         title: Text(band.name),
         actions: [
           IconButton(
-            onPressed: () {
-              context.pushRoute(const AddMembersRoute());
+            onPressed: () async {
+              await context.pushRoute(const AddMembersRoute());
+              if (!context.mounted) return;
+              context.read<BandDetailsCubit>().getMembers();
             },
             icon: const Icon(Icons.add),
           ),
@@ -46,8 +48,14 @@ class BandDashboardPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final member = state.members[index];
 
-                  return Card(
-                    child: Text(member.name),
+                  return ListTile(
+                    title: Text(member.name),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        context.read<BandDetailsCubit>().deleteMembership(musicianId: member.id);
+                      },
+                    ),
                   );
                 },
               );

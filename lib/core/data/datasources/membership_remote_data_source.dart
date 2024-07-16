@@ -9,11 +9,13 @@ abstract class MembershipRemoteDataSource {
 
   Future<void> createMemeberships({required List<Membership> memberships});
 
-  Future<List<Membership>> getMembershipsFromMusicianId({required String userId});
+  Future<List<Membership>> getMembershipsFromMusicianId({required String musicianId});
 
   Future<List<Membership>> getMembershipsFromBandId({required String bandId});
 
   Stream<List<Membership>> membershipUpdateNotifier({required String userId});
+
+  Future<void> deleteMembership({required String musicianId, required String bandId});
 }
 
 class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
@@ -46,10 +48,10 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
   }
 
   @override
-  Future<List<Membership>> getMembershipsFromMusicianId({required String userId}) async {
+  Future<List<Membership>> getMembershipsFromMusicianId({required String musicianId}) async {
     final query = _db.collection(kMembershipPath).where(
           'musicianId',
-          isEqualTo: userId,
+          isEqualTo: musicianId,
         );
 
     return firebaseQuery(
@@ -84,5 +86,25 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
             converter: MembershipModel.fromJson,
           ),
         );
+  }
+
+  @override
+  Future<void> deleteMembership({required String musicianId, required String bandId}) async {
+    final collectionRef = _db
+        .collection(kMembershipPath)
+        .where(
+          'musicianId',
+          isEqualTo: musicianId,
+        )
+        .where('bandId', isEqualTo: bandId);
+
+    final docs = (await collectionRef.get()).docs;
+
+    final List<Future> futures = [];
+    for (final doc in docs) {
+      futures.add(firebaseDelete(docRef: doc.reference));
+    }
+
+    await Future.wait(futures);
   }
 }

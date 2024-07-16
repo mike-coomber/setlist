@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/core/utils/deboucer.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/band_details/usecases/add_members_usecase.dart';

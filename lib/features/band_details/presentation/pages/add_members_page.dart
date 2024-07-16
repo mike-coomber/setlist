@@ -22,7 +22,7 @@ class AddMembersPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add members'),
+          title: const Text('Add members'),
         ),
         body: BlocListener<AddMembersCubit, AddMembersState>(
           listener: (context, state) {
@@ -65,7 +65,7 @@ class AddMembersPage extends StatelessWidget {
                         ),
                       ),
                       FilledButton(
-                        child: Text('Submit'),
+                        child: const Text('Submit'),
                         onPressed: () {
                           final bandId = context.read<BandDetailsCubit>().band.id;
 

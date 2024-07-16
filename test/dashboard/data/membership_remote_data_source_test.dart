@@ -29,7 +29,7 @@ main() {
   });
 
   test('Should be able to fetch the created membership with the musician id', () async {
-    final memberships = await dataSourceImpl.getMembershipsFromMusicianId(userId: musicianId);
+    final memberships = await dataSourceImpl.getMembershipsFromMusicianId(musicianId: musicianId);
 
     expect(memberships.isNotEmpty, true);
     expect(memberships.first.musicianId, musicianId);
@@ -52,8 +52,17 @@ main() {
       ),
     ]);
 
-    final newMembership = await dataSourceImpl.getMembershipsFromMusicianId(userId: musicianId);
+    final newMembership = await dataSourceImpl.getMembershipsFromMusicianId(musicianId: musicianId);
 
     expect(newMembership.first.musicianId, musicianId);
+  });
+
+  test('Should be able to delete a membership', () async {
+    await dataSourceImpl.deleteMembership(musicianId: musicianId, bandId: bandId);
+
+    expect(
+      await dataSourceImpl.getMembershipsFromMusicianId(musicianId: musicianId),
+      [],
+    );
   });
 }

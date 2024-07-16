@@ -23,7 +23,7 @@ class CreateBandPage extends StatelessWidget {
         child: BlocBuilder<CreateBandCubit, CreateBandState>(
           builder: (context, state) {
             return Scaffold(
-              appBar: AppBar(title: Text('Create new band')),
+              appBar: AppBar(title: const Text('Create new band')),
               body: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
