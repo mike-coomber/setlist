@@ -42,7 +42,7 @@ class BandRemoteDataSourceImpl extends BandRemoteDataSource {
           whereIn: bandIds,
         );
 
-    return firebaseGetMultipleFromQuery(
+    return firebaseQuery(
       query: query,
       converter: BandModel.fromJson,
     );

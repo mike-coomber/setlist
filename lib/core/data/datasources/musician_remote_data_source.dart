@@ -46,7 +46,7 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
           whereIn: musicianIds,
         );
 
-    return firebaseGetMultipleFromQuery(
+    return firebaseQuery(
       query: query,
       converter: MusicianModel.fromJson,
     );
@@ -59,7 +59,7 @@ class MusicianRemoteDataSourceImpl extends MusicianRemoteDataSource {
           isLessThanOrEqualTo: '$searchStr\uf8ff',
         );
 
-    return firebaseGetMultipleFromQuery(
+    return firebaseQuery(
       query: query,
       converter: MusicianModel.fromJson,
     );

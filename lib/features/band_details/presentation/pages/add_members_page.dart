@@ -29,12 +29,19 @@ class AddMembersPage extends StatelessWidget {
                     ),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: state.searchResults.length,
-                          itemBuilder: (context, index) {
-                            final musician = state.searchResults[index];
+                        itemCount: state.searchResults.length,
+                        itemBuilder: (context, index) {
+                          final musician = state.searchResults[index];
 
-                            return Card(child: Text(musician.name));
-                          }),
+                          return ListTile(
+                            onTap: () => context.read<AddMembersCubit>().onMusicianSelected(
+                                  musicianId: musician.id,
+                                ),
+                            title: Text(musician.name),
+                            selected: state.selectedMusicianIds.contains(musician.id),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

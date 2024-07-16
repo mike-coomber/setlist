@@ -18,7 +18,7 @@ Future<T> firebaseGet<T>({
   });
 }
 
-Future<List<T>> firebaseGetMultipleFromQuery<T>({
+Future<List<T>> firebaseQuery<T>({
   required Query<Map<String, dynamic>> query,
   required T Function(Map<String, dynamic> data) converter,
 }) async {
@@ -67,6 +67,12 @@ Future<String> firebaseAdd({
       throw ServerError(e.toString());
     },
   );
+}
+
+Future<void> firebaseCommitBatch({required WriteBatch batch}) {
+  return batch.commit().onError((e, _) {
+    throw ServerError(e.toString());
+  });
 }
 
 Future<void> firebaseUpdate({

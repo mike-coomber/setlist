@@ -21,6 +21,14 @@ class MembershipModel implements Membership {
     required this.role,
   });
 
+  factory MembershipModel.fromEntity(Membership membership) => MembershipModel(
+        bandId: membership.bandId,
+        musicianId: membership.musicianId,
+        role: RoleModel.fromEntity(
+          membership.role,
+        ),
+      );
+
   factory MembershipModel.fromJson(Map<String, dynamic> json) => _$MembershipModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MembershipModelToJson(this);

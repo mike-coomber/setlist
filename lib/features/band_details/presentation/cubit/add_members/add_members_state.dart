@@ -2,29 +2,29 @@ part of 'add_members_cubit.dart';
 
 class AddMembersState extends Equatable {
   const AddMembersState({
-    required this.searchTerm,
-    required this.selectedMusicians,
-    required this.searchResults,
-    required this.status,
+    this.searchTerm = '',
+    this.selectedMusicianIds = const [],
+    this.searchResults = const [],
+    this.status = FormStatus.initial,
   });
 
   final String searchTerm;
   final List<Musician> searchResults;
-  final List<Musician> selectedMusicians;
+  final List<String> selectedMusicianIds;
   final FormStatus status;
 
   @override
-  List<Object> get props => [searchTerm, searchResults, selectedMusicians];
+  List<Object> get props => [searchTerm, searchResults, selectedMusicianIds];
 
   AddMembersState copyWith({
     String? searchTerm,
     List<Musician>? searchResults,
-    List<Musician>? selectedMusicians,
+    List<String>? selectedMusicianIds,
     FormStatus? status,
   }) {
     return AddMembersState(
       searchTerm: searchTerm ?? this.searchTerm,
-      selectedMusicians: selectedMusicians ?? this.selectedMusicians,
+      selectedMusicianIds: selectedMusicianIds ?? this.selectedMusicianIds,
       searchResults: searchResults ?? this.searchResults,
       status: status ?? this.status,
     );

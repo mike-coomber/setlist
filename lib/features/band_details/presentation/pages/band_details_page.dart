@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/features/band_details/presentation/cubit/band_details/band_details_cubit.dart';
-import 'package:setlist/core/presentation/error_view.dart';
-import 'package:setlist/core/presentation/loading_view.dart';
 import 'package:setlist/injection_container.dart';
-import 'package:setlist/router/router.gr.dart';
 
 @RoutePage()
 class BandDetailsPage extends StatelessWidget {

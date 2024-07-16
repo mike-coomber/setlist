@@ -8,8 +8,8 @@ class MembershipRespositoryImpl extends MembershipRepository {
   MembershipRespositoryImpl({required this.membershipRemoteDataSource});
 
   @override
-  Future<List<Membership>> getMembershipsFromUserId({required String userId}) {
-    return membershipRemoteDataSource.getMembershipsFromUserId(userId: userId);
+  Future<List<Membership>> getMembershipsFromMusicianId({required String userId}) {
+    return membershipRemoteDataSource.getMembershipsFromMusicianId(userId: userId);
   }
 
   @override
@@ -20,5 +20,15 @@ class MembershipRespositoryImpl extends MembershipRepository {
   @override
   Future<List<Membership>> getMembershipsFromBandId({required String bandId}) {
     return membershipRemoteDataSource.getMembershipsFromBandId(bandId: bandId);
+  }
+
+  @override
+  Future<void> createMembership({required Membership membership}) {
+    return membershipRemoteDataSource.createMembership(membership: membership);
+  }
+
+  @override
+  Future<void> createMemberships({required List<Membership> memberships}) {
+    return membershipRemoteDataSource.createMemeberships(memberships: memberships);
   }
 }
