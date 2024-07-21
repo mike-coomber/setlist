@@ -36,4 +36,9 @@ class MembershipRespositoryImpl extends MembershipRepository {
   Future<void> deleteMembership({required String musicianId, required String bandId}) {
     return membershipRemoteDataSource.deleteMembership(musicianId: musicianId, bandId: bandId);
   }
+
+  @override
+  Future<Membership> getMembership({required String musicianId, required String bandId}) {
+    return membershipRemoteDataSource.getMembership(musicianId: musicianId, bandId: bandId);
+  }
 }

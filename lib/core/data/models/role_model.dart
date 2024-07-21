@@ -31,11 +31,18 @@ class PermissionsModel implements Permissions {
   @override
   final bool canRemoveMembers;
 
-  PermissionsModel({required this.canAddMembers, required this.canRemoveMembers});
+  @override
+  final bool canDeleteBand;
+
+  PermissionsModel({bool? canAddMembers, bool? canRemoveMembers, bool? canDeleteBand = false})
+      : canAddMembers = canAddMembers ?? false,
+        canRemoveMembers = canRemoveMembers ?? false,
+        canDeleteBand = canDeleteBand ?? false;
 
   factory PermissionsModel.fromEntity(Permissions entity) => PermissionsModel(
         canAddMembers: entity.canAddMembers,
         canRemoveMembers: entity.canRemoveMembers,
+        canDeleteBand: entity.canDeleteBand,
       );
 
   factory PermissionsModel.fromJson(Map<String, dynamic> json) => _$PermissionsModelFromJson(json);

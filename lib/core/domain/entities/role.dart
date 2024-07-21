@@ -7,19 +7,24 @@ class Role {
         permissions = Permissions(
           canAddMembers: true,
           canRemoveMembers: true,
+          canDeleteBand: true,
         );
 
   Role.member()
       : name = 'Member',
-        permissions = Permissions(
-          canAddMembers: false,
-          canRemoveMembers: false,
-        );
+        permissions = Permissions();
 }
 
 class Permissions {
   final bool canAddMembers;
   final bool canRemoveMembers;
+  final bool canDeleteBand;
 
-  Permissions({required this.canAddMembers, required this.canRemoveMembers});
+  Permissions({
+    bool? canAddMembers,
+    bool? canRemoveMembers,
+    bool? canDeleteBand,
+  })  : canAddMembers = canAddMembers ?? false,
+        canRemoveMembers = canRemoveMembers ?? false,
+        canDeleteBand = canDeleteBand ?? false;
 }

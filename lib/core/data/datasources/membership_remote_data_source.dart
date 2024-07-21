@@ -3,6 +3,7 @@ import 'package:setlist/core/data/db_consts.dart';
 import 'package:setlist/core/data/firebase_utils.dart';
 import 'package:setlist/core/data/models/membership_model.dart';
 import 'package:setlist/core/domain/entities/membership.dart';
+import 'package:setlist/core/errors.dart';
 
 abstract class MembershipRemoteDataSource {
   Future<String> createMembership({required Membership membership});
@@ -14,6 +15,8 @@ abstract class MembershipRemoteDataSource {
   Future<List<Membership>> getMembershipsFromBandId({required String bandId});
 
   Stream<List<Membership>> membershipUpdateNotifier({required String userId});
+
+  Future<Membership> getMembership({required String musicianId, required String bandId});
 
   Future<void> deleteMembership({required String musicianId, required String bandId});
 }
@@ -106,5 +109,25 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
     }
 
     await Future.wait(futures);
+  }
+
+  @override
+  Future<Membership> getMembership({required String musicianId, required String bandId}) async {
+    final collectionRef = _db
+        .collection(kMembershipPath)
+        .where(
+          'musicianId',
+          isEqualTo: musicianId,
+        )
+        .where('bandId', isEqualTo: bandId);
+
+    final queryResults = await firebaseQuery(
+      query: collectionRef,
+      converter: MembershipModel.fromJson,
+    );
+    if (queryResults.isEmpty) {
+      throw DataNotFoundError();
+    }
+    return queryResults.first;
   }
 }
