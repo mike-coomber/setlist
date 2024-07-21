@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:setlist/core/utils/deboucer.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
-import 'package:setlist/features/band_details/usecases/add_members_usecase.dart';
-import 'package:setlist/features/band_details/usecases/search_musicians_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/add_members_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/search_musicians_usecase.dart';
 
 import '../../../../../core/domain/entities/musician.dart';
 

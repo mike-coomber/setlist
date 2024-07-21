@@ -1,8 +1,8 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:setlist/core/data/datasources/membership_remote_data_source.dart';
+import 'package:setlist/core/data/db_consts.dart';
 import 'package:setlist/core/domain/entities/membership.dart';
-import 'package:setlist/core/domain/entities/role.dart';
 
 const musicianId = 'musician123';
 const bandId = 'band123';
@@ -10,7 +10,7 @@ const bandId = 'band123';
 final membership = Membership(
   musicianId: musicianId,
   bandId: bandId,
-  role: Role.founder(),
+  roleId: kFounderRoleId,
 );
 
 main() {
@@ -48,7 +48,7 @@ main() {
       Membership(
         musicianId: musicianId,
         bandId: bandId,
-        role: Role.member(),
+        roleId: kMemberRoleId,
       ),
     ]);
 

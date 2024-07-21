@@ -1,13 +1,11 @@
-import 'package:setlist/core/domain/entities/role.dart';
-
 class Membership {
   final String musicianId;
   final String bandId;
-  final Role role;
+  final String roleId;
 
   Membership({
     required this.musicianId,
     required this.bandId,
-    required this.role,
+    required this.roleId,
   });
 }

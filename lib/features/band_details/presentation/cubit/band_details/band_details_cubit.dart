@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:setlist/core/domain/entities/band.dart';
-import 'package:setlist/core/domain/entities/membership.dart';
 import 'package:setlist/core/domain/entities/musician.dart';
-import 'package:setlist/core/domain/entities/role.dart';
-import 'package:setlist/features/band_details/usecases/delete_band_usecase.dart';
-import 'package:setlist/features/band_details/usecases/delete_membership_usecase.dart';
-import 'package:setlist/features/band_details/usecases/get_band_members_usecase.dart';
-import 'package:setlist/features/band_details/usecases/get_membership_usecase.dart';
+import 'package:setlist/features/band_details/domain/models/permissions.dart';
+import 'package:setlist/features/band_details/domain/usecases/delete_band_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/delete_membership_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/get_band_members_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/get_membership_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/get_permissions_usecase.dart';
 
 part 'band_details_state.dart';
 
@@ -16,7 +16,8 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
   final GetBandMembersUsecase getBandMembersUsecase;
   final DeleteBandUsecase deleteBandUsecase;
   final DeleteMembershipUsecase deleteMembershipUsecase;
-  final GetMembershipUseCase getMembershipUseCase;
+  final GetPermissionsUsecase getPermissionsUsease;
+  final GetMembershipUsecase getMembershipUsecase;
 
   late String userId;
 
@@ -25,7 +26,8 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
     required this.getBandMembersUsecase,
     required this.deleteBandUsecase,
     required this.deleteMembershipUsecase,
-    required this.getMembershipUseCase,
+    required this.getPermissionsUsease,
+    required this.getMembershipUsecase,
   }) : super(BandDetailsStateInitial(band));
 
   Future<void> init({required String userId}) async {
@@ -36,14 +38,18 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
       final data = await Future.wait(
         [
           getBandMembersUsecase.call(bandId: band.id),
-          getMembershipUseCase.call(userId: userId, bandId: band.id),
+          getMembershipUsecase.call(musicianId: userId, bandId: band.id).then(
+                (membership) => getPermissionsUsease.call(
+                  roleId: membership.roleId,
+                ),
+              ),
         ],
       );
       emit(
         BandDetailsStateLoaded(
           band: band,
           members: data[0] as List<Musician>,
-          role: (data[1] as Membership).role,
+          permissions: (data[1] as Permissions),
         ),
       );
     } catch (e) {
@@ -57,7 +63,7 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
     if (membershipMusicianId == userId) {
       return false;
     }
-    return (state as BandDetailsStateLoaded).role.permissions.canRemoveMembers;
+    return (state as BandDetailsStateLoaded).permissions.canRemoveMembers;
   }
 
   Future<void> updateMembers() async {

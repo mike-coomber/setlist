@@ -1,20 +1,3 @@
-class Role {
-  final String name;
-  final Permissions permissions;
-
-  Role.founder()
-      : name = 'Founder',
-        permissions = Permissions(
-          canAddMembers: true,
-          canRemoveMembers: true,
-          canDeleteBand: true,
-        );
-
-  Role.member()
-      : name = 'Member',
-        permissions = Permissions();
-}
-
 class Permissions {
   final bool canAddMembers;
   final bool canRemoveMembers;

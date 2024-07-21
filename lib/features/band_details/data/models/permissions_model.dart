@@ -1,27 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:setlist/core/domain/entities/role.dart';
+import 'package:setlist/features/band_details/domain/models/permissions.dart';
 
-part 'role_model.g.dart';
-
-@JsonSerializable(explicitToJson: true)
-class RoleModel implements Role {
-  @override
-  final String name;
-
-  @override
-  final PermissionsModel permissions;
-
-  RoleModel({required this.name, required this.permissions});
-
-  factory RoleModel.fromEntity(Role entity) => RoleModel(
-        name: entity.name,
-        permissions: PermissionsModel.fromEntity(entity.permissions),
-      );
-
-  factory RoleModel.fromJson(Map<String, dynamic> json) => _$RoleModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$RoleModelToJson(this);
-}
+part 'permissions_model.g.dart';
 
 @JsonSerializable()
 class PermissionsModel implements Permissions {

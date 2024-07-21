@@ -1,7 +1,7 @@
 import 'package:setlist/core/domain/repositories/membership_repository.dart';
 import 'package:setlist/core/domain/repositories/musician_repository.dart';
 
-import '../../../core/domain/entities/musician.dart';
+import '../../../../core/domain/entities/musician.dart';
 
 class GetBandMembersUsecase {
   final MembershipRepository membershipRepository;

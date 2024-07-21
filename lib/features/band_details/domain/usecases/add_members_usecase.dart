@@ -1,5 +1,5 @@
+import 'package:setlist/core/data/db_consts.dart';
 import 'package:setlist/core/domain/entities/membership.dart';
-import 'package:setlist/core/domain/entities/role.dart';
 import 'package:setlist/core/domain/repositories/membership_repository.dart';
 
 class AddMembersUsecase {
@@ -13,7 +13,7 @@ class AddMembersUsecase {
           (musicianId) => Membership(
             musicianId: musicianId,
             bandId: bandId,
-            role: Role.member(),
+            roleId: kMemberRoleId,
           ),
         )
         .toList();

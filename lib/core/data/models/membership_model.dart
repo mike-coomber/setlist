@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:setlist/core/data/models/role_model.dart';
 import 'package:setlist/core/domain/entities/membership.dart';
 
 part 'membership_model.g.dart';
@@ -13,20 +12,18 @@ class MembershipModel implements Membership {
   final String musicianId;
 
   @override
-  final RoleModel role;
+  final String roleId;
 
   MembershipModel({
     required this.bandId,
     required this.musicianId,
-    required this.role,
+    required this.roleId,
   });
 
   factory MembershipModel.fromEntity(Membership membership) => MembershipModel(
         bandId: membership.bandId,
         musicianId: membership.musicianId,
-        role: RoleModel.fromEntity(
-          membership.role,
-        ),
+        roleId: membership.roleId,
       );
 
   factory MembershipModel.fromJson(Map<String, dynamic> json) => _$MembershipModelFromJson(json);
