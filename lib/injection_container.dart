@@ -38,6 +38,11 @@ import 'package:setlist/features/dashboard/usecases/membership_notifier_usecase.
 import 'package:setlist/features/create_band/presentation/cubit/create_band_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/create_musician/create_musician_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
+import 'package:setlist/features/songs/data/datasources/song_remote_datasource.dart';
+import 'package:setlist/features/songs/data/repositories/song_repository_impl.dart';
+import 'package:setlist/features/songs/domain/repositories/song_repository.dart';
+import 'package:setlist/features/songs/domain/usecases/get_songs_usecase.dart';
+import 'package:setlist/features/songs/presentation/cubit/song_list_cubit.dart';
 
 import 'core/domain/entities/band.dart';
 
@@ -93,6 +98,12 @@ void init() {
       deleteMembershipUsecase: serviceLocator(),
       getPermissionsUsease: serviceLocator(),
       getMembershipUsecase: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactoryParam(
+    (Band band, _) => SongListCubit(
+      band: band,
+      getSongUsecase: serviceLocator(),
     ),
   );
 
@@ -181,6 +192,11 @@ void init() {
       permissionsRepository: serviceLocator(),
     ),
   );
+  serviceLocator.registerFactory(
+    () => GetSongsUsecase(
+      songRepository: serviceLocator(),
+    ),
+  );
 
   // Repositories
   serviceLocator.registerLazySingleton<AuthRepository>(
@@ -204,6 +220,9 @@ void init() {
   serviceLocator.registerLazySingleton<PermissionsRepository>(
     () => PermissionsRepositoryImpl(remoteDataSource: serviceLocator()),
   );
+  serviceLocator.registerLazySingleton<SongRepository>(
+    () => SongRepositoryImpl(remoteDataSource: serviceLocator()),
+  );
 
   // Data sources
   serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
@@ -220,5 +239,8 @@ void init() {
   );
   serviceLocator.registerLazySingleton<PermissionsRemoteDatasource>(
     () => PermissionsRemoteDatasourceImpl(),
+  );
+  serviceLocator.registerLazySingleton<SongRemoteDataSource>(
+    () => SongRemoteDataSourceImpl(),
   );
 }

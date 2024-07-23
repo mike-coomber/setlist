@@ -1,4 +1,4 @@
-import 'package:setlist/features/setlist_editor/domain/repositoires/song_repository.dart';
+import 'package:setlist/features/songs/domain/repositories/song_repository.dart';
 
 class AddSongUsecase {
   final SongRepository songRepository;

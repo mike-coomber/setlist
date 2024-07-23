@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:setlist/core/data/db_consts.dart';
 import 'package:setlist/core/data/firebase_utils.dart';
-import 'package:setlist/features/setlist_editor/data/models/song_model.dart';
-import 'package:setlist/features/setlist_editor/domain/entities/song.dart';
+import 'package:setlist/features/songs/data/models/song_model.dart';
+import 'package:setlist/features/songs/domain/entities/song.dart';
 
 abstract class SongRemoteDataSource {
   Future<Song> getSong({required String songId, required String bandId});

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:setlist/features/setlist_editor/domain/entities/song.dart';
+import 'package:setlist/features/songs/domain/entities/song.dart';
 
 part 'song_model.g.dart';
 

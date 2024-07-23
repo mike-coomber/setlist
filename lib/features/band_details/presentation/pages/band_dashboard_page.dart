@@ -37,6 +37,14 @@ class BandDashboardPage extends StatelessWidget {
             ),
           );
         }
+        actions.add(
+          IconButton(
+            icon: const Icon(Icons.music_note),
+            onPressed: () {
+              context.pushRoute(SongListRoute(band: band));
+            },
+          ),
+        );
       }
 
       return Scaffold(
