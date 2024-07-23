@@ -2,14 +2,12 @@ import 'package:setlist/features/setlist_editor/domain/entities/setlist_event.da
 
 class Setlist {
   final String id;
-  final String bandId;
   final String name;
   final List<SetlistEvent> events;
 
   Setlist({
     required this.id,
     required this.events,
-    required this.bandId,
     required this.name,
   });
 }

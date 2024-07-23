@@ -3,7 +3,7 @@ const kMusicianPath = 'musicians';
 const kMembershipPath = 'memberships';
 
 const kBandPath = 'bands';
-const kSetlistPath = 'setlists';
+const kSetlistsPath = 'setlists';
 const kSongsPath = 'songs';
 
 const kPermissoinsPath = 'permissions';

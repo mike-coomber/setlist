@@ -20,6 +20,14 @@ class SongModel implements Song {
   @override
   final int duration;
 
+  factory SongModel.fromEntity(Song entity) {
+    return SongModel(
+      name: entity.name,
+      artist: entity.artist,
+      duration: entity.duration,
+    );
+  }
+
   factory SongModel.fromJson(Map<String, dynamic> json) => _$SongModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SongModelToJson(this);
