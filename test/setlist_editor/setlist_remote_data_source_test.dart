@@ -30,6 +30,7 @@ main() {
           notes: 'notes',
           length: 100,
           songId: null,
+          order: 1,
         ),
       ],
       bandId: bandId,

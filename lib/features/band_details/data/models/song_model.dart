@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:setlist/features/songs/domain/entities/song.dart';
+import 'package:setlist/features/band_details/domain/entities/song.dart';
 
 part 'song_model.g.dart';
 
@@ -8,7 +8,7 @@ class SongModel implements Song {
   SongModel({
     required this.name,
     required this.artist,
-    required this.duration,
+    this.duration,
   });
 
   @override
@@ -18,7 +18,7 @@ class SongModel implements Song {
   final String artist;
 
   @override
-  final int duration;
+  final int? duration;
 
   factory SongModel.fromEntity(Song entity) {
     return SongModel(

@@ -1,6 +1,6 @@
-import 'package:setlist/features/songs/data/datasources/song_remote_datasource.dart';
-import 'package:setlist/features/songs/domain/entities/song.dart';
-import 'package:setlist/features/songs/domain/repositories/song_repository.dart';
+import 'package:setlist/features/band_details/data/datasources/song_remote_datasource.dart';
+import 'package:setlist/features/band_details/domain/entities/song.dart';
+import 'package:setlist/features/band_details/domain/repositories/song_repository.dart';
 
 class SongRepositoryImpl extends SongRepository {
   final SongRemoteDataSource remoteDataSource;
@@ -11,7 +11,7 @@ class SongRepositoryImpl extends SongRepository {
   Future<void> addSong({
     required String songName,
     required String artist,
-    required int duration,
+    required int? duration,
     required String bandId,
   }) {
     return remoteDataSource.addSong(

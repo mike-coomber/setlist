@@ -1,5 +1,5 @@
-import 'package:setlist/features/songs/domain/entities/song.dart';
-import 'package:setlist/features/songs/domain/repositories/song_repository.dart';
+import 'package:setlist/features/band_details/domain/entities/song.dart';
+import 'package:setlist/features/band_details/domain/repositories/song_repository.dart';
 
 class GetSongsUsecase {
   final SongRepository songRepository;

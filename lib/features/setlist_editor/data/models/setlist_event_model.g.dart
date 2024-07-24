@@ -10,6 +10,7 @@ SetlistEventModel _$SetlistEventModelFromJson(Map<String, dynamic> json) =>
     SetlistEventModel(
       name: json['name'] as String,
       length: (json['length'] as num).toInt(),
+      order: (json['order'] as num).toInt(),
       notes: json['notes'] as String,
       songId: json['songId'] as String?,
     );
@@ -20,4 +21,5 @@ Map<String, dynamic> _$SetlistEventModelToJson(SetlistEventModel instance) =>
       'length': instance.length,
       'notes': instance.notes,
       'songId': instance.songId,
+      'order': instance.order,
     };

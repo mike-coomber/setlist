@@ -13,10 +13,13 @@ class SetlistEventModel implements SetlistEvent {
   final String notes;
   @override
   final String? songId;
+  @override
+  final int order;
 
   SetlistEventModel({
     required this.name,
     required this.length,
+    required this.order,
     required this.notes,
     this.songId,
   });
@@ -27,6 +30,7 @@ class SetlistEventModel implements SetlistEvent {
       length: entity.length,
       notes: entity.notes,
       songId: entity.songId,
+      order: entity.order,
     );
   }
 

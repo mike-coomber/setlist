@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:setlist/features/band_details/domain/models/permissions.dart';
+import 'package:setlist/features/band_details/domain/entities/permissions.dart';
 
 part 'permissions_model.g.dart';
 

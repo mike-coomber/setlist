@@ -1,4 +1,4 @@
-import 'package:setlist/features/songs/domain/entities/song.dart';
+import 'package:setlist/features/band_details/domain/entities/song.dart';
 
 abstract class SongRepository {
   Future<Song> getSong({required String songId, required String bandId});
@@ -8,7 +8,7 @@ abstract class SongRepository {
   Future<void> addSong({
     required String songName,
     required String artist,
-    required int duration,
+    required int? duration,
     required String bandId,
   });
 

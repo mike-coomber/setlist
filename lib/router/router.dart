@@ -27,9 +27,11 @@ class AppRouter extends $AppRouter {
             AutoRoute(
               page: BandDetailsRoute.page,
               children: [
-                AutoRoute(page: BandDashboardRoute.page, initial: true),
+                AutoRoute(
+                  page: BandDashboardRoute.page,
+                  initial: true,
+                ),
                 AutoRoute(page: AddMembersRoute.page),
-                AutoRoute(page: SongListRoute.page),
               ],
             )
           ],

@@ -15,11 +15,13 @@ final class BandDetailsStateInitial extends BandDetailsState {
 
 final class BandDetailsStateLoaded extends BandDetailsState {
   final List<Musician> members;
+  final List<Song> songs;
   final Permissions permissions;
 
   const BandDetailsStateLoaded({
     required Band band,
     required this.members,
+    required this.songs,
     required this.permissions,
   }) : super(band);
 
@@ -27,9 +29,11 @@ final class BandDetailsStateLoaded extends BandDetailsState {
     Band? band,
     List<Musician>? members,
     Permissions? permissions,
+    List<Song>? songs,
   }) =>
       BandDetailsStateLoaded(
         band: band ?? this.band,
+        songs: songs ?? this.songs,
         members: members ?? this.members,
         permissions: permissions ?? this.permissions,
       );

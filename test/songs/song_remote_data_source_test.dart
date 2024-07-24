@@ -1,7 +1,7 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:setlist/core/data/datasources/band_remote_data_source.dart';
-import 'package:setlist/features/songs/data/datasources/song_remote_datasource.dart';
+import 'package:setlist/features/band_details/data/datasources/song_remote_datasource.dart';
 
 main() {
   late BandRemoteDataSourceImpl bandDataSourceImpl;
