@@ -8,17 +8,17 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i12;
-import 'package:flutter/material.dart' as _i14;
-import 'package:setlist/core/domain/entities/band.dart' as _i13;
+import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/material.dart' as _i15;
+import 'package:setlist/core/domain/entities/band.dart' as _i14;
 import 'package:setlist/features/auth/presentation/pages/logged_out_page.dart'
     as _i7;
 import 'package:setlist/features/auth/presentation/pages/login_page.dart'
     as _i8;
 import 'package:setlist/features/auth/presentation/pages/sign_up_page.dart'
-    as _i10;
+    as _i11;
 import 'package:setlist/features/band_details/domain/entities/song.dart'
-    as _i15;
+    as _i16;
 import 'package:setlist/features/band_details/presentation/pages/add_members_page.dart'
     as _i1;
 import 'package:setlist/features/band_details/presentation/pages/band_dashboard_page.dart'
@@ -26,30 +26,32 @@ import 'package:setlist/features/band_details/presentation/pages/band_dashboard_
 import 'package:setlist/features/band_details/presentation/pages/band_details_page.dart'
     as _i3;
 import 'package:setlist/features/band_details/presentation/views/setlist_list_view.dart'
-    as _i9;
+    as _i10;
 import 'package:setlist/features/band_details/presentation/views/song_list_view.dart'
-    as _i11;
+    as _i12;
 import 'package:setlist/features/create_band/presentation/pages/create_band_page.dart'
     as _i4;
 import 'package:setlist/features/dashboard/presentation/pages/dashboard_page.dart'
     as _i5;
 import 'package:setlist/features/dashboard/presentation/pages/home_page.dart'
     as _i6;
+import 'package:setlist/features/setlist_editor/presentation/pages/setlist_editor_page.dart'
+    as _i9;
 
-abstract class $AppRouter extends _i12.RootStackRouter {
+abstract class $AppRouter extends _i13.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i12.PageFactory> pagesMap = {
+  final Map<String, _i13.PageFactory> pagesMap = {
     AddMembersRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.AddMembersPage(),
       );
     },
     BandDashboardRoute.name: (routeData) {
       final args = routeData.argsAs<BandDashboardRouteArgs>();
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BandDashboardPage(
           band: args.band,
@@ -59,7 +61,7 @@ abstract class $AppRouter extends _i12.RootStackRouter {
     },
     BandDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<BandDetailsRouteArgs>();
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.BandDetailsPage(
           band: args.band,
@@ -68,54 +70,65 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     CreateBandRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i4.CreateBandPage(),
       );
     },
     DashboardRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i5.DashboardPage(),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i6.HomePage(),
       );
     },
     LoggedOutRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i7.LoggedOutPage(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i8.LoginPage(),
       );
     },
-    SetlistTab.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+    SetlistEditorRoute.name: (routeData) {
+      final args = routeData.argsAs<SetlistEditorRouteArgs>();
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i9.SetlistListView(),
+        child: _i9.SetlistEditorPage(
+          band: args.band,
+          key: args.key,
+        ),
+      );
+    },
+    SetlistTab.name: (routeData) {
+      return _i13.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i10.SetlistListView(),
       );
     },
     SignUpRoute.name: (routeData) {
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.SignUpPage(),
+        child: const _i11.SignUpPage(),
       );
     },
     SongTab.name: (routeData) {
       final args = routeData.argsAs<SongTabArgs>();
-      return _i12.AutoRoutePage<dynamic>(
+      return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i11.SongListView(
-          key: args.key,
+        child: _i12.SongListView(
           songs: args.songs,
+          onSongSelected: args.onSongSelected,
+          key: args.key,
         ),
       );
     },
@@ -124,8 +137,8 @@ abstract class $AppRouter extends _i12.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddMembersPage]
-class AddMembersRoute extends _i12.PageRouteInfo<void> {
-  const AddMembersRoute({List<_i12.PageRouteInfo>? children})
+class AddMembersRoute extends _i13.PageRouteInfo<void> {
+  const AddMembersRoute({List<_i13.PageRouteInfo>? children})
       : super(
           AddMembersRoute.name,
           initialChildren: children,
@@ -133,16 +146,16 @@ class AddMembersRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'AddMembersRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.BandDashboardPage]
-class BandDashboardRoute extends _i12.PageRouteInfo<BandDashboardRouteArgs> {
+class BandDashboardRoute extends _i13.PageRouteInfo<BandDashboardRouteArgs> {
   BandDashboardRoute({
-    required _i13.Band band,
-    _i14.Key? key,
-    List<_i12.PageRouteInfo>? children,
+    required _i14.Band band,
+    _i15.Key? key,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
           BandDashboardRoute.name,
           args: BandDashboardRouteArgs(
@@ -154,8 +167,8 @@ class BandDashboardRoute extends _i12.PageRouteInfo<BandDashboardRouteArgs> {
 
   static const String name = 'BandDashboardRoute';
 
-  static const _i12.PageInfo<BandDashboardRouteArgs> page =
-      _i12.PageInfo<BandDashboardRouteArgs>(name);
+  static const _i13.PageInfo<BandDashboardRouteArgs> page =
+      _i13.PageInfo<BandDashboardRouteArgs>(name);
 }
 
 class BandDashboardRouteArgs {
@@ -164,9 +177,9 @@ class BandDashboardRouteArgs {
     this.key,
   });
 
-  final _i13.Band band;
+  final _i14.Band band;
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
@@ -176,11 +189,11 @@ class BandDashboardRouteArgs {
 
 /// generated route for
 /// [_i3.BandDetailsPage]
-class BandDetailsRoute extends _i12.PageRouteInfo<BandDetailsRouteArgs> {
+class BandDetailsRoute extends _i13.PageRouteInfo<BandDetailsRouteArgs> {
   BandDetailsRoute({
-    required _i13.Band band,
-    _i14.Key? key,
-    List<_i12.PageRouteInfo>? children,
+    required _i14.Band band,
+    _i15.Key? key,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
           BandDetailsRoute.name,
           args: BandDetailsRouteArgs(
@@ -192,8 +205,8 @@ class BandDetailsRoute extends _i12.PageRouteInfo<BandDetailsRouteArgs> {
 
   static const String name = 'BandDetailsRoute';
 
-  static const _i12.PageInfo<BandDetailsRouteArgs> page =
-      _i12.PageInfo<BandDetailsRouteArgs>(name);
+  static const _i13.PageInfo<BandDetailsRouteArgs> page =
+      _i13.PageInfo<BandDetailsRouteArgs>(name);
 }
 
 class BandDetailsRouteArgs {
@@ -202,9 +215,9 @@ class BandDetailsRouteArgs {
     this.key,
   });
 
-  final _i13.Band band;
+  final _i14.Band band;
 
-  final _i14.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
@@ -214,8 +227,8 @@ class BandDetailsRouteArgs {
 
 /// generated route for
 /// [_i4.CreateBandPage]
-class CreateBandRoute extends _i12.PageRouteInfo<void> {
-  const CreateBandRoute({List<_i12.PageRouteInfo>? children})
+class CreateBandRoute extends _i13.PageRouteInfo<void> {
+  const CreateBandRoute({List<_i13.PageRouteInfo>? children})
       : super(
           CreateBandRoute.name,
           initialChildren: children,
@@ -223,13 +236,13 @@ class CreateBandRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'CreateBandRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i5.DashboardPage]
-class DashboardRoute extends _i12.PageRouteInfo<void> {
-  const DashboardRoute({List<_i12.PageRouteInfo>? children})
+class DashboardRoute extends _i13.PageRouteInfo<void> {
+  const DashboardRoute({List<_i13.PageRouteInfo>? children})
       : super(
           DashboardRoute.name,
           initialChildren: children,
@@ -237,13 +250,13 @@ class DashboardRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'DashboardRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i6.HomePage]
-class HomeRoute extends _i12.PageRouteInfo<void> {
-  const HomeRoute({List<_i12.PageRouteInfo>? children})
+class HomeRoute extends _i13.PageRouteInfo<void> {
+  const HomeRoute({List<_i13.PageRouteInfo>? children})
       : super(
           HomeRoute.name,
           initialChildren: children,
@@ -251,13 +264,13 @@ class HomeRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i7.LoggedOutPage]
-class LoggedOutRoute extends _i12.PageRouteInfo<void> {
-  const LoggedOutRoute({List<_i12.PageRouteInfo>? children})
+class LoggedOutRoute extends _i13.PageRouteInfo<void> {
+  const LoggedOutRoute({List<_i13.PageRouteInfo>? children})
       : super(
           LoggedOutRoute.name,
           initialChildren: children,
@@ -265,13 +278,13 @@ class LoggedOutRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'LoggedOutRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i8.LoginPage]
-class LoginRoute extends _i12.PageRouteInfo<void> {
-  const LoginRoute({List<_i12.PageRouteInfo>? children})
+class LoginRoute extends _i13.PageRouteInfo<void> {
+  const LoginRoute({List<_i13.PageRouteInfo>? children})
       : super(
           LoginRoute.name,
           initialChildren: children,
@@ -279,13 +292,51 @@ class LoginRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.SetlistListView]
-class SetlistTab extends _i12.PageRouteInfo<void> {
-  const SetlistTab({List<_i12.PageRouteInfo>? children})
+/// [_i9.SetlistEditorPage]
+class SetlistEditorRoute extends _i13.PageRouteInfo<SetlistEditorRouteArgs> {
+  SetlistEditorRoute({
+    required _i14.Band band,
+    _i15.Key? key,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
+          SetlistEditorRoute.name,
+          args: SetlistEditorRouteArgs(
+            band: band,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SetlistEditorRoute';
+
+  static const _i13.PageInfo<SetlistEditorRouteArgs> page =
+      _i13.PageInfo<SetlistEditorRouteArgs>(name);
+}
+
+class SetlistEditorRouteArgs {
+  const SetlistEditorRouteArgs({
+    required this.band,
+    this.key,
+  });
+
+  final _i14.Band band;
+
+  final _i15.Key? key;
+
+  @override
+  String toString() {
+    return 'SetlistEditorRouteArgs{band: $band, key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i10.SetlistListView]
+class SetlistTab extends _i13.PageRouteInfo<void> {
+  const SetlistTab({List<_i13.PageRouteInfo>? children})
       : super(
           SetlistTab.name,
           initialChildren: children,
@@ -293,13 +344,13 @@ class SetlistTab extends _i12.PageRouteInfo<void> {
 
   static const String name = 'SetlistTab';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i10.SignUpPage]
-class SignUpRoute extends _i12.PageRouteInfo<void> {
-  const SignUpRoute({List<_i12.PageRouteInfo>? children})
+/// [_i11.SignUpPage]
+class SignUpRoute extends _i13.PageRouteInfo<void> {
+  const SignUpRoute({List<_i13.PageRouteInfo>? children})
       : super(
           SignUpRoute.name,
           initialChildren: children,
@@ -307,43 +358,48 @@ class SignUpRoute extends _i12.PageRouteInfo<void> {
 
   static const String name = 'SignUpRoute';
 
-  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
+  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i11.SongListView]
-class SongTab extends _i12.PageRouteInfo<SongTabArgs> {
+/// [_i12.SongListView]
+class SongTab extends _i13.PageRouteInfo<SongTabArgs> {
   SongTab({
-    _i14.Key? key,
-    required List<_i15.Song> songs,
-    List<_i12.PageRouteInfo>? children,
+    required List<_i16.Song> songs,
+    void Function(_i16.Song)? onSongSelected,
+    _i15.Key? key,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
           SongTab.name,
           args: SongTabArgs(
-            key: key,
             songs: songs,
+            onSongSelected: onSongSelected,
+            key: key,
           ),
           initialChildren: children,
         );
 
   static const String name = 'SongTab';
 
-  static const _i12.PageInfo<SongTabArgs> page =
-      _i12.PageInfo<SongTabArgs>(name);
+  static const _i13.PageInfo<SongTabArgs> page =
+      _i13.PageInfo<SongTabArgs>(name);
 }
 
 class SongTabArgs {
   const SongTabArgs({
-    this.key,
     required this.songs,
+    this.onSongSelected,
+    this.key,
   });
 
-  final _i14.Key? key;
+  final List<_i16.Song> songs;
 
-  final List<_i15.Song> songs;
+  final void Function(_i16.Song)? onSongSelected;
+
+  final _i15.Key? key;
 
   @override
   String toString() {
-    return 'SongTabArgs{key: $key, songs: $songs}';
+    return 'SongTabArgs{songs: $songs, onSongSelected: $onSongSelected, key: $key}';
   }
 }

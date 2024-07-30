@@ -6,10 +6,14 @@ part 'song_model.g.dart';
 @JsonSerializable()
 class SongModel implements Song {
   SongModel({
+    required this.id,
     required this.name,
     required this.artist,
     this.duration,
   });
+
+  @override
+  final String id;
 
   @override
   final String name;
@@ -22,6 +26,7 @@ class SongModel implements Song {
 
   factory SongModel.fromEntity(Song entity) {
     return SongModel(
+      id: entity.id,
       name: entity.name,
       artist: entity.artist,
       duration: entity.duration,

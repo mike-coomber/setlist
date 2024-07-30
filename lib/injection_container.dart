@@ -44,6 +44,7 @@ import 'package:setlist/features/band_details/data/datasources/song_remote_datas
 import 'package:setlist/features/band_details/data/repositories/song_repository_impl.dart';
 import 'package:setlist/features/band_details/domain/repositories/song_repository.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_songs_usecase.dart';
+import 'package:setlist/features/setlist_editor/presentation/cubit/setlist_editor_cubit.dart';
 
 import 'core/domain/entities/band.dart';
 
@@ -106,6 +107,12 @@ void init() {
     (Band band, _) => AddSongCubit(
       band: band,
       addSongUsecase: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactoryParam(
+    (Band band, _) => SetlistEditorCubit(
+      band: band,
+      getSongsUsecase: serviceLocator(),
     ),
   );
 

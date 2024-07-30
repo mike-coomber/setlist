@@ -9,8 +9,13 @@ import '../../domain/entities/song.dart';
 @RoutePage(name: 'SongTab')
 class SongListView extends StatelessWidget {
   final List<Song> songs;
+  final void Function(Song song)? onSongSelected;
 
-  const SongListView({super.key, required this.songs});
+  const SongListView({
+    required this.songs,
+    this.onSongSelected,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +41,7 @@ class SongListView extends StatelessWidget {
               final song = songs[index];
               return ListTile(
                 title: Text(song.name),
+                onTap: onSongSelected != null ? () => onSongSelected!(song) : null,
                 subtitle: Text(song.artist),
               );
             },

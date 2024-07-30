@@ -32,6 +32,7 @@ class AppRouter extends $AppRouter {
                   initial: true,
                 ),
                 AutoRoute(page: AddMembersRoute.page),
+                AutoRoute(page: SetlistEditorRoute.page)
               ],
             )
           ],

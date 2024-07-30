@@ -35,7 +35,12 @@ class SongRemoteDataSourceImpl extends SongRemoteDataSource {
   }) {
     final docRef = _db.collection(kBandPath).doc(bandId).collection(kSongsPath).doc();
 
-    final newSong = SongModel(name: songName, artist: artist, duration: duration);
+    final newSong = SongModel(
+      id: docRef.id,
+      name: songName,
+      artist: artist,
+      duration: duration,
+    );
 
     return firebaseSet(docRef: docRef, data: newSong.toJson());
   }
