@@ -23,7 +23,11 @@ class SetlistRepositoryImpl implements SetlistRepository {
 
   @override
   Future<Setlist> getSetlist({required String setlistId, required String bandId}) {
-    // TODO: implement getSetlist
-    throw UnimplementedError();
+    return remoteDataSource.getSetlist(setlistId: setlistId, bandId: bandId);
+  }
+
+  @override
+  Future<List<Setlist>> getSetlists({required String bandId}) {
+    return remoteDataSource.getSetlists(bandId: bandId);
   }
 }

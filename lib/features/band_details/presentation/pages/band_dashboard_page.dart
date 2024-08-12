@@ -70,7 +70,7 @@ class BandDashboardPage extends StatelessWidget {
                         Expanded(
                           child: TabBarView(
                             children: [
-                              const SetlistListView(),
+                              SetlistListView(setlists: state.setlists),
                               SongListView(songs: state.songs),
                             ],
                           ),

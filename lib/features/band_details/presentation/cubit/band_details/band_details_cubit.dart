@@ -9,6 +9,8 @@ import 'package:setlist/features/band_details/domain/usecases/get_band_members_u
 import 'package:setlist/features/band_details/domain/usecases/get_membership_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_permissions_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_songs_usecase.dart';
+import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart';
+import 'package:setlist/features/setlist_editor/domain/usecases/get_setlists_usecase.dart';
 
 import '../../../domain/entities/song.dart';
 
@@ -22,6 +24,7 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
   final GetPermissionsUsecase getPermissionsUsease;
   final GetMembershipUsecase getMembershipUsecase;
   final GetSongsUsecase getSongsUsecase;
+  final GetSetlistsUsecase getSetlistsUsecase;
 
   late String userId;
 
@@ -33,6 +36,7 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
     required this.getPermissionsUsease,
     required this.getMembershipUsecase,
     required this.getSongsUsecase,
+    required this.getSetlistsUsecase,
   }) : super(BandDetailsStateInitial(band));
 
   Future<void> init({required String userId}) async {
@@ -49,6 +53,7 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
                 ),
               ),
           getSongsUsecase.call(bandId: band.id),
+          getSetlistsUsecase.call(bandId: band.id),
         ],
       );
       emit(
@@ -57,6 +62,7 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
           members: data[0] as List<Musician>,
           permissions: (data[1] as Permissions),
           songs: data[2] as List<Song>,
+          setlists: data[3] as List<Setlist>,
         ),
       );
     } catch (e) {

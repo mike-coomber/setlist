@@ -14,6 +14,8 @@ abstract class SetlistRemoteDatasource {
   });
 
   Future<Setlist> getSetlist({required String setlistId, required String bandId});
+
+  Future<List<Setlist>> getSetlists({required String bandId});
 }
 
 class SetlistRemoteDatasourceImpl extends SetlistRemoteDatasource {
@@ -47,5 +49,12 @@ class SetlistRemoteDatasourceImpl extends SetlistRemoteDatasource {
     final docRef = _db.collection(kBandPath).doc(bandId).collection(kSetlistsPath).doc(setlistId);
 
     return await firebaseGet(docRef: docRef, converter: SetlistModel.fromJson);
+  }
+
+  @override
+  Future<List<Setlist>> getSetlists({required String bandId}) async {
+    final collectionRef = _db.collection(kBandPath).doc(bandId).collection(kSetlistsPath);
+
+    return await firebaseQuery(query: collectionRef, converter: SetlistModel.fromJson);
   }
 }

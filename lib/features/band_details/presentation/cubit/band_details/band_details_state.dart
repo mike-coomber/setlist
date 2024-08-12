@@ -16,6 +16,7 @@ final class BandDetailsStateInitial extends BandDetailsState {
 final class BandDetailsStateLoaded extends BandDetailsState {
   final List<Musician> members;
   final List<Song> songs;
+  final List<Setlist> setlists;
   final Permissions permissions;
 
   const BandDetailsStateLoaded({
@@ -23,6 +24,7 @@ final class BandDetailsStateLoaded extends BandDetailsState {
     required this.members,
     required this.songs,
     required this.permissions,
+    required this.setlists,
   }) : super(band);
 
   BandDetailsStateLoaded copyWith({
@@ -30,12 +32,14 @@ final class BandDetailsStateLoaded extends BandDetailsState {
     List<Musician>? members,
     Permissions? permissions,
     List<Song>? songs,
+    List<Setlist>? setlists,
   }) =>
       BandDetailsStateLoaded(
         band: band ?? this.band,
         songs: songs ?? this.songs,
         members: members ?? this.members,
         permissions: permissions ?? this.permissions,
+        setlists: setlists ?? this.setlists,
       );
 
   @override

@@ -18,7 +18,7 @@ import 'package:setlist/features/auth/presentation/pages/login_page.dart'
 import 'package:setlist/features/auth/presentation/pages/sign_up_page.dart'
     as _i11;
 import 'package:setlist/features/band_details/domain/entities/song.dart'
-    as _i16;
+    as _i17;
 import 'package:setlist/features/band_details/presentation/pages/add_members_page.dart'
     as _i1;
 import 'package:setlist/features/band_details/presentation/pages/band_dashboard_page.dart'
@@ -35,6 +35,8 @@ import 'package:setlist/features/dashboard/presentation/pages/dashboard_page.dar
     as _i5;
 import 'package:setlist/features/dashboard/presentation/pages/home_page.dart'
     as _i6;
+import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart'
+    as _i16;
 import 'package:setlist/features/setlist_editor/presentation/pages/setlist_editor_page.dart'
     as _i9;
 
@@ -110,9 +112,13 @@ abstract class $AppRouter extends _i13.RootStackRouter {
       );
     },
     SetlistTab.name: (routeData) {
+      final args = routeData.argsAs<SetlistTabArgs>();
       return _i13.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i10.SetlistListView(),
+        child: _i10.SetlistListView(
+          setlists: args.setlists,
+          key: args.key,
+        ),
       );
     },
     SignUpRoute.name: (routeData) {
@@ -335,16 +341,40 @@ class SetlistEditorRouteArgs {
 
 /// generated route for
 /// [_i10.SetlistListView]
-class SetlistTab extends _i13.PageRouteInfo<void> {
-  const SetlistTab({List<_i13.PageRouteInfo>? children})
-      : super(
+class SetlistTab extends _i13.PageRouteInfo<SetlistTabArgs> {
+  SetlistTab({
+    required List<_i16.Setlist> setlists,
+    _i15.Key? key,
+    List<_i13.PageRouteInfo>? children,
+  }) : super(
           SetlistTab.name,
+          args: SetlistTabArgs(
+            setlists: setlists,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'SetlistTab';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static const _i13.PageInfo<SetlistTabArgs> page =
+      _i13.PageInfo<SetlistTabArgs>(name);
+}
+
+class SetlistTabArgs {
+  const SetlistTabArgs({
+    required this.setlists,
+    this.key,
+  });
+
+  final List<_i16.Setlist> setlists;
+
+  final _i15.Key? key;
+
+  @override
+  String toString() {
+    return 'SetlistTabArgs{setlists: $setlists, key: $key}';
+  }
 }
 
 /// generated route for
@@ -365,8 +395,8 @@ class SignUpRoute extends _i13.PageRouteInfo<void> {
 /// [_i12.SongListView]
 class SongTab extends _i13.PageRouteInfo<SongTabArgs> {
   SongTab({
-    required List<_i16.Song> songs,
-    void Function(_i16.Song)? onSongSelected,
+    required List<_i17.Song> songs,
+    void Function(_i17.Song)? onSongSelected,
     _i15.Key? key,
     List<_i13.PageRouteInfo>? children,
   }) : super(
@@ -392,9 +422,9 @@ class SongTabArgs {
     this.key,
   });
 
-  final List<_i16.Song> songs;
+  final List<_i17.Song> songs;
 
-  final void Function(_i16.Song)? onSongSelected;
+  final void Function(_i17.Song)? onSongSelected;
 
   final _i15.Key? key;
 

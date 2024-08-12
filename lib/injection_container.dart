@@ -48,6 +48,7 @@ import 'package:setlist/features/setlist_editor/data/datasources/setlist_remote_
 import 'package:setlist/features/setlist_editor/data/repositories/setlist_repository_impl.dart';
 import 'package:setlist/features/setlist_editor/domain/repositoires/setlist_repository.dart';
 import 'package:setlist/features/setlist_editor/domain/usecases/add_setlist_usecase.dart';
+import 'package:setlist/features/setlist_editor/domain/usecases/get_setlists_usecase.dart';
 import 'package:setlist/features/setlist_editor/presentation/cubit/setlist_editor_cubit.dart';
 
 import 'core/domain/entities/band.dart';
@@ -105,6 +106,7 @@ void init() {
       getPermissionsUsease: serviceLocator(),
       getMembershipUsecase: serviceLocator(),
       getSongsUsecase: serviceLocator(),
+      getSetlistsUsecase: serviceLocator(),
     ),
   );
   serviceLocator.registerFactoryParam(
@@ -218,6 +220,11 @@ void init() {
   );
   serviceLocator.registerFactory(
     () => AddSetlistUsecase(
+      setlistRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => GetSetlistsUsecase(
       setlistRepository: serviceLocator(),
     ),
   );
