@@ -18,5 +18,5 @@ Map<String, dynamic> _$SetlistModelToJson(SetlistModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'events': instance.events,
+      'events': instance.events.map((e) => e.toJson()).toList(),
     };

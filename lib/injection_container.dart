@@ -44,6 +44,10 @@ import 'package:setlist/features/band_details/data/datasources/song_remote_datas
 import 'package:setlist/features/band_details/data/repositories/song_repository_impl.dart';
 import 'package:setlist/features/band_details/domain/repositories/song_repository.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_songs_usecase.dart';
+import 'package:setlist/features/setlist_editor/data/datasources/setlist_remote_datasource.dart';
+import 'package:setlist/features/setlist_editor/data/repositories/setlist_repository_impl.dart';
+import 'package:setlist/features/setlist_editor/domain/repositoires/setlist_repository.dart';
+import 'package:setlist/features/setlist_editor/domain/usecases/add_setlist_usecase.dart';
 import 'package:setlist/features/setlist_editor/presentation/cubit/setlist_editor_cubit.dart';
 
 import 'core/domain/entities/band.dart';
@@ -113,6 +117,7 @@ void init() {
     (Band band, _) => SetlistEditorCubit(
       band: band,
       getSongsUsecase: serviceLocator(),
+      addSetlistUsecase: serviceLocator(),
     ),
   );
 
@@ -211,6 +216,11 @@ void init() {
       songRepository: serviceLocator(),
     ),
   );
+  serviceLocator.registerFactory(
+    () => AddSetlistUsecase(
+      setlistRepository: serviceLocator(),
+    ),
+  );
 
   // Repositories
   serviceLocator.registerLazySingleton<AuthRepository>(
@@ -237,6 +247,9 @@ void init() {
   serviceLocator.registerLazySingleton<SongRepository>(
     () => SongRepositoryImpl(remoteDataSource: serviceLocator()),
   );
+  serviceLocator.registerLazySingleton<SetlistRepository>(
+    () => SetlistRepositoryImpl(remoteDataSource: serviceLocator()),
+  );
 
   // Data sources
   serviceLocator.registerLazySingleton<AuthRemoteDataSource>(
@@ -256,5 +269,8 @@ void init() {
   );
   serviceLocator.registerLazySingleton<SongRemoteDataSource>(
     () => SongRemoteDataSourceImpl(),
+  );
+  serviceLocator.registerLazySingleton<SetlistRemoteDatasource>(
+    () => SetlistRemoteDatasourceImpl(),
   );
 }

@@ -3,7 +3,7 @@ import 'package:setlist/features/setlist_editor/domain/entities/setlist_event.da
 
 part 'setlist_event_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class SetlistEventModel implements SetlistEvent {
   @override
   final String name;
@@ -14,7 +14,7 @@ class SetlistEventModel implements SetlistEvent {
   @override
   final String? songId;
   @override
-  final int order;
+  int order;
 
   SetlistEventModel({
     required this.name,

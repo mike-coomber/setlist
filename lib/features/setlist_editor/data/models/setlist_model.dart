@@ -4,7 +4,7 @@ import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart';
 
 part 'setlist_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class SetlistModel implements Setlist {
   @override
   final String id;
