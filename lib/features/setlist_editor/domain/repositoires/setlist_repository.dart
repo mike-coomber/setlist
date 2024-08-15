@@ -8,6 +8,13 @@ abstract class SetlistRepository {
     required String bandId,
   });
 
+  Future<void> updateSetlist({
+    required String setlistName,
+    required String setlistId,
+    required List<SetlistEvent> events,
+    required String bandId,
+  });
+
   Future<Setlist> getSetlist({required String setlistId, required String bandId});
 
   Future<List<Setlist>> getSetlists({required String bandId});

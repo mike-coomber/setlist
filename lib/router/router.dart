@@ -31,6 +31,7 @@ class AppRouter extends $AppRouter {
                   page: BandDashboardRoute.page,
                   initial: true,
                 ),
+                AutoRoute(page: SetlistRoute.page),
                 AutoRoute(page: AddMembersRoute.page),
                 AutoRoute(page: SetlistEditorRoute.page)
               ],

@@ -4,14 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/band_details/presentation/views/song_list_view.dart';
+import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart';
 import 'package:setlist/features/setlist_editor/presentation/cubit/setlist_editor_cubit.dart';
 import 'package:setlist/injection_container.dart';
 
 @RoutePage()
 class SetlistEditorPage extends StatefulWidget {
   final Band band;
+  final Setlist? setlist;
 
-  const SetlistEditorPage({required this.band, super.key});
+  const SetlistEditorPage({
+    required this.band,
+    this.setlist,
+    super.key,
+  });
 
   @override
   State<SetlistEditorPage> createState() => _SetlistEditorPageState();
@@ -23,13 +29,16 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SetlistEditorCubit>(
-      create: (context) => serviceLocator<SetlistEditorCubit>(param1: widget.band)..loadSongs(),
+      create: (context) => serviceLocator<SetlistEditorCubit>(
+        param1: widget.band,
+        param2: widget.setlist,
+      )..loadSongs(),
       child: Scaffold(
-        appBar: AppBar(title: Text('New setlist')),
+        appBar: AppBar(title: Text(widget.setlist?.name ?? 'New setlist')),
         body: BlocListener<SetlistEditorCubit, SetlistEditorState>(
           listener: (context, state) {
             if (state.status == FormStatus.success) {
-              context.maybePop();
+              context.maybePop(true);
             }
             if (state.status == FormStatus.error) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error')));
@@ -42,9 +51,10 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
                 children: [
                   Column(
                     children: [
-                      TextField(
+                      TextFormField(
                         onChanged: context.read<SetlistEditorCubit>().setlistNameChanged,
                         decoration: InputDecoration(labelText: 'Name'),
+                        initialValue: state.name,
                       ),
                       BlocBuilder<SetlistEditorCubit, SetlistEditorState>(
                         builder: (context, state) {

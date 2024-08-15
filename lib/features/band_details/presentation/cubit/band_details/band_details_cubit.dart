@@ -107,6 +107,22 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
     }
   }
 
+  Future<List<Setlist>?> updateSetlists() async {
+    final prevState = state as BandDetailsStateLoaded;
+    emit(BandDetailsStateLoading(band));
+    try {
+      final newSetlists = await getSetlistsUsecase.call(bandId: band.id);
+
+      emit(
+        prevState.copyWith(setlists: newSetlists),
+      );
+      return newSetlists;
+    } catch (e) {
+      emit(BandDetailsStateError(band));
+    }
+    return null;
+  }
+
   Future<void> deleteBand() async {
     emit(BandDetailsStateLoading(band));
     try {

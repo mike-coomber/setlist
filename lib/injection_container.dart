@@ -23,6 +23,7 @@ import 'package:setlist/features/band_details/data/repositories/permissions_repo
 import 'package:setlist/features/band_details/domain/repositories/permissions_repository.dart';
 import 'package:setlist/features/band_details/domain/usecases/add_song_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_membership_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/get_setlist_usecase.dart';
 import 'package:setlist/features/band_details/presentation/cubit/add_members/add_members_cubit.dart';
 import 'package:setlist/features/band_details/presentation/cubit/add_song/add_song_cubit.dart';
 import 'package:setlist/features/band_details/presentation/cubit/band_details/band_details_cubit.dart';
@@ -31,6 +32,7 @@ import 'package:setlist/features/band_details/domain/usecases/delete_band_usecas
 import 'package:setlist/features/band_details/domain/usecases/delete_membership_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_permissions_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/search_musicians_usecase.dart';
+import 'package:setlist/features/band_details/presentation/cubit/setlist_view/setlist_view_cubit.dart';
 import 'package:setlist/features/create_band/usecases/create_band_usecase.dart';
 import 'package:setlist/features/dashboard/usecases/create_musician_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_band_members_usecase.dart';
@@ -47,11 +49,12 @@ import 'package:setlist/features/band_details/domain/usecases/get_songs_usecase.
 import 'package:setlist/features/setlist_editor/data/datasources/setlist_remote_datasource.dart';
 import 'package:setlist/features/setlist_editor/data/repositories/setlist_repository_impl.dart';
 import 'package:setlist/features/setlist_editor/domain/repositoires/setlist_repository.dart';
-import 'package:setlist/features/setlist_editor/domain/usecases/add_setlist_usecase.dart';
+import 'package:setlist/features/setlist_editor/domain/usecases/save_setlist_usecase.dart';
 import 'package:setlist/features/setlist_editor/domain/usecases/get_setlists_usecase.dart';
 import 'package:setlist/features/setlist_editor/presentation/cubit/setlist_editor_cubit.dart';
 
 import 'core/domain/entities/band.dart';
+import 'features/setlist_editor/domain/entities/setlist.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -116,10 +119,17 @@ void init() {
     ),
   );
   serviceLocator.registerFactoryParam(
-    (Band band, _) => SetlistEditorCubit(
+    (Band band, Setlist? setlist) => SetlistEditorCubit(
       band: band,
+      setlist: setlist,
       getSongsUsecase: serviceLocator(),
-      addSetlistUsecase: serviceLocator(),
+      saveSetlistUsecase: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactoryParam(
+    (Setlist setlist, String bandId) => SetlistViewCubit(
+      setlist: setlist,
+      bandId: bandId,
     ),
   );
 
@@ -219,12 +229,17 @@ void init() {
     ),
   );
   serviceLocator.registerFactory(
-    () => AddSetlistUsecase(
+    () => SaveSetlistUsecase(
       setlistRepository: serviceLocator(),
     ),
   );
   serviceLocator.registerFactory(
     () => GetSetlistsUsecase(
+      setlistRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => GetSetlistUsecase(
       setlistRepository: serviceLocator(),
     ),
   );

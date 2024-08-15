@@ -30,4 +30,19 @@ class SetlistRepositoryImpl implements SetlistRepository {
   Future<List<Setlist>> getSetlists({required String bandId}) {
     return remoteDataSource.getSetlists(bandId: bandId);
   }
+
+  @override
+  Future<void> updateSetlist({
+    required String setlistName,
+    required String setlistId,
+    required List<SetlistEvent> events,
+    required String bandId,
+  }) {
+    return remoteDataSource.updateSetlist(
+      setlistName: setlistName,
+      setlistId: setlistId,
+      events: events,
+      bandId: bandId,
+    );
+  }
 }

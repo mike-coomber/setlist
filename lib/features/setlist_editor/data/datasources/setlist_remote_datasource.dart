@@ -13,6 +13,13 @@ abstract class SetlistRemoteDatasource {
     required String bandId,
   });
 
+  Future<void> updateSetlist({
+    required String setlistName,
+    required String setlistId,
+    required List<SetlistEvent> events,
+    required String bandId,
+  });
+
   Future<Setlist> getSetlist({required String setlistId, required String bandId});
 
   Future<List<Setlist>> getSetlists({required String bandId});
@@ -42,6 +49,26 @@ class SetlistRemoteDatasourceImpl extends SetlistRemoteDatasource {
     await firebaseSet(docRef: docRef, data: data);
 
     return docRef.id;
+  }
+
+  @override
+  Future<void> updateSetlist({
+    required String setlistName,
+    required String setlistId,
+    required List<SetlistEvent> events,
+    required String bandId,
+  }) {
+    final docRef = _db.collection(kBandPath).doc(bandId).collection(kSetlistsPath).doc(
+          setlistId,
+        );
+
+    final data = SetlistModel(
+      name: setlistName,
+      id: docRef.id,
+      events: events.map((e) => SetlistEventModel.fromEntity(e)).toList(),
+    ).toJson();
+
+    return firebaseUpdate(docRef: docRef, data: data);
   }
 
   @override

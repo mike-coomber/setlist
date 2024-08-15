@@ -4,21 +4,28 @@ import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/band_details/domain/entities/song.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_songs_usecase.dart';
+import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart';
 import 'package:setlist/features/setlist_editor/domain/entities/setlist_event.dart';
-import 'package:setlist/features/setlist_editor/domain/usecases/add_setlist_usecase.dart';
+import 'package:setlist/features/setlist_editor/domain/usecases/save_setlist_usecase.dart';
 
 part 'setlist_editor_state.dart';
 
 class SetlistEditorCubit extends Cubit<SetlistEditorState> {
   final Band band;
+  final String? _setlistId;
   final GetSongsUsecase getSongsUsecase;
-  final AddSetlistUsecase addSetlistUsecase;
+  final SaveSetlistUsecase saveSetlistUsecase;
 
   SetlistEditorCubit({
     required this.band,
+    Setlist? setlist,
     required this.getSongsUsecase,
-    required this.addSetlistUsecase,
-  }) : super(const SetlistEditorState());
+    required this.saveSetlistUsecase,
+  })  : _setlistId = setlist?.id,
+        super(SetlistEditorState(
+          events: setlist?.events ?? [],
+          name: setlist?.name ?? '',
+        ));
 
   void loadSongs() async {
     try {
@@ -88,10 +95,11 @@ class SetlistEditorCubit extends Cubit<SetlistEditorState> {
   Future<void> addSetList() async {
     emit(state.copyWith(status: FormStatus.loading));
     try {
-      await addSetlistUsecase.call(
+      await saveSetlistUsecase.call(
         bandId: band.id,
         setlistName: state.name,
         events: state.events,
+        setlistId: _setlistId,
       );
       emit(state.copyWith(status: FormStatus.success));
     } catch (e) {

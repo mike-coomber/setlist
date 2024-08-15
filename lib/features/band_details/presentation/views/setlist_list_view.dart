@@ -5,11 +5,18 @@ import 'package:setlist/features/band_details/presentation/cubit/band_details/ba
 import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart';
 import 'package:setlist/router/router.gr.dart';
 
+import '../../../../core/domain/entities/band.dart';
+
 @RoutePage(name: 'SetlistTab')
 class SetlistListView extends StatelessWidget {
   final List<Setlist> setlists;
+  final Band band;
 
-  const SetlistListView({required this.setlists, super.key});
+  const SetlistListView({
+    required this.setlists,
+    required this.band,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
