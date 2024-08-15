@@ -10,7 +10,8 @@ PermissionsModel _$PermissionsModelFromJson(Map<String, dynamic> json) =>
     PermissionsModel(
       canAddMembers: json['canAddMembers'] as bool?,
       canRemoveMembers: json['canRemoveMembers'] as bool?,
-      canDeleteBand: json['canDeleteBand'] as bool? ?? false,
+      canDeleteBand: json['canDeleteBand'] as bool?,
+      canModifySetlists: json['canModifySetlists'] as bool?,
     );
 
 Map<String, dynamic> _$PermissionsModelToJson(PermissionsModel instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$PermissionsModelToJson(PermissionsModel instance) =>
       'canAddMembers': instance.canAddMembers,
       'canRemoveMembers': instance.canRemoveMembers,
       'canDeleteBand': instance.canDeleteBand,
+      'canModifySetlists': instance.canModifySetlists,
     };

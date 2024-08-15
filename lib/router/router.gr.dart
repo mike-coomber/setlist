@@ -120,8 +120,8 @@ abstract class $AppRouter extends _i14.RootStackRouter {
         routeData: routeData,
         child: _i10.SetlistListView(
           setlists: args.setlists,
-          key: args.key,
           band: args.band,
+          key: args.key,
         ),
       );
     },
@@ -364,15 +364,15 @@ class SetlistEditorRouteArgs {
 class SetlistTab extends _i14.PageRouteInfo<SetlistTabArgs> {
   SetlistTab({
     required List<_i17.Setlist> setlists,
-    _i16.Key? key,
     required _i15.Band band,
+    _i16.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           SetlistTab.name,
           args: SetlistTabArgs(
             setlists: setlists,
-            key: key,
             band: band,
+            key: key,
           ),
           initialChildren: children,
         );
@@ -386,19 +386,19 @@ class SetlistTab extends _i14.PageRouteInfo<SetlistTabArgs> {
 class SetlistTabArgs {
   const SetlistTabArgs({
     required this.setlists,
-    this.key,
     required this.band,
+    this.key,
   });
 
   final List<_i17.Setlist> setlists;
 
-  final _i16.Key? key;
-
   final _i15.Band band;
+
+  final _i16.Key? key;
 
   @override
   String toString() {
-    return 'SetlistTabArgs{setlists: $setlists, key: $key, band: $band}';
+    return 'SetlistTabArgs{setlists: $setlists, band: $band, key: $key}';
   }
 }
 

@@ -14,10 +14,18 @@ class PermissionsModel implements Permissions {
   @override
   final bool canDeleteBand;
 
-  PermissionsModel({bool? canAddMembers, bool? canRemoveMembers, bool? canDeleteBand = false})
-      : canAddMembers = canAddMembers ?? false,
+  @override
+  final bool canModifySetlists;
+
+  PermissionsModel({
+    bool? canAddMembers,
+    bool? canRemoveMembers,
+    bool? canDeleteBand,
+    bool? canModifySetlists,
+  })  : canAddMembers = canAddMembers ?? false,
         canRemoveMembers = canRemoveMembers ?? false,
-        canDeleteBand = canDeleteBand ?? false;
+        canDeleteBand = canDeleteBand ?? false,
+        canModifySetlists = canModifySetlists ?? false;
 
   factory PermissionsModel.fromEntity(Permissions entity) => PermissionsModel(
         canAddMembers: entity.canAddMembers,

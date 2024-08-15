@@ -20,18 +20,21 @@ class SetlistListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final permissions = (context.read<BandDetailsCubit>().state as BandDetailsStateLoaded).permissions;
+
     return Column(
       children: [
-        FilledButton(
-          onPressed: () {
-            context.pushRoute(
-              SetlistEditorRoute(
-                band: context.read<BandDetailsCubit>().state.band,
-              ),
-            );
-          },
-          child: Text('New setlist'),
-        ),
+        if (permissions.canCreateSetlists)
+          FilledButton(
+            onPressed: () {
+              context.pushRoute(
+                SetlistEditorRoute(
+                  band: context.read<BandDetailsCubit>().state.band,
+                ),
+              );
+            },
+            child: Text('New setlist'),
+          ),
         Expanded(
           child: ListView.builder(
             itemCount: setlists.length,
