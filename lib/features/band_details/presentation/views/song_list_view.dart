@@ -32,7 +32,7 @@ class SongListView extends StatelessWidget {
               context.read<BandDetailsCubit>().updateSongs();
             }
           },
-          child: Text('Add Song'),
+          child: const Text('Add Song'),
         ),
         Expanded(
           child: ListView.builder(

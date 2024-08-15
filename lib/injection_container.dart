@@ -22,6 +22,7 @@ import 'package:setlist/features/band_details/data/datasources/permissions_remot
 import 'package:setlist/features/band_details/data/repositories/permissions_repository_impl.dart';
 import 'package:setlist/features/band_details/domain/repositories/permissions_repository.dart';
 import 'package:setlist/features/band_details/domain/usecases/add_song_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/delete_setlist_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_membership_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_setlist_usecase.dart';
 import 'package:setlist/features/band_details/presentation/cubit/add_members/add_members_cubit.dart';
@@ -130,6 +131,7 @@ void init() {
     (Setlist setlist, String bandId) => SetlistViewCubit(
       setlist: setlist,
       bandId: bandId,
+      deleteSetlistUsecase: serviceLocator(),
     ),
   );
 
@@ -240,6 +242,11 @@ void init() {
   );
   serviceLocator.registerFactory(
     () => GetSetlistUsecase(
+      setlistRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => DeleteSetlistUsecase(
       setlistRepository: serviceLocator(),
     ),
   );

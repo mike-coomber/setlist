@@ -24,7 +24,7 @@ class SetlistListView extends StatelessWidget {
 
     return Column(
       children: [
-        if (permissions.canCreateSetlists)
+        if (permissions.canModifySetlists)
           FilledButton(
             onPressed: () {
               context.pushRoute(
@@ -33,7 +33,7 @@ class SetlistListView extends StatelessWidget {
                 ),
               );
             },
-            child: Text('New setlist'),
+            child: const Text('New setlist'),
           ),
         Expanded(
           child: ListView.builder(
@@ -42,12 +42,18 @@ class SetlistListView extends StatelessWidget {
               final setlist = setlists[index];
               return ListTile(
                 title: Text(setlist.name),
-                onTap: () {
-                  context.pushRoute(
-                    SetlistEditorRoute(
+                onTap: () async {
+                  final setlistDeleted = await context.pushRoute(
+                    SetlistRoute(
+                      setlist: setlist,
                       band: context.read<BandDetailsCubit>().state.band,
                     ),
                   );
+                  if (setlistDeleted == true && context.mounted) {
+                    context.read<BandDetailsCubit>().removeSetlist(
+                          setlistId: setlist.id,
+                        );
+                  }
                 },
               );
             },

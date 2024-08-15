@@ -130,9 +130,9 @@ abstract class $AppRouter extends _i14.RootStackRouter {
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i11.SetlistPage(
-          key: args.key,
           setlist: args.setlist,
           band: args.band,
+          key: args.key,
         ),
       );
     },
@@ -406,16 +406,16 @@ class SetlistTabArgs {
 /// [_i11.SetlistPage]
 class SetlistRoute extends _i14.PageRouteInfo<SetlistRouteArgs> {
   SetlistRoute({
-    _i16.Key? key,
     required _i17.Setlist setlist,
     required _i15.Band band,
+    _i16.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           SetlistRoute.name,
           args: SetlistRouteArgs(
-            key: key,
             setlist: setlist,
             band: band,
+            key: key,
           ),
           initialChildren: children,
         );
@@ -428,20 +428,20 @@ class SetlistRoute extends _i14.PageRouteInfo<SetlistRouteArgs> {
 
 class SetlistRouteArgs {
   const SetlistRouteArgs({
-    this.key,
     required this.setlist,
     required this.band,
+    this.key,
   });
-
-  final _i16.Key? key;
 
   final _i17.Setlist setlist;
 
   final _i15.Band band;
 
+  final _i16.Key? key;
+
   @override
   String toString() {
-    return 'SetlistRouteArgs{key: $key, setlist: $setlist, band: $band}';
+    return 'SetlistRouteArgs{setlist: $setlist, band: $band, key: $key}';
   }
 }
 

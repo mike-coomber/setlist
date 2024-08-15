@@ -18,4 +18,6 @@ abstract class SetlistRepository {
   Future<Setlist> getSetlist({required String setlistId, required String bandId});
 
   Future<List<Setlist>> getSetlists({required String bandId});
+
+  Future<void> deleteSetlist({required String setlistId, required String bandId});
 }

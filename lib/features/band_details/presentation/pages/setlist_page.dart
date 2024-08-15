@@ -15,9 +15,9 @@ class SetlistPage extends StatelessWidget {
   final Band band;
 
   const SetlistPage({
-    super.key,
     required this.setlist,
     required this.band,
+    super.key,
   });
 
   @override
@@ -29,31 +29,37 @@ class SetlistPage extends StatelessWidget {
       ),
       child: BlocBuilder<SetlistViewCubit, SetlistViewState>(
         builder: (context, state) {
-          return PopScope(
-            onPopInvoked: (_) {
-              if (state is SetlistViewDeleted || (state is SetlistViewInitial && state.setlistUpdated)) {
+          final permissions = (context.read<BandDetailsCubit>().state as BandDetailsStateLoaded).permissions;
+          return BlocListener<SetlistViewCubit, SetlistViewState>(
+            listener: (context, state) {
+              if (state is SetlistViewDeleted) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Setlist deleted')));
                 context.maybePop(true);
-              } else {
-                context.maybePop();
               }
             },
             child: Scaffold(
               appBar: AppBar(
                 title: Text(state.setlist.name),
                 actions: [
-                  IconButton(
-                    onPressed: () async {
-                      final updateSetlist = await context.pushRoute(
-                        SetlistEditorRoute(band: band, setlist: state.setlist),
-                      );
-                      if (updateSetlist == true && context.mounted) {
-                        final newSetlists = await context.read<BandDetailsCubit>().updateSetlists();
-                        if (!context.mounted) return;
-                        context.read<SetlistViewCubit>().findAndUpdateSetlist(newSetlists);
-                      }
-                    },
-                    icon: const Icon(Icons.edit),
-                  )
+                  if (permissions.canModifySetlists)
+                    IconButton(
+                      onPressed: () async {
+                        final updateSetlist = await context.pushRoute(
+                          SetlistEditorRoute(band: band, setlist: state.setlist),
+                        );
+                        if (updateSetlist == true && context.mounted) {
+                          final newSetlists = await context.read<BandDetailsCubit>().updateSetlists();
+                          if (!context.mounted) return;
+                          context.read<SetlistViewCubit>().findAndUpdateSetlist(newSetlists);
+                        }
+                      },
+                      icon: const Icon(Icons.edit),
+                    ),
+                  if (permissions.canModifySetlists)
+                    IconButton(
+                      onPressed: context.read<SetlistViewCubit>().deleteSetlist,
+                      icon: const Icon(Icons.delete),
+                    ),
                 ],
               ),
               body: Builder(

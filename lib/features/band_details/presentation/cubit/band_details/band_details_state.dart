@@ -43,7 +43,7 @@ final class BandDetailsStateLoaded extends BandDetailsState {
       );
 
   @override
-  List<Object> get props => [band, members];
+  List<Object> get props => [band, members, setlists, songs];
 }
 
 final class BandDetailsStateLoading extends BandDetailsState {

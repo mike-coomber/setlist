@@ -147,4 +147,18 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
       emit(BandDetailsStateError(band));
     }
   }
+
+  void removeSetlist({required String setlistId}) {
+    final loadedState = state as BandDetailsStateLoaded;
+    final newSetlists = loadedState.setlists.where(
+      (setlist) {
+        print(setlist.id != setlistId);
+        return setlist.id != setlistId;
+      },
+    );
+
+    emit(
+      loadedState.copyWith(setlists: newSetlists.toList()),
+    );
+  }
 }

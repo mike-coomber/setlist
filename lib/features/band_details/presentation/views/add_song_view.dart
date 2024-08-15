@@ -22,7 +22,7 @@ class AddSongView extends StatelessWidget {
             context.maybePop(true);
           } else if (state.formStatus == FormStatus.error) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('Failed to add song'),
               ),
             );
@@ -32,23 +32,23 @@ class AddSongView extends StatelessWidget {
           builder: (context, state) {
             return Column(
               children: [
-                if (state.formStatus == FormStatus.loading) LinearProgressIndicator(),
+                if (state.formStatus == FormStatus.loading) const LinearProgressIndicator(),
                 TextField(
-                  decoration: InputDecoration(labelText: 'Title'),
+                  decoration: const InputDecoration(labelText: 'Title'),
                   onChanged: context.read<AddSongCubit>().titleChanged,
                 ),
                 TextField(
-                  decoration: InputDecoration(labelText: 'Artist'),
+                  decoration: const InputDecoration(labelText: 'Artist'),
                   onChanged: context.read<AddSongCubit>().artistChanged,
                 ),
                 TextField(
-                  decoration: InputDecoration(labelText: 'Duration'),
+                  decoration: const InputDecoration(labelText: 'Duration'),
                   onChanged: (val) => context.read<AddSongCubit>().durationChanged(int.parse(val)),
                   keyboardType: TextInputType.number,
                 ),
                 ElevatedButton(
                   onPressed: context.read<AddSongCubit>().submit,
-                  child: Text('Add Song'),
+                  child: const Text('Add Song'),
                 ),
               ],
             );

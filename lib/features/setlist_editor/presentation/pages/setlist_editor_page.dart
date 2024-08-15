@@ -41,7 +41,7 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
               context.maybePop(true);
             }
             if (state.status == FormStatus.error) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error')));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error')));
             }
           },
           child: BlocBuilder<SetlistEditorCubit, SetlistEditorState>(
@@ -53,7 +53,7 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
                     children: [
                       TextFormField(
                         onChanged: context.read<SetlistEditorCubit>().setlistNameChanged,
-                        decoration: InputDecoration(labelText: 'Name'),
+                        decoration: const InputDecoration(labelText: 'Name'),
                         initialValue: state.name,
                       ),
                       BlocBuilder<SetlistEditorCubit, SetlistEditorState>(
@@ -75,7 +75,7 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
                       Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.music_note),
+                            icon: const Icon(Icons.music_note),
                             onPressed: () => showModalBottomSheet(
                               context: context,
                               builder: (sheetContext) => SongListView(
@@ -90,7 +90,7 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
                           Expanded(
                             child: TextField(
                               controller: eventNameController,
-                              decoration: InputDecoration(labelText: 'Event name'),
+                              decoration: const InputDecoration(labelText: 'Event name'),
                               onChanged: context.read<SetlistEditorCubit>().eventNameChanged,
                               onSubmitted: (_) {
                                 context.read<SetlistEditorCubit>().addEvent();
@@ -99,7 +99,7 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                             onPressed: () => context.read<SetlistEditorCubit>().addEvent(),
                           ),
                         ],
@@ -110,7 +110,7 @@ class _SetlistEditorPageState extends State<SetlistEditorPage> {
                     onPressed: () async {
                       await context.read<SetlistEditorCubit>().addSetList();
                     },
-                    child: Text('Save'),
+                    child: const Text('Save'),
                   ),
                 ],
               );

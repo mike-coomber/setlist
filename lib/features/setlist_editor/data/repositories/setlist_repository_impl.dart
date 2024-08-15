@@ -45,4 +45,9 @@ class SetlistRepositoryImpl implements SetlistRepository {
       bandId: bandId,
     );
   }
+
+  @override
+  Future<void> deleteSetlist({required String setlistId, required String bandId}) {
+    return remoteDataSource.deleteSetlist(setlistId: setlistId, bandId: bandId);
+  }
 }
