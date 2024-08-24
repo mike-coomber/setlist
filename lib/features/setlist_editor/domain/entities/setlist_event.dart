@@ -2,7 +2,7 @@ class SetlistEvent {
   final String name;
   int order;
   final int length;
-  final String notes;
+  String notes;
   final String? songId;
 
   SetlistEvent({

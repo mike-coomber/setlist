@@ -26,12 +26,15 @@ class SetlistListView extends StatelessWidget {
       children: [
         if (permissions.canModifySetlists)
           FilledButton(
-            onPressed: () {
-              context.pushRoute(
+            onPressed: () async {
+              final setlistAdded = await context.pushRoute(
                 SetlistEditorRoute(
                   band: context.read<BandDetailsCubit>().state.band,
                 ),
               );
+              if (setlistAdded == true && context.mounted) {
+                context.read<BandDetailsCubit>().updateSetlists();
+              }
             },
             child: const Text('New setlist'),
           ),

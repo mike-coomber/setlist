@@ -10,15 +10,7 @@ sealed class SetlistViewState extends Equatable {
 }
 
 class SetlistViewInitial extends SetlistViewState {
-  const SetlistViewInitial(
-    super.setlist, {
-    this.setlistUpdated = false,
-  });
-
-  final bool setlistUpdated;
-
-  @override
-  List<Object> get props => [...super.props, setlistUpdated];
+  const SetlistViewInitial(super.setlist);
 }
 
 class SetlistViewLoading extends SetlistViewState {

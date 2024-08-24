@@ -21,17 +21,11 @@ class SetlistViewCubit extends Cubit<SetlistViewState> {
       emit(SetlistViewError(setlist));
       return;
     }
-    emit(SetlistViewLoading(setlist));
     try {
       final updatedSetlist = newSetlists.firstWhere(
         (setlist) => setlist.id == this.setlist.id,
       );
-      emit(
-        SetlistViewInitial(
-          updatedSetlist,
-          setlistUpdated: true,
-        ),
-      );
+      emit(SetlistViewInitial(updatedSetlist));
     } catch (e) {
       emit(SetlistViewError(setlist));
     }

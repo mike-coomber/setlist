@@ -70,13 +70,14 @@ class SetlistPage extends StatelessWidget {
                     );
                   }
                   return ListView.builder(
-                    itemCount: setlist.events.length,
+                    itemCount: state.setlist.events.length,
                     itemBuilder: (context, index) {
                       final setlistEvent = state.setlist.events[index];
 
                       return ListTile(
                         leading: Text('${setlistEvent.order}.'),
                         title: Text(setlistEvent.name),
+                        subtitle: setlistEvent.notes.isNotEmpty ? Text(setlistEvent.notes) : null,
                       );
                     },
                   );

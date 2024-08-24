@@ -10,7 +10,7 @@ class SetlistEventModel implements SetlistEvent {
   @override
   final int length;
   @override
-  final String notes;
+  String notes;
   @override
   final String? songId;
   @override

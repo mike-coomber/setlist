@@ -60,7 +60,16 @@ class SetlistEditorCubit extends Cubit<SetlistEditorState> {
     );
   }
 
+  void onEventNotesChanged(String notes, SetlistEvent event) {
+    final events = state.events;
+    final index = events.indexOf(event);
+    events[index].notes = notes;
+    emit(state.copyWith(events: events));
+  }
+
   void addEvent() {
+    if (state.newEventName.isEmpty) return;
+
     final newEvent = SetlistEvent(
       name: state.newEventName,
       order: state.events.length + 1,
@@ -76,6 +85,15 @@ class SetlistEditorCubit extends Cubit<SetlistEditorState> {
         newEventLength: null,
       ),
     );
+  }
+
+  void removeEvent(SetlistEvent event) {
+    final events = [...state.events];
+    events.remove(event);
+    for (int i = 0; i < events.length; i++) {
+      events[i].order = i + 1;
+    }
+    emit(state.copyWith(events: events));
   }
 
   void reorderEvents(int oldIndex, int newIndex) {
