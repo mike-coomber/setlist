@@ -19,6 +19,12 @@ abstract class MembershipRemoteDataSource {
   Future<Membership> getMembership({required String musicianId, required String bandId});
 
   Future<void> deleteMembership({required String musicianId, required String bandId});
+
+  Future<void> updateRole({
+    required String userId,
+    required String bandId,
+    required String newRoleId,
+  });
 }
 
 class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
@@ -129,5 +135,29 @@ class MembershipRemoteDataSourceImpl extends MembershipRemoteDataSource {
       throw DataNotFoundError();
     }
     return queryResults.first;
+  }
+
+  @override
+  Future<void> updateRole({
+    required String userId,
+    required String bandId,
+    required String newRoleId,
+  }) async {
+    final collectionRef = _db
+        .collection(kMembershipPath)
+        .where(
+          'musicianId',
+          isEqualTo: userId,
+        )
+        .where('bandId', isEqualTo: bandId);
+
+    final membershipRef = (await collectionRef.get().onError((e, _) {
+      throw ServerError(e.toString());
+    }))
+        .docs
+        .first
+        .reference;
+
+    return firebaseUpdate(docRef: membershipRef, data: {'roleId': newRoleId});
   }
 }

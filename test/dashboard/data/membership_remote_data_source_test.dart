@@ -57,6 +57,21 @@ main() {
     expect(newMembership.first.musicianId, musicianId);
   });
 
+  test('Should be able to update a role', () async {
+    await dataSourceImpl.updateRole(
+      userId: musicianId,
+      bandId: bandId,
+      newRoleId: kMemberRoleId,
+    );
+
+    final updatedMembership = await dataSourceImpl.getMembership(
+      musicianId: musicianId,
+      bandId: bandId,
+    );
+
+    expect(updatedMembership.roleId, kMemberRoleId);
+  });
+
   test('Should be able to delete a membership', () async {
     await dataSourceImpl.deleteMembership(musicianId: musicianId, bandId: bandId);
 

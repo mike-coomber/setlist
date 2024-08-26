@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:setlist/core/errors.dart';
 import 'package:setlist/core/domain/entities/musician.dart';
 import 'package:setlist/features/dashboard/usecases/get_bands_usecase.dart';
 import 'package:setlist/features/dashboard/usecases/get_musician_usecase.dart';
@@ -36,8 +35,6 @@ class DashboardCubit extends Cubit<DashboardState> {
           ),
         );
       });
-    } on DataNotFoundError {
-      emit(DashboardFirstLogin());
     } catch (e) {
       emit(DashboardError());
     }

@@ -41,4 +41,17 @@ class MembershipRespositoryImpl extends MembershipRepository {
   Future<Membership> getMembership({required String musicianId, required String bandId}) {
     return membershipRemoteDataSource.getMembership(musicianId: musicianId, bandId: bandId);
   }
+
+  @override
+  Future<void> updateRole({
+    required String userId,
+    required String bandId,
+    required String newRoleId,
+  }) {
+    return membershipRemoteDataSource.updateRole(
+      userId: userId,
+      bandId: bandId,
+      newRoleId: newRoleId,
+    );
+  }
 }

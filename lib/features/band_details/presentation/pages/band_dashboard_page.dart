@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/core/presentation/error_view.dart';
 import 'package:setlist/core/presentation/loading_view.dart';
+import 'package:setlist/features/auth/presentation/cubit/auth/auth_cubit.dart';
+import 'package:setlist/features/band_details/presentation/components/leave_band_modal.dart';
 import 'package:setlist/features/band_details/presentation/cubit/band_details/band_details_cubit.dart';
 import 'package:setlist/features/band_details/presentation/views/setlist_list_view.dart';
 import 'package:setlist/features/band_details/presentation/views/song_list_view.dart';
@@ -40,6 +42,28 @@ class BandDashboardPage extends StatelessWidget {
               ),
             );
           }
+          actions.add(
+            IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () async {
+                  final result = await showDialog<LeaveBandModalResult>(
+                    context: context,
+                    builder: (context) => LeaveBandModal(
+                      musicians: state.members,
+                      bandId: state.band.id,
+                      roleId: state.currentMembership.roleId,
+                    ),
+                  );
+                  if (!context.mounted) return;
+                  if (result != null && result.leaveBand) {
+                    final userId = context.read<AuthCubit>().user.id;
+                    context.read<BandDetailsCubit>().leaveBand(
+                          userId: userId,
+                          newFounderId: result.newFounderId,
+                        );
+                  }
+                }),
+          );
         }
 
         return DefaultTabController(

@@ -24,7 +24,12 @@ Future<List<T>> firebaseQuery<T>({
 }) async {
   try {
     return parseDocs(
-      docs: (await query.get()).docs,
+      docs: (await query.get().onError(
+        (e, _) {
+          throw ServerError(e.toString());
+        },
+      ))
+          .docs,
       converter: converter,
     );
   } catch (e) {

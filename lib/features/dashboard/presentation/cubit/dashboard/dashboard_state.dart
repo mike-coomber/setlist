@@ -35,5 +35,3 @@ final class DashboardLoggedIn extends DashboardState {
   @override
   List<Object> get props => [currentMusician, bands];
 }
-
-final class DashboardFirstLogin extends DashboardState {}

@@ -25,6 +25,7 @@ import 'package:setlist/features/band_details/domain/usecases/add_song_usecase.d
 import 'package:setlist/features/band_details/domain/usecases/delete_setlist_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_membership_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_setlist_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/leave_band_usecase.dart';
 import 'package:setlist/features/band_details/presentation/cubit/add_members/add_members_cubit.dart';
 import 'package:setlist/features/band_details/presentation/cubit/add_song/add_song_cubit.dart';
 import 'package:setlist/features/band_details/presentation/cubit/band_details/band_details_cubit.dart';
@@ -111,6 +112,7 @@ void init() {
       getMembershipUsecase: serviceLocator(),
       getSongsUsecase: serviceLocator(),
       getSetlistsUsecase: serviceLocator(),
+      leaveBandUsecase: serviceLocator(),
     ),
   );
   serviceLocator.registerFactoryParam(
@@ -149,6 +151,7 @@ void init() {
   serviceLocator.registerLazySingleton(
     () => SignupUsecase(
       authRepository: serviceLocator(),
+      musicianRepository: serviceLocator(),
     ),
   );
   serviceLocator.registerLazySingleton(
@@ -248,6 +251,11 @@ void init() {
   serviceLocator.registerFactory(
     () => DeleteSetlistUsecase(
       setlistRepository: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory(
+    () => LeaveBandUsecase(
+      membershipRepository: serviceLocator(),
     ),
   );
 

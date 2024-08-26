@@ -14,4 +14,10 @@ abstract class MembershipRepository {
   Future<Membership> getMembership({required String musicianId, required String bandId});
 
   Future<void> deleteMembership({required String musicianId, required String bandId});
+
+  Future<void> updateRole({
+    required String userId,
+    required String bandId,
+    required String newRoleId,
+  });
 }

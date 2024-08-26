@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/features/auth/presentation/cubit/auth/auth_cubit.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
 import 'package:setlist/core/presentation/error_view.dart';
-import 'package:setlist/features/dashboard/presentation/views/first_login_view.dart';
 import 'package:setlist/core/presentation/loading_view.dart';
 import 'package:setlist/features/dashboard/presentation/views/band_list_view.dart';
 import 'package:setlist/injection_container.dart';
@@ -55,8 +54,6 @@ class HomePage extends StatelessWidget {
                 return const ErrorView();
               case DashboardLoggedIn():
                 return const BandListView();
-              case DashboardFirstLogin():
-                return const FirstLoginView();
             }
           },
         ),
