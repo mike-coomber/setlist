@@ -19,6 +19,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       state.copyWith(
         email: val,
         emailStatus: FieldStatus.valid,
+        status: FormStatus.initial,
       ),
     );
   }
@@ -29,6 +30,18 @@ class SignUpCubit extends Cubit<SignUpState> {
       state.copyWith(
         password: val,
         passwordStatus: FieldStatus.valid,
+        status: FormStatus.initial,
+      ),
+    );
+  }
+
+  void onNameChanged(String val) {
+    // TODO: check name validity
+    emit(
+      state.copyWith(
+        name: val,
+        nameStatus: FieldStatus.valid,
+        status: FormStatus.initial,
       ),
     );
   }
@@ -42,7 +55,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(state.copyWith(status: FormStatus.loading));
 
     try {
-      await usecase.call(email: state.email, password: state.password);
+      await usecase.call(email: state.email, password: state.password, name: state.name);
       emit(state.copyWith(status: FormStatus.success));
     } catch (e) {
       emit(state.copyWith(status: FormStatus.error));

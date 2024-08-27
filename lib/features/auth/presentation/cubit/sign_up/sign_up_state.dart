@@ -6,8 +6,11 @@ class SignUpState extends Equatable {
   final FieldStatus emailStatus;
   final String password;
   final FieldStatus passwordStatus;
+  final String name;
+  final FieldStatus nameStatus;
 
-  bool get formValid => emailStatus == FieldStatus.valid && passwordStatus == FieldStatus.valid;
+  bool get formValid =>
+      emailStatus == FieldStatus.valid && passwordStatus == FieldStatus.valid && nameStatus == FieldStatus.valid;
 
   const SignUpState({
     this.status = FormStatus.initial,
@@ -15,6 +18,8 @@ class SignUpState extends Equatable {
     this.emailStatus = FieldStatus.initilal,
     this.password = '',
     this.passwordStatus = FieldStatus.initilal,
+    this.name = '',
+    this.nameStatus = FieldStatus.initilal,
   });
 
   SignUpState copyWith({
@@ -23,6 +28,8 @@ class SignUpState extends Equatable {
     FieldStatus? emailStatus,
     String? password,
     FieldStatus? passwordStatus,
+    String? name,
+    FieldStatus? nameStatus,
   }) {
     return SignUpState(
       status: status ?? this.status,
@@ -30,9 +37,19 @@ class SignUpState extends Equatable {
       emailStatus: emailStatus ?? this.emailStatus,
       password: password ?? this.password,
       passwordStatus: passwordStatus ?? this.passwordStatus,
+      name: name ?? this.name,
+      nameStatus: nameStatus ?? this.nameStatus,
     );
   }
 
   @override
-  List<Object> get props => [status, email, emailStatus, password, passwordStatus];
+  List<Object> get props => [
+        status,
+        email,
+        emailStatus,
+        password,
+        passwordStatus,
+        name,
+        nameStatus,
+      ];
 }

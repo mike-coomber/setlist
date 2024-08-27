@@ -63,6 +63,12 @@ class _SignUpViewState extends State<SignUpView> {
                   enableSuggestions: false,
                   autocorrect: false,
                 ),
+                TextFormField(
+                  decoration: const InputDecoration(hintText: 'Name'),
+                  onChanged: _cubit.onNameChanged,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                ),
                 FilledButton(
                   onPressed: _cubit.signUp,
                   child: const Text('Sign up'),
