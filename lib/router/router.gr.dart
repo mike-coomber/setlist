@@ -9,8 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i14;
-import 'package:flutter/material.dart' as _i16;
-import 'package:setlist/core/domain/entities/band.dart' as _i15;
+import 'package:flutter/material.dart' as _i15;
+import 'package:setlist/core/domain/entities/band.dart' as _i17;
+import 'package:setlist/core/domain/entities/musician.dart' as _i16;
 import 'package:setlist/features/auth/presentation/pages/logged_out_page.dart'
     as _i7;
 import 'package:setlist/features/auth/presentation/pages/login_page.dart'
@@ -18,7 +19,7 @@ import 'package:setlist/features/auth/presentation/pages/login_page.dart'
 import 'package:setlist/features/auth/presentation/pages/sign_up_page.dart'
     as _i12;
 import 'package:setlist/features/band_details/domain/entities/song.dart'
-    as _i18;
+    as _i19;
 import 'package:setlist/features/band_details/presentation/pages/add_members_page.dart'
     as _i1;
 import 'package:setlist/features/band_details/presentation/pages/band_dashboard_page.dart'
@@ -38,7 +39,7 @@ import 'package:setlist/features/dashboard/presentation/pages/dashboard_page.dar
 import 'package:setlist/features/dashboard/presentation/pages/home_page.dart'
     as _i6;
 import 'package:setlist/features/setlist_editor/domain/entities/setlist.dart'
-    as _i17;
+    as _i18;
 import 'package:setlist/features/setlist_editor/presentation/pages/setlist_editor_page.dart'
     as _i9;
 
@@ -58,7 +59,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.BandDashboardPage(
-          band: args.band,
+          bandId: args.bandId,
           key: args.key,
         ),
       );
@@ -68,15 +69,19 @@ abstract class $AppRouter extends _i14.RootStackRouter {
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i3.BandDetailsPage(
-          band: args.band,
+          bandId: args.bandId,
           key: args.key,
         ),
       );
     },
     CreateBandRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateBandRouteArgs>();
       return _i14.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.CreateBandPage(),
+        child: _i4.CreateBandPage(
+          musician: args.musician,
+          key: args.key,
+        ),
       );
     },
     DashboardRoute.name: (routeData) {
@@ -174,13 +179,13 @@ class AddMembersRoute extends _i14.PageRouteInfo<void> {
 /// [_i2.BandDashboardPage]
 class BandDashboardRoute extends _i14.PageRouteInfo<BandDashboardRouteArgs> {
   BandDashboardRoute({
-    required _i15.Band band,
-    _i16.Key? key,
+    required String bandId,
+    _i15.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           BandDashboardRoute.name,
           args: BandDashboardRouteArgs(
-            band: band,
+            bandId: bandId,
             key: key,
           ),
           initialChildren: children,
@@ -194,17 +199,17 @@ class BandDashboardRoute extends _i14.PageRouteInfo<BandDashboardRouteArgs> {
 
 class BandDashboardRouteArgs {
   const BandDashboardRouteArgs({
-    required this.band,
+    required this.bandId,
     this.key,
   });
 
-  final _i15.Band band;
+  final String bandId;
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
-    return 'BandDashboardRouteArgs{band: $band, key: $key}';
+    return 'BandDashboardRouteArgs{bandId: $bandId, key: $key}';
   }
 }
 
@@ -212,13 +217,13 @@ class BandDashboardRouteArgs {
 /// [_i3.BandDetailsPage]
 class BandDetailsRoute extends _i14.PageRouteInfo<BandDetailsRouteArgs> {
   BandDetailsRoute({
-    required _i15.Band band,
-    _i16.Key? key,
+    required String bandId,
+    _i15.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           BandDetailsRoute.name,
           args: BandDetailsRouteArgs(
-            band: band,
+            bandId: bandId,
             key: key,
           ),
           initialChildren: children,
@@ -232,32 +237,56 @@ class BandDetailsRoute extends _i14.PageRouteInfo<BandDetailsRouteArgs> {
 
 class BandDetailsRouteArgs {
   const BandDetailsRouteArgs({
-    required this.band,
+    required this.bandId,
     this.key,
   });
 
-  final _i15.Band band;
+  final String bandId;
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
-    return 'BandDetailsRouteArgs{band: $band, key: $key}';
+    return 'BandDetailsRouteArgs{bandId: $bandId, key: $key}';
   }
 }
 
 /// generated route for
 /// [_i4.CreateBandPage]
-class CreateBandRoute extends _i14.PageRouteInfo<void> {
-  const CreateBandRoute({List<_i14.PageRouteInfo>? children})
-      : super(
+class CreateBandRoute extends _i14.PageRouteInfo<CreateBandRouteArgs> {
+  CreateBandRoute({
+    required _i16.Musician musician,
+    _i15.Key? key,
+    List<_i14.PageRouteInfo>? children,
+  }) : super(
           CreateBandRoute.name,
+          args: CreateBandRouteArgs(
+            musician: musician,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'CreateBandRoute';
 
-  static const _i14.PageInfo<void> page = _i14.PageInfo<void>(name);
+  static const _i14.PageInfo<CreateBandRouteArgs> page =
+      _i14.PageInfo<CreateBandRouteArgs>(name);
+}
+
+class CreateBandRouteArgs {
+  const CreateBandRouteArgs({
+    required this.musician,
+    this.key,
+  });
+
+  final _i16.Musician musician;
+
+  final _i15.Key? key;
+
+  @override
+  String toString() {
+    return 'CreateBandRouteArgs{musician: $musician, key: $key}';
+  }
 }
 
 /// generated route for
@@ -320,9 +349,9 @@ class LoginRoute extends _i14.PageRouteInfo<void> {
 /// [_i9.SetlistEditorPage]
 class SetlistEditorRoute extends _i14.PageRouteInfo<SetlistEditorRouteArgs> {
   SetlistEditorRoute({
-    required _i15.Band band,
-    _i17.Setlist? setlist,
-    _i16.Key? key,
+    required _i17.Band band,
+    _i18.Setlist? setlist,
+    _i15.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           SetlistEditorRoute.name,
@@ -347,11 +376,11 @@ class SetlistEditorRouteArgs {
     this.key,
   });
 
-  final _i15.Band band;
+  final _i17.Band band;
 
-  final _i17.Setlist? setlist;
+  final _i18.Setlist? setlist;
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
@@ -363,9 +392,9 @@ class SetlistEditorRouteArgs {
 /// [_i10.SetlistListView]
 class SetlistTab extends _i14.PageRouteInfo<SetlistTabArgs> {
   SetlistTab({
-    required List<_i17.Setlist> setlists,
-    required _i15.Band band,
-    _i16.Key? key,
+    required List<_i18.Setlist> setlists,
+    required _i17.Band band,
+    _i15.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           SetlistTab.name,
@@ -390,11 +419,11 @@ class SetlistTabArgs {
     this.key,
   });
 
-  final List<_i17.Setlist> setlists;
+  final List<_i18.Setlist> setlists;
 
-  final _i15.Band band;
+  final _i17.Band band;
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
@@ -406,9 +435,9 @@ class SetlistTabArgs {
 /// [_i11.SetlistPage]
 class SetlistRoute extends _i14.PageRouteInfo<SetlistRouteArgs> {
   SetlistRoute({
-    required _i17.Setlist setlist,
-    required _i15.Band band,
-    _i16.Key? key,
+    required _i18.Setlist setlist,
+    required _i17.Band band,
+    _i15.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           SetlistRoute.name,
@@ -433,11 +462,11 @@ class SetlistRouteArgs {
     this.key,
   });
 
-  final _i17.Setlist setlist;
+  final _i18.Setlist setlist;
 
-  final _i15.Band band;
+  final _i17.Band band;
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {
@@ -463,9 +492,9 @@ class SignUpRoute extends _i14.PageRouteInfo<void> {
 /// [_i13.SongListView]
 class SongTab extends _i14.PageRouteInfo<SongTabArgs> {
   SongTab({
-    required List<_i18.Song> songs,
-    void Function(_i18.Song)? onSongSelected,
-    _i16.Key? key,
+    required List<_i19.Song> songs,
+    void Function(_i19.Song)? onSongSelected,
+    _i15.Key? key,
     List<_i14.PageRouteInfo>? children,
   }) : super(
           SongTab.name,
@@ -490,11 +519,11 @@ class SongTabArgs {
     this.key,
   });
 
-  final List<_i18.Song> songs;
+  final List<_i19.Song> songs;
 
-  final void Function(_i18.Song)? onSongSelected;
+  final void Function(_i19.Song)? onSongSelected;
 
-  final _i16.Key? key;
+  final _i15.Key? key;
 
   @override
   String toString() {

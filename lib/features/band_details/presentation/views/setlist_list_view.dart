@@ -29,7 +29,7 @@ class SetlistListView extends StatelessWidget {
             onPressed: () async {
               final setlistAdded = await context.pushRoute(
                 SetlistEditorRoute(
-                  band: context.read<BandDetailsCubit>().state.band,
+                  band: (context.read<BandDetailsCubit>().state as BandDetailsStateLoaded).band,
                 ),
               );
               if (setlistAdded == true && context.mounted) {
@@ -49,7 +49,7 @@ class SetlistListView extends StatelessWidget {
                   final setlistDeleted = await context.pushRoute(
                     SetlistRoute(
                       setlist: setlist,
-                      band: context.read<BandDetailsCubit>().state.band,
+                      band: (context.read<BandDetailsCubit>().state as BandDetailsStateLoaded).band,
                     ),
                   );
                   if (setlistDeleted == true && context.mounted) {

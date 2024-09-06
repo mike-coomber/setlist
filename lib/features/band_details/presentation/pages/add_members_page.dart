@@ -71,7 +71,7 @@ class AddMembersPage extends StatelessWidget {
                       FilledButton(
                         child: const Text('Submit'),
                         onPressed: () {
-                          final band = context.read<BandDetailsCubit>().band;
+                          final band = (context.read<BandDetailsCubit>().state as BandDetailsStateLoaded).band;
 
                           context.read<AddMembersCubit>().addMembers(band: band);
                         },

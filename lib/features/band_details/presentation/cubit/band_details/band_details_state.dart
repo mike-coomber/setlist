@@ -1,19 +1,20 @@
 part of 'band_details_cubit.dart';
 
 sealed class BandDetailsState extends Equatable {
-  final Band band;
+  final String bandId;
 
-  const BandDetailsState(this.band);
+  const BandDetailsState(this.bandId);
 
   @override
-  List<Object> get props => [band];
+  List<Object> get props => [bandId];
 }
 
 final class BandDetailsStateInitial extends BandDetailsState {
-  const BandDetailsStateInitial(super.band);
+  const BandDetailsStateInitial(super.bandId);
 }
 
 final class BandDetailsStateLoaded extends BandDetailsState {
+  final Band band;
   final List<Musician> members;
   final List<Song> songs;
   final List<Setlist> setlists;
@@ -21,13 +22,14 @@ final class BandDetailsStateLoaded extends BandDetailsState {
   final Membership currentMembership;
 
   const BandDetailsStateLoaded({
-    required Band band,
+    required String bandId,
+    required this.band,
     required this.members,
     required this.songs,
     required this.permissions,
     required this.setlists,
     required this.currentMembership,
-  }) : super(band);
+  }) : super(bandId);
 
   BandDetailsStateLoaded copyWith({
     Band? band,
@@ -38,6 +40,7 @@ final class BandDetailsStateLoaded extends BandDetailsState {
     List<Setlist>? setlists,
   }) =>
       BandDetailsStateLoaded(
+        bandId: bandId,
         band: band ?? this.band,
         songs: songs ?? this.songs,
         members: members ?? this.members,
@@ -47,17 +50,17 @@ final class BandDetailsStateLoaded extends BandDetailsState {
       );
 
   @override
-  List<Object> get props => [band, members, setlists, songs];
+  List<Object> get props => [bandId, band, members, setlists, songs];
 }
 
 final class BandDetailsStateLoading extends BandDetailsState {
-  const BandDetailsStateLoading(super.band);
+  const BandDetailsStateLoading(super.bandId);
 }
 
 final class BandDetailsStateError extends BandDetailsState {
-  const BandDetailsStateError(super.band);
+  const BandDetailsStateError(super.bandId);
 }
 
 final class BandDetailsStateDeleted extends BandDetailsState {
-  const BandDetailsStateDeleted(super.band);
+  const BandDetailsStateDeleted(super.bandId);
 }

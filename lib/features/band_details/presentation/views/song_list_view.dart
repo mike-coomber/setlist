@@ -26,7 +26,7 @@ class SongListView extends StatelessWidget {
             final bool songAdded = await showModalBottomSheet(
                 context: context,
                 builder: (context) => AddSongView(
-                      band: context.read<BandDetailsCubit>().band,
+                      band: (context.read<BandDetailsCubit>().state as BandDetailsStateLoaded).band,
                     ));
             if (songAdded == true && context.mounted) {
               context.read<BandDetailsCubit>().updateSongs();

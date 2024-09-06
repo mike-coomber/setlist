@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
 import 'package:setlist/router/router.gr.dart';
 
-class BandListView extends StatelessWidget {
-  const BandListView({super.key});
+class BandMembershipsListView extends StatelessWidget {
+  const BandMembershipsListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +16,18 @@ class BandListView extends StatelessWidget {
         return Column(
           children: [
             Text(loggedInState.currentMusician.name),
-            if (state.bands.isNotEmpty)
+            if (state.bandMemberships.isNotEmpty)
               Expanded(
                 child: ListView.builder(
-                  itemCount: state.bands.length,
+                  itemCount: state.bandMemberships.length,
                   itemBuilder: (context, index) {
-                    final band = state.bands[index];
+                    final membership = state.bandMemberships[index];
                     return GestureDetector(
                       onTap: () async {
                         final bandId = await context.pushRoute(BandDetailsRoute(
-                          band: band,
+                          bandId: membership.bandId,
                           children: [
-                            BandDashboardRoute(band: band),
+                            BandDashboardRoute(bandId: membership.bandId),
                           ],
                         ));
                         if (context.mounted && bandId != null && bandId is String) {
@@ -35,7 +35,7 @@ class BandListView extends StatelessWidget {
                         }
                       },
                       child: Card(
-                        child: Text(band.name),
+                        child: Text(membership.bandName),
                       ),
                     );
                   },

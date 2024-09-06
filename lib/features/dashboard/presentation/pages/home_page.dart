@@ -27,8 +27,17 @@ class HomePage extends StatelessWidget {
             BlocBuilder<DashboardCubit, DashboardState>(
               builder: (context, state) {
                 return IconButton(
-                  onPressed: () {
-                    context.pushRoute(const CreateBandRoute());
+                  onPressed: () async {
+                    if (state is DashboardLoggedIn) {
+                      final bandCreated = await context.pushRoute(
+                        CreateBandRoute(musician: state.currentMusician),
+                      );
+                      if (bandCreated == true && context.mounted) {
+                        context.read<DashboardCubit>().updateBands(
+                              state.currentMusician.id,
+                            );
+                      }
+                    }
                   },
                   icon: const Icon(Icons.add),
                 );
@@ -52,7 +61,7 @@ class HomePage extends StatelessWidget {
               case DashboardError():
                 return const ErrorView();
               case DashboardLoggedIn():
-                return const BandListView();
+                return const BandMembershipsListView();
             }
           },
         ),

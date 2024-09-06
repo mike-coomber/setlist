@@ -7,6 +7,7 @@ import 'package:setlist/features/band_details/domain/entities/permissions.dart';
 import 'package:setlist/features/band_details/domain/usecases/delete_band_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/delete_membership_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_band_members_usecase.dart';
+import 'package:setlist/features/band_details/domain/usecases/get_band_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_membership_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_permissions_usecase.dart';
 import 'package:setlist/features/band_details/domain/usecases/get_songs_usecase.dart';
@@ -19,7 +20,8 @@ import '../../../domain/entities/song.dart';
 part 'band_details_state.dart';
 
 class BandDetailsCubit extends Cubit<BandDetailsState> {
-  final Band band;
+  final String bandId;
+  final GetBandUsecase getBandUsecase;
   final GetBandMembersUsecase getBandMembersUsecase;
   final DeleteBandUsecase deleteBandUsecase;
   final DeleteMembershipUsecase deleteMembershipUsecase;
@@ -32,7 +34,8 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
   late String userId;
 
   BandDetailsCubit({
-    required this.band,
+    required this.bandId,
+    required this.getBandUsecase,
     required this.getBandMembersUsecase,
     required this.deleteBandUsecase,
     required this.deleteMembershipUsecase,
@@ -41,26 +44,28 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
     required this.getSongsUsecase,
     required this.getSetlistsUsecase,
     required this.leaveBandUsecase,
-  }) : super(BandDetailsStateInitial(band));
+  }) : super(BandDetailsStateInitial(bandId));
 
   Future<void> init({required String userId}) async {
     this.userId = userId;
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
 
     try {
       final data = await Future.wait(
         [
-          getBandMembersUsecase.call(bandId: band.id),
-          getMembershipUsecase.call(musicianId: userId, bandId: band.id),
-          getSongsUsecase.call(bandId: band.id),
-          getSetlistsUsecase.call(bandId: band.id),
+          getBandMembersUsecase.call(bandId: bandId),
+          getMembershipUsecase.call(musicianId: userId, bandId: bandId),
+          getSongsUsecase.call(bandId: bandId),
+          getSetlistsUsecase.call(bandId: bandId),
+          getBandUsecase.call(bandId),
         ],
       );
       final membership = (data[1] as Membership);
       final permissions = await getPermissionsUsease.call(roleId: membership.roleId);
       emit(
         BandDetailsStateLoaded(
-          band: band,
+          bandId: bandId,
+          band: data[4] as Band,
           members: data[0] as List<Musician>,
           permissions: permissions,
           currentMembership: membership,
@@ -69,7 +74,7 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
         ),
       );
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
   }
 
@@ -84,84 +89,84 @@ class BandDetailsCubit extends Cubit<BandDetailsState> {
 
   Future<void> updateMembers() async {
     final prevState = state as BandDetailsStateLoaded;
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
     try {
-      final newMembers = await getBandMembersUsecase.call(bandId: band.id);
+      final newMembers = await getBandMembersUsecase.call(bandId: bandId);
 
       emit(
         prevState.copyWith(members: newMembers),
       );
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
   }
 
   Future<void> updateSongs() async {
     final prevState = state as BandDetailsStateLoaded;
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
     try {
-      final newSongs = await getSongsUsecase.call(bandId: band.id);
+      final newSongs = await getSongsUsecase.call(bandId: bandId);
 
       emit(
         prevState.copyWith(songs: newSongs),
       );
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
   }
 
   Future<List<Setlist>?> updateSetlists() async {
     final prevState = state as BandDetailsStateLoaded;
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
     try {
-      final newSetlists = await getSetlistsUsecase.call(bandId: band.id);
+      final newSetlists = await getSetlistsUsecase.call(bandId: bandId);
 
       emit(
         prevState.copyWith(setlists: newSetlists),
       );
       return newSetlists;
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
     return null;
   }
 
   Future<void> deleteBand() async {
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
     try {
-      await deleteBandUsecase.call(bandId: band.id);
-      emit(BandDetailsStateDeleted(band));
+      await deleteBandUsecase.call(bandId: bandId);
+      emit(BandDetailsStateDeleted(bandId));
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
   }
 
   Future<void> deleteMembership({required String musicianId}) async {
     final prevState = state as BandDetailsStateLoaded;
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
     try {
-      await deleteMembershipUsecase.call(musicianId: musicianId, bandId: band.id);
-      final newMembers = await getBandMembersUsecase.call(bandId: band.id);
+      await deleteMembershipUsecase.call(musicianId: musicianId, bandId: bandId);
+      final newMembers = await getBandMembersUsecase.call(bandId: bandId);
 
       emit(
         prevState.copyWith(members: newMembers),
       );
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
   }
 
   Future<void> leaveBand({required String userId, String? newFounderId}) async {
-    emit(BandDetailsStateLoading(band));
+    emit(BandDetailsStateLoading(bandId));
     try {
       await leaveBandUsecase.call(
         userId: userId,
-        bandId: band.id,
+        bandId: bandId,
         newFounderId: newFounderId,
       );
-      emit(BandDetailsStateDeleted(band));
+      emit(BandDetailsStateDeleted(bandId));
     } catch (e) {
-      emit(BandDetailsStateError(band));
+      emit(BandDetailsStateError(bandId));
     }
   }
 
