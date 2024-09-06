@@ -11,6 +11,8 @@ final membership = Membership(
   musicianId: musicianId,
   bandId: bandId,
   roleId: kFounderRoleId,
+  musicianName: 'musician',
+  bandName: 'band',
 );
 
 main() {
@@ -49,6 +51,8 @@ main() {
         musicianId: musicianId,
         bandId: bandId,
         roleId: kMemberRoleId,
+        musicianName: 'musician',
+        bandName: 'band',
       ),
     ]);
 

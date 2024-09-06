@@ -19,10 +19,17 @@ class CreateBandCubit extends Cubit<CreateBandState> {
     emit(state.copyWith(name: name));
   }
 
-  Future<void> createBand({required String userId}) async {
+  Future<void> createBand({
+    required String userId,
+    required String founderName,
+  }) async {
     emit(state.copyWith(status: FormStatus.loading));
     try {
-      await createBandUsecase.call(bandName: state.name, userId: userId);
+      await createBandUsecase.call(
+        bandName: state.name,
+        userId: userId,
+        founderName: founderName,
+      );
       emit(state.copyWith(status: FormStatus.success));
     } catch (e) {
       emit(state.copyWith(status: FormStatus.error));

@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:setlist/features/auth/presentation/cubit/auth/auth_cubit.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/create_band/presentation/cubit/create_band_cubit.dart';
+import 'package:setlist/features/dashboard/presentation/cubit/dashboard/dashboard_cubit.dart';
 import 'package:setlist/injection_container.dart';
 
 @RoutePage()
@@ -35,8 +35,11 @@ class CreateBandPage extends StatelessWidget {
                     ),
                     FilledButton(
                       onPressed: () {
-                        final userId = context.read<AuthCubit>().user.id;
-                        context.read<CreateBandCubit>().createBand(userId: userId);
+                        final musician = (context.read<DashboardCubit>().state as DashboardLoggedIn).currentMusician;
+                        context.read<CreateBandCubit>().createBand(
+                              userId: musician.id,
+                              founderName: musician.name,
+                            );
                       },
                       child: const Text('Create band'),
                     ),

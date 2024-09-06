@@ -1,5 +1,6 @@
 import 'package:setlist/core/data/db_consts.dart';
 import 'package:setlist/core/domain/entities/membership.dart';
+import 'package:setlist/core/domain/entities/musician.dart';
 import 'package:setlist/core/domain/repositories/membership_repository.dart';
 
 class AddMembersUsecase {
@@ -7,12 +8,18 @@ class AddMembersUsecase {
 
   AddMembersUsecase({required this.membershipRepository});
 
-  Future<void> call({required List<String> musicianIds, required String bandId}) {
-    final memberships = musicianIds
+  Future<void> call({
+    required List<Musician> musicians,
+    required String bandId,
+    required String bandName,
+  }) {
+    final memberships = musicians
         .map(
-          (musicianId) => Membership(
-            musicianId: musicianId,
+          (musician) => Membership(
+            musicianId: musician.id,
+            musicianName: musician.name,
             bandId: bandId,
+            bandName: bandName,
             roleId: kMemberRoleId,
           ),
         )

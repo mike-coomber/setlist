@@ -11,6 +11,8 @@ MembershipModel _$MembershipModelFromJson(Map<String, dynamic> json) =>
       bandId: json['bandId'] as String,
       musicianId: json['musicianId'] as String,
       roleId: json['roleId'] as String,
+      musicianName: json['musicianName'] as String,
+      bandName: json['bandName'] as String,
     );
 
 Map<String, dynamic> _$MembershipModelToJson(MembershipModel instance) =>
@@ -18,4 +20,6 @@ Map<String, dynamic> _$MembershipModelToJson(MembershipModel instance) =>
       'bandId': instance.bandId,
       'musicianId': instance.musicianId,
       'roleId': instance.roleId,
+      'musicianName': instance.musicianName,
+      'bandName': instance.bandName,
     };

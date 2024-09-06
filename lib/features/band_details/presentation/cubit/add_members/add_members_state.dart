@@ -3,7 +3,7 @@ part of 'add_members_cubit.dart';
 class AddMembersState extends Equatable {
   const AddMembersState({
     this.searchTerm = '',
-    this.selectedMusicianIds = const [],
+    this.selectedMusicians = const [],
     this.searchResults = const [],
     this.searchStatus = FormStatus.initial,
     this.submitStatus = FormStatus.initial,
@@ -11,7 +11,7 @@ class AddMembersState extends Equatable {
 
   final String searchTerm;
   final List<Musician> searchResults;
-  final List<String> selectedMusicianIds;
+  final List<Musician> selectedMusicians;
   final FormStatus searchStatus;
   final FormStatus submitStatus;
 
@@ -19,7 +19,7 @@ class AddMembersState extends Equatable {
   List<Object> get props => [
         searchTerm,
         searchResults,
-        selectedMusicianIds,
+        selectedMusicians,
         searchStatus,
         submitStatus,
       ];
@@ -27,13 +27,13 @@ class AddMembersState extends Equatable {
   AddMembersState copyWith({
     String? searchTerm,
     List<Musician>? searchResults,
-    List<String>? selectedMusicianIds,
+    List<Musician>? selectedMusicians,
     FormStatus? searchStatus,
     FormStatus? submitStatus,
   }) {
     return AddMembersState(
       searchTerm: searchTerm ?? this.searchTerm,
-      selectedMusicianIds: selectedMusicianIds ?? this.selectedMusicianIds,
+      selectedMusicians: selectedMusicians ?? this.selectedMusicians,
       searchResults: searchResults ?? this.searchResults,
       searchStatus: searchStatus ?? this.searchStatus,
       submitStatus: submitStatus ?? this.submitStatus,

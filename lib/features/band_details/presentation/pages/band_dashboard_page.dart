@@ -21,31 +21,29 @@ class BandDashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BandDetailsCubit, BandDetailsState>(
       builder: (context, state) {
-        final List<Widget> actions = [];
+        final List<PopupMenuItem> actions = [];
 
         if (state is BandDetailsStateLoaded) {
           if (state.permissions.canAddMembers) {
             actions.add(
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => context.pushRoute(const AddMembersRoute()),
+              PopupMenuItem(
+                child: const Text('Add members'),
+                onTap: () => context.pushRoute(const AddMembersRoute()),
               ),
             );
           }
           if (state.permissions.canDeleteBand) {
             actions.add(
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  context.read<BandDetailsCubit>().deleteBand();
-                },
+              PopupMenuItem(
+                child: Text('Delete band'),
+                onTap: () => context.read<BandDetailsCubit>().deleteBand(),
               ),
             );
           }
           actions.add(
-            IconButton(
-                icon: const Icon(Icons.logout),
-                onPressed: () async {
+            PopupMenuItem(
+                child: Text('Leave band'),
+                onTap: () async {
                   final result = await showDialog<LeaveBandModalResult>(
                     context: context,
                     builder: (context) => LeaveBandModal(
@@ -71,7 +69,12 @@ class BandDashboardPage extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: Text(band.name),
-              actions: actions,
+              actions: [
+                PopupMenuButton(
+                  itemBuilder: (context) => actions,
+                  position: PopupMenuPosition.under,
+                ),
+              ],
               bottom: const TabBar(
                 tabs: [
                   Tab(text: 'Setlists'),

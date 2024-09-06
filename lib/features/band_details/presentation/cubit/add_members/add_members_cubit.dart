@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:setlist/core/domain/entities/band.dart';
 import 'package:setlist/core/utils/deboucer.dart';
 import 'package:setlist/features/auth/presentation/cubit/form_status.dart';
 import 'package:setlist/features/band_details/domain/usecases/add_members_usecase.dart';
@@ -25,7 +26,7 @@ class AddMembersCubit extends Cubit<AddMembersState> {
           const AddMembersState(
             searchTerm: '',
             searchResults: [],
-            selectedMusicianIds: [],
+            selectedMusicians: [],
             searchStatus: FormStatus.initial,
           ),
         );
@@ -59,23 +60,31 @@ class AddMembersCubit extends Cubit<AddMembersState> {
     }
   }
 
-  void onMusicianSelected({required String musicianId}) {
-    if (state.selectedMusicianIds.contains(musicianId)) {
-      final newMusicianIds = state.selectedMusicianIds.where((id) => id != musicianId).toList();
-      emit(state.copyWith(selectedMusicianIds: newMusicianIds));
+  void onMusicianSelected({required Musician musician}) {
+    if (state.selectedMusicians.contains(musician)) {
+      final newMusicianIds = state.selectedMusicians
+          .where(
+            (id) => id != musician,
+          )
+          .toList();
+      emit(state.copyWith(selectedMusicians: newMusicianIds));
     } else {
       emit(
         state.copyWith(
-          selectedMusicianIds: [...state.selectedMusicianIds, musicianId],
+          selectedMusicians: [...state.selectedMusicians, musician],
         ),
       );
     }
   }
 
-  Future<void> addMembers({required String bandId}) async {
+  Future<void> addMembers({required Band band}) async {
     emit(state.copyWith(submitStatus: FormStatus.loading));
     try {
-      await addMembersUsecase.call(musicianIds: state.selectedMusicianIds, bandId: bandId);
+      await addMembersUsecase.call(
+        musicians: state.selectedMusicians,
+        bandId: band.id,
+        bandName: band.name,
+      );
 
       emit(state.copyWith(submitStatus: FormStatus.success));
     } catch (e) {

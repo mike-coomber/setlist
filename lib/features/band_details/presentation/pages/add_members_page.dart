@@ -56,10 +56,14 @@ class AddMembersPage extends StatelessWidget {
 
                             return ListTile(
                               onTap: () => context.read<AddMembersCubit>().onMusicianSelected(
-                                    musicianId: musician.id,
+                                    musician: musician,
                                   ),
                               title: Text(musician.name),
-                              selected: state.selectedMusicianIds.contains(musician.id),
+                              selected: state.selectedMusicians
+                                  .where(
+                                    (m) => m.id == musician.id,
+                                  )
+                                  .isNotEmpty,
                             );
                           },
                         ),
@@ -67,9 +71,9 @@ class AddMembersPage extends StatelessWidget {
                       FilledButton(
                         child: const Text('Submit'),
                         onPressed: () {
-                          final bandId = context.read<BandDetailsCubit>().band.id;
+                          final band = context.read<BandDetailsCubit>().band;
 
-                          context.read<AddMembersCubit>().addMembers(bandId: bandId);
+                          context.read<AddMembersCubit>().addMembers(band: band);
                         },
                       )
                     ],
