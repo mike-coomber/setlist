@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setlist/features/auth/presentation/cubit/sign_up/sign_up_cubit.dart';
 import 'package:setlist/injection_container.dart';
+import 'package:setlist/router/router.gr.dart';
 
 import '../cubit/form_status.dart';
 
@@ -45,6 +46,10 @@ class _SignUpViewState extends State<SignUpView> {
           if (state.status == FormStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Signup success')),
+            );
+            context.router.pushAndPopUntil(
+              const HomeRoute(),
+              predicate: (route) => false,
             );
           }
         },

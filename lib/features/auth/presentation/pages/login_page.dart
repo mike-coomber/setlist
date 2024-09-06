@@ -47,8 +47,10 @@ class _LoginViewState extends State<LoginView> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login success')),
             );
-            context.router.removeLast();
-            context.router.push(const HomeRoute());
+            context.router.pushAndPopUntil(
+              const DashboardRoute(),
+              predicate: (route) => false,
+            );
           }
         },
         builder: (context, state) {

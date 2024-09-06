@@ -38,7 +38,6 @@ class HomePage extends StatelessWidget {
               onPressed: () async {
                 await context.read<AuthCubit>().logout();
                 if (!context.mounted) return;
-                context.pushRoute(const LoginRoute());
               },
               icon: const Icon(Icons.logout),
             )

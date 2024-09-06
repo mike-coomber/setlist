@@ -36,7 +36,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     try {
       await logoutUsecase.call();
-      emit(LoggedOut());
     } catch (e) {
       print(e);
     }

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,9 +46,6 @@ class App extends StatelessWidget {
           theme: ThemeData.light(useMaterial3: true),
           routerConfig: router.config(
             navigatorObservers: () => [DebugObserver()],
-            reevaluateListenable: ReevaluateListenable.stream(
-              context.read<AuthCubit>().stream,
-            ),
           ),
         );
       }),
